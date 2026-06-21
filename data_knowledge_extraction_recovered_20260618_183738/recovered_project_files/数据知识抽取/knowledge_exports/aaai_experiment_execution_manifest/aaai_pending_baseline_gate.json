@@ -1,0 +1,95 @@
+{
+  "overall_status": "no_pending_baselines",
+  "claim_rule": "official-source adapted controls are scored matched-protocol controls but remain inadmissible as official external leaderboard scores",
+  "pending_baselines": [],
+  "materialized_external_controls": [
+    {
+      "name": "PatchTST",
+      "family": "temporal sequence",
+      "datasets": [
+        "TEP",
+        "SKAB"
+      ],
+      "status": "materialized_official_source_adapted_control",
+      "runner_status": "official_source_adapted_budget_probe_available",
+      "score_status": "matched_protocol_control_scored",
+      "official_task": "long-term time-series forecasting and representation learning",
+      "official_paper_url": "https://openreview.net/forum?id=Jbdc0vTOcol",
+      "official_repo_url": "https://github.com/yuqinie98/PatchTST",
+      "official_repo_snapshot_status": "repo_head_resolved",
+      "official_repo_checkout_status": "checkout_verified",
+      "official_repo_protocol_wrapper_status": "official_source_adapted_backbone_wrapper_available_not_official_score",
+      "checks": [
+        "official_source_checkout_verified",
+        "same_seeds",
+        "validation_only_model_selection",
+        "official_external_score_false",
+        "no_public_leaderboard_claim"
+      ],
+      "score_artifact": "knowledge_exports/external_baseline_protocol_runs/patchtst_official_tep_wrapper_3seed_budget_probe.json",
+      "official_external_score": false,
+      "comparison_admissibility": "not_admissible_as_official_external_score",
+      "claim_gate": "matched-protocol control only; no public leaderboard claim",
+      "command_template": "python Scripts/run_patchtst_tep_official_wrapper.py --seeds 42,43,44 --max-rows 20000 --window-size 32 --epochs 10 --device auto"
+    },
+    {
+      "name": "Anomaly Transformer",
+      "family": "temporal sequence",
+      "datasets": [
+        "SKAB",
+        "TEP"
+      ],
+      "status": "materialized_official_source_adapted_control",
+      "runner_status": "official_source_adapted_budget_probe_available",
+      "score_status": "matched_protocol_control_scored",
+      "official_task": "unsupervised time-series anomaly detection",
+      "official_paper_url": "https://openreview.net/forum?id=LzQQ89U1qm_",
+      "official_repo_url": "https://github.com/thuml/Anomaly-Transformer",
+      "official_repo_snapshot_status": "repo_head_resolved",
+      "official_repo_checkout_status": "checkout_verified",
+      "official_repo_protocol_wrapper_status": "patched_skab_official_source_wrapper_available_not_official_score",
+      "checks": [
+        "official_source_checkout_verified",
+        "same_seeds",
+        "validation_only_threshold",
+        "point_adjustment_disabled",
+        "official_external_score_false",
+        "no_public_leaderboard_claim"
+      ],
+      "score_artifact": "knowledge_exports/external_baseline_protocol_runs/anomaly_transformer_official_skab_wrapper_3seed_budget_probe.json",
+      "official_external_score": false,
+      "comparison_admissibility": "not_admissible_as_official_external_score",
+      "claim_gate": "matched-protocol control only; no public leaderboard claim",
+      "command_template": "python Scripts/run_anomaly_transformer_skab_official_wrapper.py --adapter-root knowledge_exports/external_baseline_protocol_runs/anomaly_transformer_official_skab_adapter --checkout C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\anomaly_transformer --seeds 42,43,44 --epochs 5"
+    },
+    {
+      "name": "Graph WaveNet",
+      "family": "graph temporal",
+      "datasets": [
+        "TEP"
+      ],
+      "status": "materialized_official_source_adapted_control",
+      "runner_status": "official_source_adapted_budget_probe_available",
+      "score_status": "matched_protocol_control_scored",
+      "official_task": "spatial-temporal traffic forecasting",
+      "official_paper_url": "https://www.ijcai.org/proceedings/2019/264",
+      "official_repo_url": "https://github.com/nnzhan/Graph-WaveNet",
+      "official_repo_snapshot_status": "repo_head_resolved",
+      "official_repo_checkout_status": "checkout_verified",
+      "official_repo_protocol_wrapper_status": "official_source_adapted_graph_temporal_wrapper_available_not_official_score",
+      "checks": [
+        "official_source_checkout_verified",
+        "same_seeds",
+        "graph_input_contract_declared",
+        "validation_only_model_selection",
+        "official_external_score_false",
+        "no_public_leaderboard_claim"
+      ],
+      "score_artifact": "knowledge_exports/external_baseline_protocol_runs/graph_wavenet_official_tep_wrapper_3seed_budget_probe.json",
+      "official_external_score": false,
+      "comparison_admissibility": "not_admissible_as_official_external_score",
+      "claim_gate": "matched-protocol control only; no public leaderboard claim",
+      "command_template": "python Scripts/run_graph_wavenet_tep_official_wrapper.py --seeds 42,43,44 --max-rows 20000 --window-size 32 --epochs 10 --device auto"
+    }
+  ]
+}

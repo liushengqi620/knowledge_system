@@ -1,0 +1,477 @@
+from __future__ import annotations
+
+import argparse
+import json
+import os
+from pathlib import Path
+from typing import Any
+
+
+VERSION = "aaai-exact-native-execution-plan-v1"
+REPO_ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_OUTPUT_DIR = REPO_ROOT / "knowledge_exports" / "aaai_exact_native_protocol_gate"
+
+
+REFERENCE_SOURCES: list[dict[str, str]] = [
+    {
+        "id": "skab_official_repository",
+        "title": "SKAB official repository",
+        "url": "https://github.com/waico/skab",
+        "protocol_use": (
+            "Defines SKAB v0.9 data files, anomaly/changepoint labels, proposed leaderboard framing, "
+            "and notebook/core-based reproduction route."
+        ),
+    },
+    {
+        "id": "nasa_cmapss_open_data",
+        "title": "NASA C-MAPSS open data page",
+        "url": "https://data.nasa.gov/dataset/cmapss-jet-engine-simulated-data",
+        "protocol_use": (
+            "Defines train/test trajectories for FD001-FD004, operational settings, sensors, and the "
+            "terminal test-unit RUL prediction objective."
+        ),
+    },
+    {
+        "id": "nasa_pcoe_cmapss_repository",
+        "title": "NASA PCoE Turbofan Engine Degradation Simulation repository entry",
+        "url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
+        "protocol_use": (
+            "Used to cross-check FD001-FD004 operating-condition/fault-mode combinations and the PCoE dataset lineage."
+        ),
+    },
+    {
+        "id": "tab_protocol_caveats",
+        "title": "Unified Benchmarking of Time Series Anomaly Detection Methods",
+        "url": "https://arxiv.org/abs/2506.18046",
+        "protocol_use": (
+            "Used only as an evaluation-caveat reference for split leakage, drop-last, point adjustment, "
+            "threshold choice, and inconsistent output-length issues in TSAD comparisons."
+        ),
+    },
+    {
+        "id": "mdfa_2025_open_protocol",
+        "title": "Remaining Useful Life Prediction for Aero-Engines Based on Multi-Scale Dilated Fusion Attention Model",
+        "url": "https://www.mdpi.com/2076-3417/15/17/9813",
+        "protocol_use": (
+            "Primary open full-text C-MAPSS exact-source candidate after FD004 count reconciliation; exposes "
+            "FD001-FD004 scope, window, batch, epochs, optimizer, learning rate, dropout, preprocessing, and metrics."
+        ),
+    },
+    {
+        "id": "acb_2021_open_protocol",
+        "title": "Effective Latent Representation for Prediction of Remaining Useful Life",
+        "url": "https://www.techscience.com/csse/v36n1/40892/html",
+        "protocol_use": (
+            "Fallback all-subset open C-MAPSS baseline candidate; useful if MDFA count reconciliation fails, "
+            "but its accessible text lacks enough budget fields for immediate exact reproduction."
+        ),
+    },
+]
+
+
+DATASET_PLANS: list[dict[str, Any]] = [
+    {
+        "dataset": "SKAB",
+        "priority": "P0",
+        "claim_upgrade_target": "from matched reliability-filtered anomaly evidence to native SKAB outlier/changepoint evidence",
+        "native_protocol_contract": [
+            "Keep outlier detection and changepoint detection as separate native tasks; do not mix labels in one score.",
+            "Use the official SKAB data layout and preserve datetime order, anomaly labels, and changepoint labels.",
+            "For changepoint scoring, declare the right-side event window policy before running any model.",
+            "Select thresholds only on training-derived validation data or the official notebook split; never tune on test labels.",
+            "Report F1, FAR, and MAR for point/outlier labels; report the declared event-window score separately for changepoints.",
+            "Disable point-adjustment unless it is the explicit native protocol being reproduced.",
+        ],
+        "current_reusable_assets": [
+            "Scripts/skab_external_baselines.py",
+            "Scripts/run_anomaly_transformer_skab_official_wrapper.py",
+            "Scripts/run_skab_dynamic_llm_graph_experiment.py",
+            "Scripts/skab_native_metric_audit.py",
+            "knowledge_exports/aaai_formal_public_runs/skab_strong_anchor_w48_e40",
+            "knowledge_exports/external_baseline_protocol_runs/skab_external_baselines_native_records_usad_tranad_w48_e8.json",
+            "knowledge_exports/public_benchmark_ready_llm_live_skab",
+            "knowledge_exports/aaai_exact_native_protocol_gate/skab_native_metric_audit.md",
+        ],
+        "required_new_or_tightened_assets": [
+            {
+                "name": "skab_native_metric_audit",
+                "purpose": "Materialize point, no-point-adjustment, and declared changepoint-window scores from identical predictions.",
+                "status": "materialized_complete_current_proposed_branches",
+            },
+            {
+                "name": "skab_official_notebook_reproduction",
+                "purpose": "Run or faithfully port the official repository notebook/core baselines with frozen split and threshold policy.",
+                "status": "missing_official_repo_level; style_usad_tranad_records_materialized",
+            },
+            {
+                "name": "skab_external_style_baseline_prediction_archive",
+                "purpose": "Archive USAD/TranAD-style frozen per-window prediction records with point and changepoint metrics.",
+                "status": "materialized_usad_tranad_w48_e8_3seed_not_official",
+            },
+            {
+                "name": "skab_threshold_policy_manifest",
+                "purpose": "Record validation-only threshold grid, event-window width, and whether point adjustment is disabled.",
+                "status": "materialized_in_skab_native_metric_audit",
+            },
+        ],
+        "baseline_protocols_to_run": [
+            "official SKAB notebook/core baselines where runnable",
+            "USAD-style reconstruction under native point labels",
+            "TranAD-style reconstruction under native point labels",
+            "GDN/MTAD-GAT matched graph-temporal controls with identical thresholds",
+            "official-source Anomaly Transformer wrapper with point adjustment disabled and native output-length audit",
+        ],
+        "first_commands": [
+            (
+                "python Scripts/aaai_formal_public_protocol.py --only skab_strong_anchor "
+                "--seeds 42,43,44 --device cuda --execute"
+            ),
+            (
+                "python Scripts/run_anomaly_transformer_skab_official_wrapper.py "
+                "--seeds 42,43,44 --epochs 5"
+            ),
+            "python Scripts/summarize_skab_external_baselines.py",
+        ],
+        "gate_flip_requirements": [
+            "exact_public_split=true after official split/notebook policy is reproduced and recorded",
+            "exact_preprocessing=true after train-only scaling and missing/valid mask policy match the native reproduction",
+            "exact_metric=true after point and changepoint scores are written from frozen predictions",
+            "official_or_published_baseline_protocol=true after official or faithful baselines have seed-level artifacts",
+            "threshold_or_delay_policy=true after validation-only threshold and right-side changepoint event-window are frozen",
+            "matched_budget=true after model epochs, windowing, and output length are identical across compared methods",
+        ],
+        "success_evidence": [
+            "one JSON file per seed containing scores, binary labels, thresholds, prediction length, and metric variants",
+            "one markdown audit table comparing proposed, anchor, and official/fair baselines under the same native scores",
+            "exact-native gate row for SKAB updated only if every listed gate is true",
+        ],
+    },
+    {
+        "dataset": "C-MAPSS",
+        "priority": "P0",
+        "claim_upgrade_target": "from original-task RUL transfer evidence to native FD001-FD004 prognostics evidence",
+        "native_protocol_contract": [
+            "Use the NASA train/test split and terminal test-unit RUL labels for FD001, FD002, FD003, and FD004.",
+            "Report subset-specific RMSE and PHM-style asymmetric RUL score; pooled metrics are secondary.",
+            "Declare the train-target RUL cap before training and include an uncapped terminal-test metric audit.",
+            "Fit scalers, operating-regime prototypes, and any sensor selection on training units only.",
+            "Keep derived health-stage labels auxiliary; the primary task is continuous RUL regression.",
+            "Compare against compatible published RUL baselines only when their subset, cap, score, and preprocessing match.",
+        ],
+        "current_reusable_assets": [
+            "Scripts/run_cmapss_rul_baselines.py",
+            "Scripts/run_cmapss_mdfa_source_matched.py",
+            "Scripts/summarize_cmapss_rul_terminal_results.py",
+            "Scripts/run_public_ms_gse_rpf_experiment.py",
+            "Scripts/cmapss_native_preprocessing_manifest.py",
+            "Scripts/cmapss_published_baseline_alignment.py",
+            "Scripts/cmapss_published_baseline_contract.py",
+            "Scripts/cmapss_lstm_source_protocol_audit.py",
+            "Scripts/cmapss_open_protocol_candidate_audit.py",
+            "Scripts/cmapss_mdfa_source_profile.py",
+            "Scripts/cmapss_mdfa_runner_audit.py",
+            "Scripts/cmapss_mdfa_strategy_probe_audit.py",
+            "Scripts/cmapss_rul_backbone_optimization_audit.py",
+            "Scripts/cmapss_pseudo_truncation_validation_audit.py",
+            "knowledge_exports/aaai_formal_public_runs/cmapss_original_rul_terminal_anchor_w48_e20",
+            "knowledge_exports/aaai_formal_public_runs/cmapss_rul_anchorpath_bigru_cls020_w80_e20",
+            "knowledge_exports/cmapss_rul_deep_baselines_regime_w160_cap150",
+            "knowledge_exports/cmapss_lstm_published_style_w80_cap125",
+            "knowledge_exports/aaai_formal_public_runs/cmapss_rul_anchorpath_bigru_cls020_cap150_w80_e20",
+            "knowledge_exports/aaai_exact_native_protocol_gate/cmapss_native_preprocessing_manifest.md",
+            "knowledge_exports/aaai_exact_native_protocol_gate/cmapss_published_baseline_alignment.md",
+            "knowledge_exports/aaai_exact_native_protocol_gate/cmapss_published_baseline_contract.md",
+            "knowledge_exports/aaai_exact_native_protocol_gate/cmapss_lstm_source_protocol_audit.md",
+            "knowledge_exports/aaai_exact_native_protocol_gate/cmapss_open_protocol_candidate_audit.md",
+            "knowledge_exports/aaai_exact_native_protocol_gate/cmapss_mdfa_source_profile.md",
+            "knowledge_exports/aaai_exact_native_protocol_gate/cmapss_mdfa_runner_audit.md",
+            "knowledge_exports/aaai_exact_native_protocol_gate/cmapss_mdfa_strategy_probe_audit.md",
+            "knowledge_exports/cmapss_mdfa_source_matched_source2d_smoke/cmapss_mdfa_source_matched_summary.md",
+            "knowledge_exports/aaai_exact_native_protocol_gate/cmapss_rul_backbone_optimization_audit.md",
+            "knowledge_exports/aaai_exact_native_protocol_gate/cmapss_pseudo_truncation_validation_audit.md",
+        ],
+        "required_new_or_tightened_assets": [
+            {
+                "name": "cmapss_native_preprocessing_manifest",
+                "purpose": "Record FD subset, sensor columns, operation-setting normalization, RUL cap, and train-only fitting state.",
+                "status": "native_preprocessing_complete_alignment_artifact_present_not_sota_proof",
+            },
+            {
+                "name": "cmapss_published_baseline_alignment",
+                "purpose": "Map each cited RUL baseline to FD subset, cap, RMSE/score formula, and comparable budget.",
+                "status": "materialized_partial_reference_registry_and_lstm_style_candidate_present_reproduction_and_budget_missing",
+            },
+            {
+                "name": "cmapss_published_baseline_contract",
+                "purpose": "Turn each cited RUL baseline into a field-level exact reproduction checklist before any published-style row is promoted.",
+                "status": "materialized_contract_complete_reproduction_pending",
+            },
+            {
+                "name": "cmapss_lstm_source_protocol_audit",
+                "purpose": "Extract local LSTM candidate configuration and keep exact LSTM reproduction blocked until primary-source protocol fields are available.",
+                "status": "materialized_source_protocol_incomplete_local_config_extracted",
+            },
+            {
+                "name": "cmapss_open_protocol_candidate_audit",
+                "purpose": "Identify accessible published C-MAPSS RUL sources that can replace the blocked LSTM full-text path as exact-source reproduction targets.",
+                "status": "materialized_open_candidates_identified_exact_profile_pending",
+            },
+            {
+                "name": "cmapss_mdfa_source_profile",
+                "purpose": "Extract MDFA 2025 protocol fields and reconcile FD001-FD004 raw-file unit counts against the published table before full-budget reproduction.",
+                "status": "materialized_source_profile_count_reconciled_full_budget_pending",
+            },
+            {
+                "name": "cmapss_mdfa_source_matched_runner",
+                "purpose": "Run the MDFA architecture directly on raw C-MAPSS files with train-unit PCA, optional operating-condition normalization, and terminal per-engine prediction records.",
+                "status": "materialized_four_subset_three_seed_branch_archive_reproduction_pending",
+            },
+            {
+                "name": "cmapss_mdfa_runner_audit",
+                "purpose": "Keep the MDFA smoke archive separate from a full published reproduction and list the remaining budget/preprocessing blockers.",
+                "status": "materialized_smoke_runner_materialized_full_budget_pending",
+            },
+            {
+                "name": "cmapss_mdfa_strategy_probe_audit",
+                "purpose": "Audit FD001/FD003 long-window probes plus FD002/FD004 operating-condition-aware probes before choosing the full-budget MDFA route.",
+                "status": "materialized_full_branch_archive_reproduction_pending",
+            },
+            {
+                "name": "cmapss_lstm_published_style_candidate",
+                "purpose": "Run an LSTM sequence RUL branch as a local matched candidate for the published LSTM baseline family.",
+                "status": "materialized_3seed_fd001_fd004_terminal_records_not_exact_published_reproduction",
+            },
+            {
+                "name": "cmapss_subset_seed_prediction_archive",
+                "purpose": "Store per-test-engine terminal prediction, true RUL, subset, and seed for every branch.",
+                "status": "materialized_seed_level_for_current_branches",
+            },
+            {
+                "name": "cmapss_rul_backbone_optimization_audit",
+                "purpose": "Audit cap/window changes and keep path fusion closed unless it beats the temporal anchor.",
+                "status": "materialized_partial_long_window_anchor_positive_path_fusion_closed",
+            },
+            {
+                "name": "cmapss_pseudo_truncation_validation_audit",
+                "purpose": "Select cap/window on train-unit pseudo-terminal validation instead of test sweep and disclose PHM-score trade-offs.",
+                "status": "materialized_complete_rmse_selection_score_tradeoff_disclosed",
+            },
+        ],
+        "baseline_protocols_to_run": [
+            "Ridge/HistGB/ExtraTrees summary baselines as transparent lower-bound controls",
+            "GRU and TCN sequence RUL baselines under identical FD001-FD004 windows",
+            "cap-corrected long-window temporal anchor as the current strongest local C-MAPSS RUL control",
+            "published-compatible LSTM/attention/Transformer RUL baselines only after cap and score formula alignment",
+            "local LSTM sequence branch as a published-style candidate until the exact LSTM paper configuration is reproduced",
+            "MDFA 2025 open full-text profile as the first exact-source all-subset candidate after raw-file count reconciliation",
+            "MDFA 2025 source-matched runner smoke plus completed FD001/FD003 low-dropout long-window and FD002/FD004 condition-aware branch archives as route-selection evidence only, not published-score rows",
+            "ACB 2021 open full-text profile as fallback if MDFA cannot be reconciled",
+            "AnchorPath-BiGRU path residual fusion only as a challenger after validation-safe admission",
+        ],
+        "first_commands": [
+            (
+                "python Scripts/run_cmapss_mdfa_source_matched.py --output-dir "
+                "knowledge_exports/cmapss_mdfa_source_matched_single_condition_w80_all24_dropout01_full "
+                "--subsets FD001,FD003 --seeds 42,43,44 "
+                "--window-size 80 --epochs 100 --batch-size 32 --learning-rate 0.0001 --dropout 0.1 "
+                "--conv-formulation source_2d --feature-policy all24_pca --device cuda --resume"
+            ),
+            (
+                "python Scripts/run_cmapss_mdfa_source_matched.py --output-dir "
+                "knowledge_exports/cmapss_mdfa_condition_full_fd002_fd004_sensor21_pca_kmeans_onehot "
+                "--subsets FD002,FD004 --seeds 42,43,44 "
+                "--epochs 100 --batch-size 32 --learning-rate 0.0001 --dropout 0.3 "
+                "--conv-formulation source_2d --feature-policy sensor21_pca "
+                "--condition-normalization kmeans6_settings --append-condition-onehot --device cuda --resume"
+            ),
+            (
+                "python Scripts/cmapss_pseudo_truncation_validation_audit.py "
+                "--seeds 42,43,44 --candidates gru_w80_cap125,gru_w80_cap150,gru_w160_cap150 "
+                "--device cuda --epochs 25 --batch-size 256 --max-rows-per-split 12000"
+            ),
+            (
+                "python Scripts/run_cmapss_rul_baselines.py --output-dir "
+                "knowledge_exports/cmapss_rul_deep_baselines_regime_w160_cap150 "
+                "--seeds 42,43,44 --baselines gru_sequence --window-size 160 "
+                "--max-rows-per-split 12000 --rul-cap 150 --use-regime-prototype-residuals "
+                "--device cuda --epochs 25 --batch-size 256 --hidden-dim 64 --layers 2 --dropout 0.10"
+            ),
+            (
+                "python Scripts/run_cmapss_rul_baselines.py --seeds 42,43,44 "
+                "--baselines ridge_summary,histgb_summary,extra_trees_summary,gru_sequence,tcn_sequence "
+                "--use-regime-prototype-residuals --window-size 80 --device cuda"
+            ),
+            (
+                "python Scripts/run_cmapss_rul_baselines.py --output-dir "
+                "knowledge_exports/cmapss_lstm_published_style_w80_cap125 "
+                "--seeds 42,43,44 --baselines lstm_sequence --window-size 80 "
+                "--max-rows-per-split 12000 --rul-cap 125 --use-regime-prototype-residuals "
+                "--device cuda --epochs 25 --batch-size 256 --hidden-dim 64 --layers 2 --dropout 0.10"
+            ),
+            (
+                "python Scripts/aaai_formal_public_protocol.py --only "
+                "cmapss_rul_anchorpath_bigru_cls020 --seeds 42,43,44 --device cuda --execute "
+                "# challenger only; not a C-MAPSS path-fusion claim unless validation-safe admission beats the temporal anchor"
+            ),
+            "python Scripts/summarize_cmapss_rul_terminal_results.py",
+        ],
+        "gate_flip_requirements": [
+            "exact_preprocessing=true is satisfied by the native preprocessing manifest; published-baseline preprocessing equivalence remains part of the baseline-protocol gate",
+            "official_or_published_baseline_protocol=true after cited baselines are aligned or explicitly excluded",
+            "matched_budget=true after epochs, windows, seeds, and FD subset coverage are matched or normalized",
+            "LSTM published-style candidate becomes a reproduced published baseline only after exact paper preprocessing, cap, hidden size, epochs, validation split, and subset table are matched",
+            "cmapss_published_baseline_contract must show source-matched fields, matched budget, and prediction archives before official_or_published_baseline_protocol can flip",
+            "cmapss_lstm_source_protocol_audit must show paper_fulltext_protocol_available and all_required_source_fields_verified before promoting the local LSTM row",
+            "cmapss_mdfa_strategy_probe_audit must identify the selected source_2d long-window single-condition and condition-aware multi-condition routes before launching the full archive",
+            "cmapss_mdfa_runner_audit must show full_three_seed_archive_present, full_source_budget_100epoch_present, pca_key_sensor_exact_policy_verified, and safe_to_promote_mdfa_to_exact_reproduction before promoting the open full-text candidate",
+            "C-MAPSS path-fusion claim enabled only after pseudo-truncation validation shows RMSE gain over the same-window temporal anchor and either improves PHM score or explicitly passes a predeclared score trade-off rule",
+        ],
+        "success_evidence": [
+            "FD001-FD004 subset table with RMSE, MAE, and RUL score for every seed and branch",
+            "terminal per-engine prediction archive with no derived-label primary metric",
+            "exact-native gate row for C-MAPSS remains blocked only by published-baseline protocol and budget after native preprocessing evidence is complete",
+        ],
+    },
+    {
+        "dataset": "TEP",
+        "priority": "P1",
+        "claim_upgrade_target": "strict 22-class matched evidence to cited native FDD protocol evidence",
+        "native_protocol_contract": [
+            "Pick the cited TEP/FDD taxonomy before training.",
+            "Match split, delay policy, metric, and class inclusion exactly.",
+            "Attach strict full-model seed-level predictions before using the row as the main official claim.",
+        ],
+        "current_reusable_assets": ["knowledge_exports/aaai_latex_draft", "knowledge_exports/aaai_ablation_coverage_audit.json"],
+        "required_new_or_tightened_assets": [
+            {"name": "tep_native_fdd_protocol_reproduction", "purpose": "Reproduce at least two cited TEP protocols.", "status": "missing"}
+        ],
+        "baseline_protocols_to_run": ["published TEP/FDD protocols selected from cited papers"],
+        "first_commands": ["python Scripts/aaai_exact_native_protocol_gate.py --output-dir knowledge_exports/aaai_exact_native_protocol_gate"],
+        "gate_flip_requirements": ["all TEP exact-native gates true"],
+        "success_evidence": ["seed-level strict 22-class predictions and cited-protocol reproduction table"],
+    },
+    {
+        "dataset": "Hydraulic",
+        "priority": "P2",
+        "claim_upgrade_target": "near-ceiling safety evidence to native four-target Hydraulic table",
+        "native_protocol_contract": [
+            "Use published target definitions and metrics for all four condition-monitoring targets.",
+            "Report near-ceiling non-degradation unless a compatible temporal baseline table is reproduced.",
+        ],
+        "current_reusable_assets": ["knowledge_exports/aaai_latex_draft", "knowledge_exports/aaai_ablation_coverage_audit.json"],
+        "required_new_or_tightened_assets": [
+            {
+                "name": "hydraulic_four_target_protocol_table",
+                "purpose": "Reformat current evidence into published four-target protocol.",
+                "status": "missing",
+            }
+        ],
+        "baseline_protocols_to_run": ["published Hydraulic four-target baselines", "one compatible temporal neural baseline"],
+        "first_commands": ["python Scripts/aaai_exact_native_protocol_gate.py --output-dir knowledge_exports/aaai_exact_native_protocol_gate"],
+        "gate_flip_requirements": ["all Hydraulic exact-native gates true"],
+        "success_evidence": ["four-target table with seed-level metrics and matched published baseline rows"],
+    },
+]
+
+
+def _fs_path(path: Path | str) -> str:
+    resolved = Path(path).resolve()
+    text = str(resolved)
+    if os.name == "nt" and not text.startswith("\\\\?\\"):
+        return "\\\\?\\" + text
+    return text
+
+
+def build_exact_native_execution_plan() -> dict[str, Any]:
+    return {
+        "version": VERSION,
+        "status": "execution_plan_ready_not_sota_proof",
+        "claim_rule": (
+            "This plan is an execution contract, not evidence of official SOTA. A gate may flip only after "
+            "the referenced artifacts exist and are inspected."
+        ),
+        "primary_next_datasets": ["SKAB", "C-MAPSS"],
+        "reference_sources": REFERENCE_SOURCES,
+        "plans": DATASET_PLANS,
+    }
+
+
+def render_markdown(payload: dict[str, Any]) -> str:
+    lines = [
+        "# AAAI Exact-Native Execution Plan",
+        "",
+        f"- Version: {payload['version']}",
+        f"- Status: `{payload['status']}`",
+        f"- Claim rule: {payload['claim_rule']}",
+        f"- Primary next datasets: {', '.join(payload['primary_next_datasets'])}",
+        "",
+        "This file turns the current exact-native SOTA blocker into concrete experiment work. It must not be cited as a completed result.",
+        "",
+        "## Reference Sources",
+        "",
+        "| ID | Source | Protocol use |",
+        "|---|---|---|",
+    ]
+    for ref in payload["reference_sources"]:
+        lines.append(f"| {ref['id']} | [{ref['title']}]({ref['url']}) | {ref['protocol_use']} |")
+
+    lines.extend(
+        [
+            "",
+            "## Dataset Execution Matrix",
+            "",
+            "| Dataset | Priority | Claim upgrade target | Required new/tightened assets |",
+            "|---|---|---|---|",
+        ]
+    )
+    for plan in payload["plans"]:
+        assets = "<br>".join(f"{item['name']} ({item['status']})" for item in plan["required_new_or_tightened_assets"])
+        lines.append(f"| {plan['dataset']} | {plan['priority']} | {plan['claim_upgrade_target']} | {assets} |")
+
+    lines.extend(["", "## Detailed Contracts", ""])
+    for plan in payload["plans"]:
+        lines.extend([f"### {plan['dataset']} ({plan['priority']})", ""])
+        lines.append("Native protocol contract:")
+        lines.extend(f"- {item}" for item in plan["native_protocol_contract"])
+        lines.append("")
+        lines.append("Reusable assets:")
+        lines.extend(f"- `{item}`" for item in plan["current_reusable_assets"])
+        lines.append("")
+        lines.append("Baseline protocols to run:")
+        lines.extend(f"- {item}" for item in plan["baseline_protocols_to_run"])
+        lines.append("")
+        lines.append("First commands:")
+        lines.extend(f"- `{item}`" for item in plan["first_commands"])
+        lines.append("")
+        lines.append("Gate flip requirements:")
+        lines.extend(f"- {item}" for item in plan["gate_flip_requirements"])
+        lines.append("")
+        lines.append("Success evidence:")
+        lines.extend(f"- {item}" for item in plan["success_evidence"])
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def write_exact_native_execution_plan(output_dir: Path | str = DEFAULT_OUTPUT_DIR) -> list[Path]:
+    output_dir = Path(output_dir)
+    os.makedirs(_fs_path(output_dir), exist_ok=True)
+    payload = build_exact_native_execution_plan()
+    json_path = output_dir / "aaai_exact_native_execution_plan.json"
+    md_path = output_dir / "aaai_exact_native_execution_plan.md"
+    with open(_fs_path(json_path), "w", encoding="utf-8") as handle:
+        handle.write(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
+    with open(_fs_path(md_path), "w", encoding="utf-8", newline="\n") as handle:
+        handle.write(render_markdown(payload))
+    return [json_path, md_path]
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description="Write exact-native execution plan for SOTA-gate closure.")
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    args = parser.parse_args(argv)
+    for path in write_exact_native_execution_plan(args.output_dir):
+        print(path)
+
+
+if __name__ == "__main__":
+    main()

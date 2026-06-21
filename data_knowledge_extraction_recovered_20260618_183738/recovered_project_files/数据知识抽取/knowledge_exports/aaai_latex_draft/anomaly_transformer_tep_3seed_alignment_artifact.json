@@ -1,0 +1,37 @@
+{
+  "status": "local_matched_three_seed_probe_available",
+  "method": "Anomaly Transformer",
+  "model_name": "anomaly_transformer",
+  "dataset": "TEP",
+  "source_artifact": "knowledge_exports/tep_anomaly_transformer_matched_adapter_3seed_probe/anomaly_transformer_3seed_probe.json",
+  "source_sha256": "c7f324ce617ef1dda1f8c25eda78903325dd9ce7246b997c1251035cbbc80e9e",
+  "command": "python Scripts/run_tep_sequence_graph_ablation.py --output knowledge_exports/tep_anomaly_transformer_matched_adapter_3seed_probe/anomaly_transformer_3seed_probe.json --model anomaly_transformer --seeds 42,43,44 --max-rows 3000 --window-size 16 --hidden-dim 32 --epochs 3 --batch-size 256 --normal-pretrain-epochs 0 --variants no_graph --device auto",
+  "seed_budget": [
+    42,
+    43,
+    44
+  ],
+  "variants": [
+    "no_graph"
+  ],
+  "summary": {
+    "no_graph": {
+      "n_runs": 3,
+      "target_defect_macro_f1_mean": 0.18633004077250115,
+      "target_defect_macro_f1_std": 0.04739519569135658,
+      "macro_f1_mean": 0.1778604934646602,
+      "macro_f1_std": 0.04524086861447673,
+      "event_macro_recall_mean": 0.23809523809523808,
+      "event_macro_recall_std": 0.038880789567986955,
+      "path_hit_rate_mean": 0.0,
+      "path_hit_rate_std": 0.0,
+      "candidate_edges_mean": null,
+      "candidate_edges_std": null,
+      "matched_edges_mean": null,
+      "matched_edges_std": null,
+      "pruned_edges_mean": null,
+      "pruned_edges_std": null
+    }
+  },
+  "claim_boundary": "three-seed local matched adapter probe only; not admissible as an official external comparison score until exact official protocol alignment and budget reproduction pass"
+}

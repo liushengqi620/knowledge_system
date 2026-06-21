@@ -1,0 +1,90 @@
+[
+  {
+    "experiment_id": "A1",
+    "track": "prompt_atom",
+    "title": "Prompt-atom decomposition diagnostics",
+    "research_question": "Which prompt decomposition strategy creates the most useful local update units before LLM evaluation?",
+    "status": "ready",
+    "command": "python experiments/prompt_atom_decomposition_experiment.py --output-dir outputs/prompt_atom_decomposition",
+    "expected_outputs": "diagnostic_results.json; diagnostic_summary.csv; diagnostic_table.tex; experiment_protocol.md",
+    "decision_gate": "functional_atom should beat no_atom on edit locality and diagnostic score without over_fine fragmentation risk",
+    "notes": "This is a safe first experiment because it does not fabricate extraction metrics."
+  },
+  {
+    "experiment_id": "A2",
+    "track": "prompt_atom",
+    "title": "Prompt-atom runner dry run",
+    "research_question": "Can all decomposition strategies be scheduled and summarized with explicit missing-result states?",
+    "status": "ready",
+    "command": "python experiments/run_atom_decomposition_result_experiment.py --dry-run --output-root outputs/atom_decomposition_result_dryrun",
+    "expected_outputs": "atom_decomposition_result_summary.csv; atom_decomposition_result_summary.json; atom_decomposition_result_table.tex",
+    "decision_gate": "Every strategy should produce a row with missing_result_file or not_executed rather than failing silently",
+    "notes": "Use this to inspect commands before running any expensive LLM pipeline."
+  },
+  {
+    "experiment_id": "A3",
+    "track": "prompt_atom",
+    "title": "Full prompt-atom result ablation",
+    "research_question": "Does functional_atom improve NER F1, RE F1, Overall F1, and KHR over coarse or random prompt decompositions?",
+    "status": "ready_scaffold_only",
+    "command": "python experiments/run_atom_decomposition_result_experiment.py --output-root outputs/atom_decomposition_result",
+    "expected_outputs": "per-strategy ablation_results.json plus consolidated CSV/JSON/LaTeX table",
+    "decision_gate": "functional_atom must improve Overall F1 and reduce KHR against no_atom and random_atom under the same data and evaluator",
+    "notes": "The recovered prompt_engineering_ablation.py is a scaffold unless a real evaluator is restored."
+  },
+  {
+    "experiment_id": "B1",
+    "track": "plm_baseline",
+    "title": "Prepare supervised PLM matrix",
+    "research_question": "What exact dataset/model/ratio/seed combinations are required for a fair low-annotation comparison?",
+    "status": "blocked_missing_dataset",
+    "command": "python experiments/extended_plm_baselines.py --output-dir outputs/plm_extended_baselines_runs",
+    "expected_outputs": "manifest.json; results_template.csv; run_commands.ps1; split files",
+    "decision_gate": "All configured combinations appear in the manifest, and fixed FSDV/FSDV-EAPA rows remain separated from trainable PLM rows",
+    "notes": "Provide dataset paths or restore data before running on real inputs."
+  },
+  {
+    "experiment_id": "B2",
+    "track": "plm_baseline",
+    "title": "BERT-CRF+CasRel supervised baseline",
+    "research_question": "How much annotation does the local supervised pipeline need to approach FSDV-EAPA?",
+    "status": "blocked_missing_data_or_training_modules",
+    "command": "python experiments/extended_plm_baselines.py --execute --models BERT-CRF+CasRel --output-dir outputs/plm_extended_baselines_runs",
+    "expected_outputs": "summary_metrics.json for each dataset/ratio/seed row",
+    "decision_gate": "Use dev Overall F1 for checkpoint selection, then evaluate held-out test splits separately",
+    "notes": "Do not compare dev-selected metrics directly against test-only FSDV/FSDV-EAPA rows."
+  },
+  {
+    "experiment_id": "B3",
+    "track": "plm_baseline",
+    "title": "External PLM adapters",
+    "research_question": "Do PURE, CasRel, TPLinker, and PRGC change the conclusion under the same annotation budgets?",
+    "status": "pending_adapter_implementation",
+    "command": "edit experiments/plm_external_adapters.template.json, then run extended_plm_baselines.py --execute",
+    "expected_outputs": "summary_metrics.json from each external adapter plus per-sample predictions",
+    "decision_gate": "Each adapter must use the same split, seed, encoder policy, and test metric schema",
+    "notes": "OneRel can remain optional unless the final paper table needs it."
+  },
+  {
+    "experiment_id": "C1",
+    "track": "evaluation",
+    "title": "Held-out test evaluation",
+    "research_question": "Do completed supervised baselines hold up on test data after dev selection?",
+    "status": "blocked_until_trained_runs_exist",
+    "command": "python experiments/evaluate_local_plm_baseline.py --run-root outputs/plm_extended_baselines_runs --device cuda",
+    "expected_outputs": "test_results.csv; test_summary.csv; per-run test_metrics.json",
+    "decision_gate": "Paper tables must use test metrics or clearly mark development metrics",
+    "notes": "Run after BERT-CRF+CasRel training outputs exist."
+  },
+  {
+    "experiment_id": "D1",
+    "track": "reporting",
+    "title": "Evidence audit for paper claims",
+    "research_question": "Which claims are supported by completed evidence and which are still planned?",
+    "status": "ready",
+    "command": "python experiments/experiment_status.py --output-dir outputs/experiment_status",
+    "expected_outputs": "status_report.json; status_items.csv; status_report.md",
+    "decision_gate": "No placeholder row can be described as an experimental result",
+    "notes": "Use this before writing or updating any manuscript table."
+  }
+]

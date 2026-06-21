@@ -1,0 +1,164 @@
+{
+  "schema_name": "quality_traceability_large_kg",
+  "version": "0.1-seed",
+  "layers": {
+    "mechanism": "Text-extracted mechanism entities, relations, chains, and control actions.",
+    "instance": "Future production batches/events/observations attached to the mechanism graph.",
+    "evidence": "Source text, extraction confidence, prompt atoms, adjudication, and review metadata.",
+    "application": "Quality traceability queries, paths, warnings, and recommended actions."
+  },
+  "node_classes": [
+    {
+      "name": "MechanismLayer",
+      "class_type": "SchemaClass",
+      "description": "Mechanism knowledge extracted from papers/manuals/expert rules."
+    },
+    {
+      "name": "InstanceLayer",
+      "class_type": "SchemaClass",
+      "description": "Production batches, quality events, and process observations."
+    },
+    {
+      "name": "EvidenceLayer",
+      "class_type": "SchemaClass",
+      "description": "Text evidence, model confidence, provenance, and review states."
+    },
+    {
+      "name": "TraceabilityApplication",
+      "class_type": "SchemaClass",
+      "description": "Quality cause-location-action traceability application layer."
+    },
+    {
+      "name": "ProcessParameter",
+      "class_type": "EntityType",
+      "description": "Process variable or operating parameter."
+    },
+    {
+      "name": "EquipmentState",
+      "class_type": "EntityType",
+      "description": "Equipment condition or operating state."
+    },
+    {
+      "name": "MaterialState",
+      "class_type": "EntityType",
+      "description": "Steel, slag, inclusion, solidification, or thermal state."
+    },
+    {
+      "name": "DefectMechanism",
+      "class_type": "EntityType",
+      "description": "Intermediate physical mechanism."
+    },
+    {
+      "name": "QualityDefect",
+      "class_type": "EntityType",
+      "description": "Observed or potential quality defect."
+    },
+    {
+      "name": "ControlAction",
+      "class_type": "EntityType",
+      "description": "Control, prevention, or correction action."
+    },
+    {
+      "name": "ProcessStage",
+      "class_type": "EntityType",
+      "description": "Process location or stage."
+    },
+    {
+      "name": "ProductionBatch",
+      "class_type": "InstanceType",
+      "description": "Batch/heat/cast-sequence node for future traceability data."
+    },
+    {
+      "name": "QualityEvent",
+      "class_type": "InstanceType",
+      "description": "Observed quality event or warning event."
+    },
+    {
+      "name": "ProcessObservation",
+      "class_type": "InstanceType",
+      "description": "Observed process variable value in a batch/event."
+    },
+    {
+      "name": "RiskWarning",
+      "class_type": "InstanceType",
+      "description": "Warning output from a future risk model."
+    },
+    {
+      "name": "TracePath",
+      "class_type": "InstanceType",
+      "description": "Path connecting observation, mechanism, defect, and action."
+    }
+  ],
+  "edge_types": [
+    {
+      "head": "MechanismLayer",
+      "relation": "supports",
+      "tail": "TraceabilityApplication"
+    },
+    {
+      "head": "InstanceLayer",
+      "relation": "instantiates",
+      "tail": "TraceabilityApplication"
+    },
+    {
+      "head": "EvidenceLayer",
+      "relation": "audits",
+      "tail": "MechanismLayer"
+    },
+    {
+      "head": "ProductionBatch",
+      "relation": "has_event",
+      "tail": "QualityEvent"
+    },
+    {
+      "head": "QualityEvent",
+      "relation": "has_observation",
+      "tail": "ProcessObservation"
+    },
+    {
+      "head": "ProcessObservation",
+      "relation": "aligned_to",
+      "tail": "ProcessParameter"
+    },
+    {
+      "head": "QualityEvent",
+      "relation": "explained_by",
+      "tail": "DefectMechanism"
+    },
+    {
+      "head": "DefectMechanism",
+      "relation": "increase_risk_of",
+      "tail": "QualityDefect"
+    },
+    {
+      "head": "ControlAction",
+      "relation": "suppress",
+      "tail": "QualityDefect"
+    },
+    {
+      "head": "TracePath",
+      "relation": "uses_mechanism",
+      "tail": "MechanismLayer"
+    },
+    {
+      "head": "TracePath",
+      "relation": "suggests_action",
+      "tail": "ControlAction"
+    }
+  ],
+  "mechanism_relation_types": [
+    "cause",
+    "affect",
+    "increase_risk_of",
+    "suppress",
+    "improve",
+    "located_at",
+    "controlled_by",
+    "indicates"
+  ],
+  "traceability_queries": [
+    "Given a quality defect, return upstream mechanisms, process parameters, and control actions.",
+    "Given a process observation, return possible mechanisms and quality risks.",
+    "Given a warning event, return evidence-backed trace paths and recommended checks/actions."
+  ]
+}

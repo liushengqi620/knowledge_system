@@ -1,0 +1,87 @@
+{
+  "schema": "cmapss-mdfa-source-matched-runner-v1",
+  "status": "source_matched_candidate_not_exact_reproduction",
+  "claim_boundary": "This run uses MDFA 2025 published hyperparameters and raw C-MAPSS FD001-FD004 files, but remains a source-matched candidate until PCA/key-sensor details and matched budget are finalized.",
+  "source": {
+    "id": "mdfa_2025",
+    "url": "https://www.mdpi.com/2076-3417/15/17/9813",
+    "published_hyperparameters": {
+      "batch_size": 32,
+      "window_size": 30,
+      "epochs": 100,
+      "optimizer": "Adam",
+      "loss": "MSE",
+      "learning_rate": 0.0001,
+      "dropout": 0.3
+    },
+    "published_architecture": {
+      "model_family": "multi-scale dilated fusion attention",
+      "dilation_rates": [
+        1,
+        2,
+        4
+      ],
+      "kernel_size": "3x3",
+      "conv_formulation": "source_2d_time_feature",
+      "attention": [
+        "channel_attention",
+        "spatial_attention"
+      ],
+      "fusion": "four branches concatenated then compressed with 1x1 convolution"
+    },
+    "published_mdfa_results": {
+      "FD001": {
+        "rmse": 11.78,
+        "score": 299.08
+      },
+      "FD002": {
+        "rmse": 16.38,
+        "score": 1380.65
+      },
+      "FD003": {
+        "rmse": 11.89,
+        "score": 303.34
+      },
+      "FD004": {
+        "rmse": 19.23,
+        "score": 3566.44
+      }
+    }
+  },
+  "overall_metrics": {
+    "rul_mae": 9.94632263660431,
+    "rul_rmse": 14.696955517950279,
+    "rul_score": 759.6584469661273
+  },
+  "subset_seed_rows": [
+    {
+      "subset": "FD003",
+      "seed": 42,
+      "rul_rmse": 14.696955517950279,
+      "rul_mae": 9.94632263660431,
+      "rul_score": 759.6584469661273,
+      "pca_feature_dim": 14,
+      "feature_policy": "all24_pca",
+      "condition_normalization": "none",
+      "append_condition_onehot": false,
+      "train_seconds": 63.634358500130475
+    }
+  ],
+  "rul_subset_metrics": {
+    "enabled": true,
+    "rows": [
+      {
+        "subset": "FD003",
+        "n_units": 100,
+        "n_samples": 100,
+        "rul_mae": 9.94632263660431,
+        "rul_rmse": 14.696955517950279,
+        "rul_score": 759.6584469661273
+      }
+    ]
+  },
+  "n_prediction_records": 100,
+  "expected_subset_seed_count": 1,
+  "completed_subset_seed_count": 1,
+  "run_complete": true
+}

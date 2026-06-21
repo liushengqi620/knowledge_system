@@ -1,0 +1,229 @@
+{
+  "version": "cmapss-exact-native-gap-audit-v1",
+  "status": "cmapss_exact_native_gap_protocol_budget_pending",
+  "claim_boundary": "This audit separates C-MAPSS score gaps from exact-native protocol gaps. It does not authorize official or literature-wide SOTA wording.",
+  "exact_gate_missing_gates": [
+    "official_or_published_baseline_protocol",
+    "matched_budget"
+  ],
+  "gates": {
+    "native_exact_nonbaseline_fields_pass": true,
+    "published_contract_materialized": true,
+    "mdfa_open_source_profile_materialized": true,
+    "mdfa_local_full_branch_archive_present": true,
+    "mdfa_score_gap_quantified": true,
+    "exact_published_reproduction_complete": false,
+    "matched_budget_complete": false,
+    "mdfa_exact_source_policy_verified": false,
+    "official_sota_admissible": false
+  },
+  "missing_gates": [
+    "exact_published_reproduction_complete",
+    "matched_budget_complete",
+    "mdfa_exact_source_policy_verified",
+    "official_sota_admissible"
+  ],
+  "requirement_rows": [
+    {
+      "requirement": "native C-MAPSS task/split/preprocessing/metric",
+      "status": "pass",
+      "evidence": "exact-native gate and native preprocessing manifest pass all non-baseline C-MAPSS fields"
+    },
+    {
+      "requirement": "published baseline contract",
+      "status": "partial",
+      "evidence": "field-level contract exists, but no published baseline is exact-reproduced"
+    },
+    {
+      "requirement": "MDFA open-source profile",
+      "status": "partial",
+      "evidence": "open full text, hyperparameters, architecture fields, Table-4 key sensors, and raw-count reconciliation are materialized"
+    },
+    {
+      "requirement": "MDFA local four-subset archive",
+      "status": "partial",
+      "evidence": "strategy audit reports a complete FD001-FD004 three-seed local branch archive"
+    },
+    {
+      "requirement": "exact MDFA preprocessing and label policy",
+      "status": "blocked",
+      "evidence": "PCA cumulative threshold and exact test-label scoring policy are not machine-readable; selected local branches intentionally deviate from MDFA preprocessing"
+    },
+    {
+      "requirement": "matched training budget",
+      "status": "blocked",
+      "evidence": "local full branches use 100 epochs/batch 32 but selected window/dropout/condition policies are not budget-equivalent to the published MDFA protocol"
+    },
+    {
+      "requirement": "C-MAPSS path fusion",
+      "status": "closed_challenger",
+      "evidence": "backbone audit keeps path fusion closed until it beats the same-window temporal anchor under the pseudo-terminal validation panel"
+    }
+  ],
+  "mdfa_contract_field_status": {
+    "official_data_split": "covered_by_native_manifest",
+    "subset_scope": "missing_or_subset_limited",
+    "rul_label_policy": "local_declared_not_source_exact",
+    "sensor_selection": "missing_source_exact",
+    "normalization_scope": "local_train_only_declared_not_source_exact",
+    "sequence_window": "missing",
+    "architecture_config": "missing",
+    "training_budget": "missing_source_exact",
+    "metric_recompute": "missing",
+    "prediction_archive": "missing"
+  },
+  "mdfa_budget_matrix": [
+    {
+      "subset_group": "MDFA 2025 published protocol",
+      "window": 30,
+      "epochs": 100,
+      "batch_size": 32,
+      "dropout": 0.3,
+      "feature_policy": "Table-4/key-sensor PCA policy, exact PCA threshold unresolved",
+      "condition_policy": "not machine-readable",
+      "claim_use": "reference protocol only"
+    },
+    {
+      "subset_group": "FD001/FD003 selected local branch",
+      "window": 80,
+      "epochs": 100,
+      "batch_size": 32,
+      "dropout": "0.1 for FD001; 0.0 selected for FD003",
+      "feature_policy": "all24_pca",
+      "temporal_feature_mode": "level for FD001; level_diff for FD003",
+      "condition_policy": "none",
+      "fd001_gap_rmse": 0.7698042582434397,
+      "fd003_gap_rmse": 1.0360420711196152,
+      "claim_use": "local source-style candidate, not exact MDFA reproduction"
+    },
+    {
+      "subset_group": "FD002/FD004 selected local branch",
+      "window": 80,
+      "epochs": 100,
+      "batch_size": 32,
+      "dropout": 0.3,
+      "feature_policy": "sensor21_pca",
+      "condition_policy": "kmeans6_settings + condition_onehot",
+      "fd002_gap_rmse": -0.5389686622976093,
+      "fd004_gap_rmse": -3.270375606579643,
+      "claim_use": "condition-aware local candidate, intentionally deviates from exact MDFA preprocessing"
+    }
+  ],
+  "mdfa_external_source_resolution": [
+    {
+      "field": "paper identity",
+      "status": "machine_readable",
+      "source": "https://www.mdpi.com/2076-3417/15/17/9813",
+      "evidence": "MDPI article page identifies Applied Sciences 2025, 15(17), 9813 and DOI 10.3390/app15179813."
+    },
+    {
+      "field": "RUL label cap",
+      "status": "machine_readable",
+      "source": "https://www.mdpi.com/2076-3417/15/17/9813",
+      "evidence": "The article states a piecewise linear RUL strategy and sets the initial RUL to 125."
+    },
+    {
+      "field": "C-MAPSS split and subset counts",
+      "status": "machine_readable",
+      "source": "https://www.mdpi.com/2076-3417/15/17/9813",
+      "evidence": "The article lists FD001-FD004 operating conditions, fault modes, and train/test unit counts."
+    },
+    {
+      "field": "training hyperparameters",
+      "status": "machine_readable",
+      "source": "https://www.mdpi.com/2076-3417/15/17/9813",
+      "evidence": "The article lists batch_size 32, window_size 30, epoch 100, Adam, MSE, learning rate 0.0001, and dropout 0.3."
+    },
+    {
+      "field": "MDFA architecture",
+      "status": "machine_readable",
+      "source": "https://www.mdpi.com/2076-3417/15/17/9813",
+      "evidence": "The article lists the parallel dilated convolution branches with dilation rates 1, 2, and 4 and attention/fusion module settings."
+    },
+    {
+      "field": "key sensors",
+      "status": "machine_readable",
+      "source": "https://www.mdpi.com/2076-3417/15/17/9813",
+      "evidence": "The article's Table 4 lists key C-MAPSS sensor variables including Ps30, T24, T30, P30, Phi, Nf, Nc, and W31/W32."
+    },
+    {
+      "field": "PCA threshold or per-subset component count",
+      "status": "not_machine_readable",
+      "source": "https://www.mdpi.com/2076-3417/15/17/9813",
+      "evidence": "The article states that PCA components are selected by cumulative contribution rate and references Figure 4, but does not provide a numeric threshold or exact component counts."
+    },
+    {
+      "field": "source code or supplementary reproduction package",
+      "status": "not_available_from_article_page",
+      "source": "https://www.mdpi.com/2076-3417/15/17/9813",
+      "evidence": "The article page exposes no Supplementary or GitHub entry, and the data availability statement says supporting data are available from the corresponding author upon reasonable request."
+    }
+  ],
+  "mdfa_subset_gaps": [
+    {
+      "subset": "FD001",
+      "selected_branch": "window80/all24_pca/dropout0.1",
+      "current_rmse": 12.549804258243439,
+      "reference": "MDFA_2025_Table_5_RMSE",
+      "reference_rmse": 11.78,
+      "gap_current_minus_reference": 0.7698042582434397,
+      "current_score": 245.47924207479096,
+      "current_raw_rmse": 13.699427527250265,
+      "n_seeds": 3,
+      "claim_boundary": "source_style_capped_test_only_not_official_sota"
+    },
+    {
+      "subset": "FD003",
+      "selected_branch": "window80/all24_pca/dropout0.0+level_diff",
+      "current_rmse": 12.926042071119616,
+      "reference": "MDFA_2025_Table_5_RMSE",
+      "reference_rmse": 11.89,
+      "gap_current_minus_reference": 1.0360420711196152,
+      "current_score": 330.1924696568298,
+      "current_raw_rmse": 14.177427348766399,
+      "n_seeds": 3,
+      "claim_boundary": "source_style_capped_test_only_not_official_sota"
+    },
+    {
+      "subset": "FD002",
+      "selected_branch": "sensor21_pca+kmeans6_settings+condition_onehot",
+      "current_rmse": 15.84103133770239,
+      "reference": "MDFA_2025_Table_5_RMSE",
+      "reference_rmse": 16.38,
+      "gap_current_minus_reference": -0.5389686622976093,
+      "current_score": 1366.247625517067,
+      "current_raw_rmse": 27.924683346213694,
+      "n_seeds": 3,
+      "claim_boundary": "source_style_capped_test_only_not_official_sota"
+    },
+    {
+      "subset": "FD004",
+      "selected_branch": "sensor21_pca+kmeans6_settings+condition_onehot",
+      "current_rmse": 15.959624393420357,
+      "reference": "MDFA_2025_Table_5_RMSE",
+      "reference_rmse": 19.23,
+      "gap_current_minus_reference": -3.270375606579643,
+      "current_score": 2141.4317785472695,
+      "current_raw_rmse": 27.429838816251465,
+      "n_seeds": 3,
+      "claim_boundary": "source_style_capped_test_only_not_official_sota"
+    }
+  ],
+  "mdfa_mean_gap_current_minus_reference": -0.5008744848785494,
+  "supporting_artifact_status": {
+    "native_manifest": "native_preprocessing_manifest_complete",
+    "published_alignment": "published_baseline_alignment_partial_not_sota_proof",
+    "published_contract": "contract_complete_reproduction_pending",
+    "mdfa_source_profile": "source_profile_count_reconciled_runner_pending",
+    "mdfa_runner_audit": "smoke_runner_materialized_full_budget_pending",
+    "mdfa_strategy_probe": "full_branch_archive_materialized_reproduction_pending",
+    "backbone_optimization": "cmapss_rul_backbone_optimization_partial",
+    "pseudo_truncation_validation": "pseudo_truncation_validation_complete_with_score_tradeoff"
+  },
+  "next_actions": [
+    "Do not spend the next run on broad architecture search; the source audit now shows the MDFA paper is partially machine-readable but does not expose the PCA threshold or code needed for exact reproduction.",
+    "For exact MDFA reproduction, obtain the missing PCA threshold/per-subset component policy and any source code from the authors, then rerun the source-compatible window=30/dropout=0.3/batch=32/epoch=100 route with archived per-engine predictions.",
+    "For local SOTA-style evidence, target FD001/FD003 residual RMSE gaps while keeping the claim outside official MDFA reproduction wording.",
+    "Keep C-MAPSS path fusion as a challenger until it beats the w160/cap150 temporal anchor on the train-only pseudo-terminal validation panel."
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "status": "ok",
+  "task": "skab_dynamic_llm_graph_api_experiment",
+  "model": "gpt-5.5",
+  "seed": 43,
+  "sequence_epochs": 8,
+  "edge_probe_epochs": 0,
+  "api": {
+    "status": "skipped"
+  },
+  "parse": {
+    "status": "ok",
+    "path": "knowledge_exports\\aaai_missing_ablation_runs\\skab_edge_subset_sweep_formal_prep\\seed43_best_validated_edges.json",
+    "loaded_edges": 1
+  },
+  "error_summary": {
+    "source": "default",
+    "false_negative_rate": 0.25,
+    "false_positive_rate": 0.1,
+    "weak_segments": []
+  },
+  "dynamic_edges": [
+    {
+      "source": "Accelerometer1RMS",
+      "target": "Accelerometer2RMS",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.9,
+      "correlation": 0.9954164121681978,
+      "source_families": [
+        "data"
+      ]
+    }
+  ],
+  "candidate_dynamic_edges": [
+    {
+      "source": "Accelerometer1RMS",
+      "target": "Accelerometer2RMS",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.9,
+      "correlation": 0.9954164121681978,
+      "source_families": [
+        "data"
+      ]
+    }
+  ],
+  "edge_policy": {
+    "policy": "learned_reliability",
+    "base_edges": 0,
+    "dynamic_edges": 1,
+    "n_input_edges": 1,
+    "n_kept_after_reliability": 1,
+    "n_rejected_by_reliability": 0,
+    "edge_reliability_threshold": 0.45,
+    "validation_macro_f1_baseline": 0.9503280582700273,
+    "validation_macro_f1_candidate": 0.9618823093116152,
+    "validation_macro_f1_gain": 0.011554251041587915,
+    "edge_min_validation_macro_gain": 0.0,
+    "n_rejected_by_validation_gain_guard": 0,
+    "counterfactual_guard_modes": [],
+    "counterfactual_validation_macro_drops": {},
+    "counterfactual_min_macro_drop": 0.01,
+    "counterfactual_max_macro_drop": 0.0,
+    "counterfactual_passing_modes": [],
+    "counterfactual_min_passing_modes": 1,
+    "n_rejected_by_counterfactual_guard": 0,
+    "counterfactual_guard_skipped": "no_guard_modes_or_edges",
+    "n_kept_edges": 1,
+    "admitted": true,
+    "edge_max_far_increase_percent": 1.0
+  },
+  "baseline": {
+    "threshold": 0.6599999999999999,
+    "validation_metrics": {
+      "accuracy": 0.9535594700829815,
+      "balanced_accuracy": 0.9474621270674137,
+      "macro_f1": 0.9503280582700273,
+      "macro_precision": 0.9535464184742573,
+      "macro_recall": 0.9474621270674137,
+      "positive_f1": 0.9376587844440102,
+      "positive_precision": 0.9534976152623211,
+      "positive_recall": 0.9223375624759708
+    },
+    "metrics": {
+      "accuracy": 0.8353065912705425,
+      "balanced_accuracy": 0.7980936026254153,
+      "macro_f1": 0.8094956358212302,
+      "macro_precision": 0.8283714297730671,
+      "macro_recall": 0.7980936026254153,
+      "positive_f1": 0.7393736017897091,
+      "positive_precision": 0.812039312039312,
+      "positive_recall": 0.6786447638603696
+    },
+    "protocol": {
+      "binary": {
+        "f1": 0.7393736017897091,
+        "precision": 0.812039312039312,
+        "recall": 0.6786447638603696,
+        "far_percent": 8.24575586095392,
+        "mar_percent": 32.13552361396304
+      },
+      "point_adjusted": {
+        "f1": 0.8181818181818182,
+        "detected_runs": 9,
+        "anomalous_runs": 11
+      },
+      "right_window_changepoint": {
+        "window_steps": 60,
+        "detected_runs": 9,
+        "anomalous_runs": 11
+      }
+    },
+    "sequence_n_features": 11,
+    "time_context": {
+      "mode": "time_context"
+    },
+    "msfg": {
+      "n_fused_edges": 0,
+      "n_used_edges": 0,
+      "edge_feature_cols": [],
+      "used_edges": []
+    },
+    "train": {
+      "loss_tail": [
+        0.15493794743503844,
+        0.1365908050377454,
+        0.12070071497665984,
+        0.10459819742079292,
+        0.1039462478033134
+      ],
+      "epochs": 8,
+      "device": "cuda",
+      "model_family": "tcn_temporal_convolution",
+      "input_features": 11,
+      "parameters": 8194,
+      "train_seconds": 0.9529999999795109,
+      "train_samples_per_second": 240243.4417680193,
+      "test_inference_seconds": 0.012776799965649843,
+      "test_inference_samples_per_second": 885824.308937152,
+      "graph_strength": 0.0,
+      "lagged_graph_fusion_mode": "direct_filter",
+      "residual_channel_enabled": false,
+      "normal_residual_features_enabled": false,
+      "normal_pretrain_loss_tail": []
+    }
+  },
+  "dynamic_llm_kg": {
+    "threshold": 0.72,
+    "validation_metrics": {
+      "accuracy": 0.964186926772456,
+      "balanced_accuracy": 0.9611197769439841,
+      "macro_f1": 0.9618823093116152,
+      "macro_precision": 0.962668441807643,
+      "macro_recall": 0.9611197769439841,
+      "positive_f1": 0.9525096525096525,
+      "positive_precision": 0.9565723148507174,
+      "positive_recall": 0.948481353325644
+    },
+    "metrics": {
+      "accuracy": 0.8640219119985864,
+      "balanced_accuracy": 0.8142568406153634,
+      "macro_f1": 0.8359912207895058,
+      "macro_precision": 0.8863355756343473,
+      "macro_recall": 0.8142568406153634,
+      "positive_f1": 0.7681879801174876,
+      "positive_precision": 0.9296390812978491,
+      "positive_recall": 0.6545174537987679
+    },
+    "protocol": {
+      "binary": {
+        "f1": 0.7681879801174876,
+        "precision": 0.9296390812978491,
+        "recall": 0.6545174537987679,
+        "far_percent": 2.600377256804096,
+        "mar_percent": 34.5482546201232
+      },
+      "point_adjusted": {
+        "f1": 0.7272727272727273,
+        "detected_runs": 8,
+        "anomalous_runs": 11
+      },
+      "right_window_changepoint": {
+        "window_steps": 60,
+        "detected_runs": 8,
+        "anomalous_runs": 11
+      }
+    },
+    "sequence_n_features": 12,
+    "time_context": {
+      "mode": "time_context"
+    },
+    "msfg": {
+      "n_fused_edges": 1,
+      "n_used_edges": 1,
+      "edge_feature_cols": [
+        "edge_Accelerometer1RMS_to_Accelerometer2RMS_lag1"
+      ],
+      "used_edges": [
+        {
+          "source": "Accelerometer1RMS",
+          "target": "Accelerometer2RMS",
+          "lag": 1,
+          "reliability": 0.9
+        }
+      ]
+    },
+    "train": {
+      "loss_tail": [
+        0.14276928827166557,
+        0.13040909663374936,
+        0.10796232295355626,
+        0.10121802094259433,
+        0.10496391515646662
+      ],
+      "epochs": 8,
+      "device": "cuda",
+      "model_family": "tcn_temporal_convolution",
+      "input_features": 12,
+      "parameters": 8354,
+      "train_seconds": 0.6563920001499355,
+      "train_samples_per_second": 348803.7635250002,
+      "test_inference_seconds": 0.010940599953755736,
+      "test_inference_samples_per_second": 1034495.3702575249,
+      "graph_strength": 0.0,
+      "lagged_graph_fusion_mode": "direct_filter",
+      "residual_channel_enabled": false,
+      "normal_residual_features_enabled": false,
+      "normal_pretrain_loss_tail": []
+    }
+  },
+  "macro_f1_delta": 0.026495584968275643,
+  "point_adjusted_f1_delta": -0.09090909090909094
+}

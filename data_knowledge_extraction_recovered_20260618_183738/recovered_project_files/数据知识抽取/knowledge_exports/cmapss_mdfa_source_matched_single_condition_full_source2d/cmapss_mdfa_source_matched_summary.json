@@ -1,0 +1,107 @@
+{
+  "schema": "cmapss-mdfa-source-matched-runner-v1",
+  "status": "source_matched_candidate_not_exact_reproduction",
+  "claim_boundary": "This run uses MDFA 2025 published hyperparameters and raw C-MAPSS FD001-FD004 files, but remains a source-matched candidate until PCA/key-sensor details and matched budget are finalized.",
+  "source": {
+    "id": "mdfa_2025",
+    "url": "https://www.mdpi.com/2076-3417/15/17/9813",
+    "published_hyperparameters": {
+      "batch_size": 32,
+      "window_size": 30,
+      "epochs": 100,
+      "optimizer": "Adam",
+      "loss": "MSE",
+      "learning_rate": 0.0001,
+      "dropout": 0.3
+    },
+    "published_architecture": {
+      "model_family": "multi-scale dilated fusion attention",
+      "dilation_rates": [
+        1,
+        2,
+        4
+      ],
+      "kernel_size": "3x3",
+      "conv_formulation": "source_2d_time_feature",
+      "attention": [
+        "channel_attention",
+        "spatial_attention"
+      ],
+      "fusion": "four branches concatenated then compressed with 1x1 convolution"
+    },
+    "published_mdfa_results": {
+      "FD001": {
+        "rmse": 11.78,
+        "score": 299.08
+      },
+      "FD002": {
+        "rmse": 16.38,
+        "score": 1380.65
+      },
+      "FD003": {
+        "rmse": 11.89,
+        "score": 303.34
+      },
+      "FD004": {
+        "rmse": 19.23,
+        "score": 3566.44
+      }
+    }
+  },
+  "overall_metrics": {
+    "rul_mae": 10.844352362155915,
+    "rul_rmse": 15.916072096096707,
+    "rul_score": 2088.1201146871904
+  },
+  "subset_seed_rows": [
+    {
+      "subset": "FD001",
+      "seed": 42,
+      "rul_rmse": 14.130848130890335,
+      "rul_mae": 9.769714231491088,
+      "rul_score": 522.6088624422725,
+      "pca_feature_dim": 12,
+      "feature_policy": "all24_pca",
+      "condition_normalization": "none",
+      "append_condition_onehot": false,
+      "train_seconds": 210.775953900069
+    },
+    {
+      "subset": "FD003",
+      "seed": 42,
+      "rul_rmse": 17.520326282293077,
+      "rul_mae": 11.91899049282074,
+      "rul_score": 1565.5112522449183,
+      "pca_feature_dim": 10,
+      "feature_policy": "all24_pca",
+      "condition_normalization": "none",
+      "append_condition_onehot": false,
+      "train_seconds": 250.7324906999711
+    }
+  ],
+  "rul_subset_metrics": {
+    "enabled": true,
+    "rows": [
+      {
+        "subset": "FD001",
+        "n_units": 100,
+        "n_samples": 100,
+        "rul_mae": 9.769714231491088,
+        "rul_rmse": 14.130848130890335,
+        "rul_score": 522.6088624422725
+      },
+      {
+        "subset": "FD003",
+        "n_units": 100,
+        "n_samples": 100,
+        "rul_mae": 11.91899049282074,
+        "rul_rmse": 17.520326282293077,
+        "rul_score": 1565.5112522449183
+      }
+    ]
+  },
+  "n_prediction_records": 200,
+  "expected_subset_seed_count": 6,
+  "completed_subset_seed_count": 2,
+  "run_complete": false
+}

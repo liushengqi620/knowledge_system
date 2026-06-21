@@ -1,0 +1,560 @@
+{
+  "version": "graph-wavenet-official-source-tep-wrapper-v1",
+  "checked_on": "2026-06-21",
+  "status": "official_source_adapted_wrapper_executed",
+  "dataset": "TEP",
+  "baseline": "Graph WaveNet",
+  "official_commit": "6b162e80c59a",
+  "official_checkout": "C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\graph_wavenet",
+  "claim_boundary": "Official Graph WaveNet source backbone adapted with a lightweight TEP classification head; not an official Graph WaveNet paper benchmark score.",
+  "summary": {
+    "target_defect_macro_f1": {
+      "mean": 0.004856333468231485,
+      "std": 0.0
+    },
+    "macro_f1": {
+      "mean": 0.004635591037857326,
+      "std": 0.0
+    },
+    "event_macro_recall": {
+      "mean": 0.047619047619047616,
+      "std": 0.0
+    },
+    "train_seconds": {
+      "mean": 0.4150278000161052,
+      "std": 0.0
+    }
+  },
+  "runs": [
+    {
+      "seed": 42,
+      "dataset": "TEP",
+      "official_checkout": "C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\graph_wavenet",
+      "official_commit": "6b162e80c59a",
+      "config": {
+        "max_rows": 600,
+        "window_size": 16,
+        "batch_size": 128,
+        "epochs": 1,
+        "learning_rate": 0.001,
+        "encoder_dim": 16,
+        "residual_channels": 16,
+        "dilation_channels": 16,
+        "skip_channels": 64,
+        "end_channels": 128,
+        "blocks": 2,
+        "layers": 2,
+        "dropout": 0.1,
+        "adaptive_only": true,
+        "classifier_dropout": 0.1
+      },
+      "row_counts": {
+        "train_rows": 177,
+        "val_rows": 44,
+        "test_rows": 379,
+        "n_features": 52,
+        "n_classes": 22
+      },
+      "validation": {
+        "target_defect_macro_f1": 0.006818181818181818,
+        "macro_f1": 0.006198347107438016
+      },
+      "training": {
+        "device": "cuda:0",
+        "model_family": "official_graph_wavenet_adaptive_adjacency_backbone_plus_lightweight_classifier",
+        "parameters": 24790,
+        "epochs": 1,
+        "best_validation_target_defect_macro_f1": 0.006818181818181818,
+        "best_validation_macro_f1": 0.006198347107438016,
+        "history": [
+          {
+            "epoch": 1.0,
+            "train_loss": 3.260400891304016,
+            "validation_target_defect_macro_f1": 0.006818181818181818,
+            "validation_macro_f1": 0.006198347107438016,
+            "epoch_seconds": 0.4133534000720829
+          }
+        ],
+        "train_seconds": 0.4150278000161052,
+        "train_samples_per_second": 426.4774552286172,
+        "test_inference_seconds": 0.01974230003543198,
+        "test_inference_samples_per_second": 19197.357922825588,
+        "adaptive_adjacency": {
+          "adaptive_adjacency_available": true,
+          "shape": [
+            52,
+            52
+          ],
+          "mean": 0.01923076994717121,
+          "std": 0.07844176143407822,
+          "max": 0.9804374575614929,
+          "row_sum_min": 0.9999997615814209,
+          "row_sum_max": 1.0000001192092896
+        },
+        "official_source_compatibility_patch": {
+          "enabled": true,
+          "reason": "official source defines Conv1d modules on a 4D [batch, channel, node, time] forward path",
+          "replacement": "Conv1d modules are replaced with shape-equivalent Conv2d modules and copied weights",
+          "patched_module_counts": {
+            "gate_convs": 4,
+            "residual_convs": 4,
+            "skip_convs": 4
+          }
+        }
+      },
+      "sample_multiclass_metrics": {
+        "accuracy": 0.047493403693931395,
+        "macro_precision": 0.0024496461622210124,
+        "macro_recall": 0.043062200956937795,
+        "macro_f1": 0.004635591037857326,
+        "balanced_accuracy": 0.043062200956937795,
+        "top2_accuracy": 0.10026385224274406,
+        "wrong_class_alarm_rate": 0.9490084985835694,
+        "normal_class_id": 0,
+        "class_names": [
+          "fault_free",
+          "A/C_feed_ratio_B_composition_constant_stream_4",
+          "B_composition_A/C_ratio_constant_stream_4",
+          "D_feed_temperature_stream_2",
+          "reactor_cooling_water_inlet_temperature",
+          "condenser_cooling_water_inlet_temperature",
+          "A_feed_loss_stream_1",
+          "C_header_pressure_loss_stream_4",
+          "A_B_C_feed_composition_stream_4",
+          "D_feed_temperature_stream_2_random_variation",
+          "C_feed_temperature_stream_4",
+          "reactor_cooling_water_inlet_temperature_random_variation",
+          "condenser_cooling_water_inlet_temperature_random_variation",
+          "reaction_kinetics",
+          "reactor_cooling_water_valve",
+          "condenser_cooling_water_valve",
+          "unknown_fault_16",
+          "unknown_fault_17",
+          "unknown_fault_18",
+          "unknown_fault_19",
+          "unknown_fault_20",
+          "stream_4_valve_fixed"
+        ],
+        "per_class": {
+          "fault_free": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 26,
+            "auc_pr": 0.039143483908662485
+          },
+          "A/C_feed_ratio_B_composition_constant_stream_4": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 19,
+            "auc_pr": 0.10728825399441645
+          },
+          "B_composition_A/C_ratio_constant_stream_4": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 18,
+            "auc_pr": 0.22418848227907398
+          },
+          "D_feed_temperature_stream_2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 16,
+            "auc_pr": 0.06913321405531808
+          },
+          "reactor_cooling_water_inlet_temperature": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 16,
+            "auc_pr": 0.023820076010272303
+          },
+          "condenser_cooling_water_inlet_temperature": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 21,
+            "auc_pr": 0.06604106738213915
+          },
+          "A_feed_loss_stream_1": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 17,
+            "auc_pr": 0.025591192770320563
+          },
+          "C_header_pressure_loss_stream_4": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 16,
+            "auc_pr": 0.03174025262851351
+          },
+          "A_B_C_feed_composition_stream_4": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 17,
+            "auc_pr": 0.08213860397109951
+          },
+          "D_feed_temperature_stream_2_random_variation": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 17,
+            "auc_pr": 0.051871616300276153
+          },
+          "C_feed_temperature_stream_4": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 20,
+            "auc_pr": 0.07119560942276174
+          },
+          "reactor_cooling_water_inlet_temperature_random_variation": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12,
+            "auc_pr": 0.0196162385587087
+          },
+          "condenser_cooling_water_inlet_temperature_random_variation": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 15,
+            "auc_pr": 0.0863208276046299
+          },
+          "reaction_kinetics": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 16,
+            "auc_pr": 0.05698855597433178
+          },
+          "reactor_cooling_water_valve": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 19,
+            "auc_pr": 0.03681864650516622
+          },
+          "condenser_cooling_water_valve": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 15,
+            "auc_pr": 0.07716122143117439
+          },
+          "unknown_fault_16": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12,
+            "auc_pr": 0.10032842020180575
+          },
+          "unknown_fault_17": {
+            "precision": 0.05389221556886228,
+            "recall": 0.9473684210526315,
+            "f1": 0.10198300283286119,
+            "support": 19,
+            "auc_pr": 0.05198642556570447
+          },
+          "unknown_fault_18": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 22,
+            "auc_pr": 0.5155660803630059
+          },
+          "unknown_fault_19": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 19,
+            "auc_pr": 0.1547608450576913
+          },
+          "unknown_fault_20": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 12,
+            "auc_pr": 0.029321179910414594
+          },
+          "stream_4_valve_fixed": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 15,
+            "auc_pr": 0.06193955391001694
+          }
+        },
+        "target_defect_macro_f1": 0.004856333468231485
+      },
+      "event_warning_metrics": {
+        "event_recall": 0.047619047619047616,
+        "event_macro_recall": 0.047619047619047616,
+        "false_alarm_rate": 1.0,
+        "wrong_class_alarm_rate": 0.9523809523809523,
+        "missed_event_rate": 0.0,
+        "average_lead_time": 747.0,
+        "median_lead_time": 747.0,
+        "n_events": 32,
+        "n_abnormal_events": 21,
+        "per_class_event": {
+          "A/C_feed_ratio_B_composition_constant_stream_4": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "B_composition_A/C_ratio_constant_stream_4": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "D_feed_temperature_stream_2": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "reactor_cooling_water_inlet_temperature": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "condenser_cooling_water_inlet_temperature": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "A_feed_loss_stream_1": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "C_header_pressure_loss_stream_4": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "A_B_C_feed_composition_stream_4": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "D_feed_temperature_stream_2_random_variation": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "C_feed_temperature_stream_4": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "reactor_cooling_water_inlet_temperature_random_variation": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "condenser_cooling_water_inlet_temperature_random_variation": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "reaction_kinetics": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "reactor_cooling_water_valve": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "condenser_cooling_water_valve": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "unknown_fault_16": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "unknown_fault_17": {
+            "event_recall": 1.0,
+            "support_events": 1,
+            "correct_events": 1
+          },
+          "unknown_fault_18": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "unknown_fault_19": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "unknown_fault_20": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          },
+          "stream_4_valve_fixed": {
+            "event_recall": 0.0,
+            "support_events": 1,
+            "correct_events": 0
+          }
+        }
+      },
+      "path_explanation_metrics": {
+        "path_hit_rate": 0.0,
+        "knowledge_consistency": 0.0,
+        "n_true_classes": 21,
+        "n_paths": 0,
+        "per_class": {
+          "A/C_feed_ratio_B_composition_constant_stream_4": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "A_B_C_feed_composition_stream_4": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "A_feed_loss_stream_1": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "B_composition_A/C_ratio_constant_stream_4": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "C_feed_temperature_stream_4": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "C_header_pressure_loss_stream_4": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "D_feed_temperature_stream_2": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "D_feed_temperature_stream_2_random_variation": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "condenser_cooling_water_inlet_temperature": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "condenser_cooling_water_inlet_temperature_random_variation": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "condenser_cooling_water_valve": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "reaction_kinetics": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "reactor_cooling_water_inlet_temperature": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "reactor_cooling_water_inlet_temperature_random_variation": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "reactor_cooling_water_valve": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "stream_4_valve_fixed": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "unknown_fault_16": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "unknown_fault_17": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "unknown_fault_18": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "unknown_fault_19": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          },
+          "unknown_fault_20": {
+            "path_hit": 0.0,
+            "n_paths": 0,
+            "matched_paths": 0,
+            "knowledge_consistency": 0.0
+          }
+        }
+      },
+      "protocol_alignment": {
+        "official_source_backbone_used": true,
+        "official_external_score": false,
+        "official_native_task": "spatial-temporal traffic forecasting",
+        "task_specific_head_added": true,
+        "modern_pytorch_conv_compatibility_patch": true,
+        "validation_only_model_selection": true,
+        "test_labels_used_for_model_selection": false,
+        "claim_boundary": "Official Graph WaveNet source backbone adapted with a lightweight TEP classification head; not an official Graph WaveNet paper benchmark score."
+      }
+    }
+  ]
+}

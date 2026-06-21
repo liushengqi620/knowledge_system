@@ -1,0 +1,328 @@
+{
+  "version": "anomaly-transformer-official-skab-adapter-v1",
+  "checked_on": "2026-06-21",
+  "overall_status": "official_source_adapter_prepared",
+  "dataset_root": "knowledge_exports\\public_datasets",
+  "output_root": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter",
+  "claim_boundary": "Prepared official-source adapter files only; exact official/matched protocol scores remain pending.",
+  "seeds": [
+    {
+      "version": "anomaly-transformer-official-skab-adapter-v1",
+      "checked_on": "2026-06-21",
+      "seed": 42,
+      "dataset": "SKAB",
+      "official_baseline": "Anomaly Transformer",
+      "official_checkout": "C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\anomaly_transformer",
+      "official_commit": "b0ee470c8012",
+      "adapter_format": "PSM-compatible CSV plus validation CSV extension",
+      "adapter_dir": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\psm_compatible",
+      "train_policy": "normal rows from training runs only",
+      "feature_columns": [
+        "Accelerometer1RMS",
+        "Accelerometer2RMS",
+        "Current",
+        "Pressure",
+        "Temperature",
+        "Thermocouple",
+        "Voltage",
+        "Volume Flow RateRMS"
+      ],
+      "input_c": 8,
+      "win_size": 48,
+      "batch_size": 256,
+      "epochs": 10,
+      "train_runs": [
+        "other_4",
+        "valve1_6",
+        "other_11",
+        "anomaly-free_anomaly-free",
+        "valve1_0",
+        "valve1_10",
+        "valve1_7",
+        "other_7",
+        "valve1_14",
+        "other_6",
+        "other_9",
+        "valve2_2",
+        "other_10",
+        "other_12",
+        "valve2_1",
+        "other_1",
+        "other_8",
+        "other_3"
+      ],
+      "val_runs": [
+        "valve1_2",
+        "valve2_0",
+        "valve1_11",
+        "other_14",
+        "valve1_5",
+        "valve1_15"
+      ],
+      "test_runs": [
+        "valve1_4",
+        "valve1_1",
+        "valve1_3",
+        "other_13",
+        "valve1_9",
+        "valve1_13",
+        "valve2_3",
+        "other_2",
+        "other_5",
+        "valve1_8",
+        "valve1_12"
+      ],
+      "row_counts": {
+        "train_rows": 21824,
+        "val_rows": 6550,
+        "test_rows": 11813,
+        "train_positive_rows": 0,
+        "val_positive_rows": 2239,
+        "test_positive_rows": 4209
+      },
+      "window_counts": {
+        "official_train_windows_step1": 21777,
+        "official_test_windows_step1": 11766,
+        "official_thre_windows_step_win_size": 246,
+        "patched_val_windows_step1": 6503
+      },
+      "files": {
+        "train_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\psm_compatible\\train.csv",
+        "val_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\psm_compatible\\val.csv",
+        "val_label_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\psm_compatible\\val_label.csv",
+        "test_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\psm_compatible\\test.csv",
+        "test_label_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\psm_compatible\\test_label.csv",
+        "train_meta_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\psm_compatible\\train_meta.csv",
+        "val_meta_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\psm_compatible\\val_meta.csv",
+        "test_meta_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\psm_compatible\\test_meta.csv"
+      },
+      "commands": {
+        "official_unmodified_train_command": "cd C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\anomaly_transformer && python main.py --dataset PSM --data_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\psm_compatible --input_c 8 --output_c 8 --win_size 48 --batch_size 256 --model_save_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\official_checkpoints --num_epochs 10 --mode train",
+        "official_unmodified_test_command": "cd C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\anomaly_transformer && python main.py --dataset PSM --data_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\psm_compatible --input_c 8 --output_c 8 --win_size 48 --batch_size 256 --model_save_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_42\\official_checkpoints --mode test",
+        "required_matched_wrapper": "patch Solver.train to validate on val.csv, patch Solver.test to tune thresholds on val scores only, emit raw validation/test scores and disable label-based point adjustment unless explicitly reported"
+      },
+      "protocol_alignment": {
+        "official_unmodified_loader_usable": true,
+        "official_external_score": false,
+        "matched_protocol_score_ready": false,
+        "requires_solver_patch": true,
+        "validation_only_thresholds": "requires patched score path; official unmodified test uses train+test percentile",
+        "point_adjustment": "official unmodified test uses label-based point adjustment; must be disabled or separately declared",
+        "early_stopping": "official train currently validates on test_loader; matched wrapper must validate on val.csv",
+        "claim_boundary": "This artifact prepares official-source input files and commands only. It is not an official Anomaly Transformer score until the patched wrapper emits seed-level validation/test scores, threshold provenance, metrics, and budget records."
+      }
+    },
+    {
+      "version": "anomaly-transformer-official-skab-adapter-v1",
+      "checked_on": "2026-06-21",
+      "seed": 43,
+      "dataset": "SKAB",
+      "official_baseline": "Anomaly Transformer",
+      "official_checkout": "C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\anomaly_transformer",
+      "official_commit": "b0ee470c8012",
+      "adapter_format": "PSM-compatible CSV plus validation CSV extension",
+      "adapter_dir": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\psm_compatible",
+      "train_policy": "normal rows from training runs only",
+      "feature_columns": [
+        "Accelerometer1RMS",
+        "Accelerometer2RMS",
+        "Current",
+        "Pressure",
+        "Temperature",
+        "Thermocouple",
+        "Voltage",
+        "Volume Flow RateRMS"
+      ],
+      "input_c": 8,
+      "win_size": 48,
+      "batch_size": 256,
+      "epochs": 10,
+      "train_runs": [
+        "other_3",
+        "other_6",
+        "anomaly-free_anomaly-free",
+        "valve1_15",
+        "valve1_2",
+        "valve2_2",
+        "valve1_9",
+        "other_4",
+        "other_9",
+        "valve1_10",
+        "valve1_14",
+        "other_12",
+        "valve1_4",
+        "valve1_13",
+        "valve2_0",
+        "valve1_0",
+        "valve2_1",
+        "other_11"
+      ],
+      "val_runs": [
+        "valve1_8",
+        "other_5",
+        "valve2_3",
+        "valve1_6",
+        "valve1_7",
+        "other_10"
+      ],
+      "test_runs": [
+        "valve1_1",
+        "valve1_3",
+        "valve1_12",
+        "other_1",
+        "valve1_11",
+        "valve1_5",
+        "other_13",
+        "other_8",
+        "other_7",
+        "other_14",
+        "other_2"
+      ],
+      "row_counts": {
+        "train_rows": 22049,
+        "val_rows": 6869,
+        "test_rows": 11318,
+        "train_positive_rows": 0,
+        "val_positive_rows": 2601,
+        "test_positive_rows": 3896
+      },
+      "window_counts": {
+        "official_train_windows_step1": 22002,
+        "official_test_windows_step1": 11271,
+        "official_thre_windows_step_win_size": 235,
+        "patched_val_windows_step1": 6822
+      },
+      "files": {
+        "train_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\psm_compatible\\train.csv",
+        "val_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\psm_compatible\\val.csv",
+        "val_label_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\psm_compatible\\val_label.csv",
+        "test_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\psm_compatible\\test.csv",
+        "test_label_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\psm_compatible\\test_label.csv",
+        "train_meta_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\psm_compatible\\train_meta.csv",
+        "val_meta_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\psm_compatible\\val_meta.csv",
+        "test_meta_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\psm_compatible\\test_meta.csv"
+      },
+      "commands": {
+        "official_unmodified_train_command": "cd C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\anomaly_transformer && python main.py --dataset PSM --data_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\psm_compatible --input_c 8 --output_c 8 --win_size 48 --batch_size 256 --model_save_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\official_checkpoints --num_epochs 10 --mode train",
+        "official_unmodified_test_command": "cd C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\anomaly_transformer && python main.py --dataset PSM --data_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\psm_compatible --input_c 8 --output_c 8 --win_size 48 --batch_size 256 --model_save_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_43\\official_checkpoints --mode test",
+        "required_matched_wrapper": "patch Solver.train to validate on val.csv, patch Solver.test to tune thresholds on val scores only, emit raw validation/test scores and disable label-based point adjustment unless explicitly reported"
+      },
+      "protocol_alignment": {
+        "official_unmodified_loader_usable": true,
+        "official_external_score": false,
+        "matched_protocol_score_ready": false,
+        "requires_solver_patch": true,
+        "validation_only_thresholds": "requires patched score path; official unmodified test uses train+test percentile",
+        "point_adjustment": "official unmodified test uses label-based point adjustment; must be disabled or separately declared",
+        "early_stopping": "official train currently validates on test_loader; matched wrapper must validate on val.csv",
+        "claim_boundary": "This artifact prepares official-source input files and commands only. It is not an official Anomaly Transformer score until the patched wrapper emits seed-level validation/test scores, threshold provenance, metrics, and budget records."
+      }
+    },
+    {
+      "version": "anomaly-transformer-official-skab-adapter-v1",
+      "checked_on": "2026-06-21",
+      "seed": 44,
+      "dataset": "SKAB",
+      "official_baseline": "Anomaly Transformer",
+      "official_checkout": "C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\anomaly_transformer",
+      "official_commit": "b0ee470c8012",
+      "adapter_format": "PSM-compatible CSV plus validation CSV extension",
+      "adapter_dir": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\psm_compatible",
+      "train_policy": "normal rows from training runs only",
+      "feature_columns": [
+        "Accelerometer1RMS",
+        "Accelerometer2RMS",
+        "Current",
+        "Pressure",
+        "Temperature",
+        "Thermocouple",
+        "Voltage",
+        "Volume Flow RateRMS"
+      ],
+      "input_c": 8,
+      "win_size": 48,
+      "batch_size": 256,
+      "epochs": 10,
+      "train_runs": [
+        "other_12",
+        "other_11",
+        "other_5",
+        "other_6",
+        "valve2_3",
+        "valve1_4",
+        "valve1_14",
+        "other_10",
+        "valve1_12",
+        "valve1_15",
+        "valve1_11",
+        "valve1_10",
+        "valve1_7",
+        "other_13",
+        "other_1",
+        "other_9",
+        "other_14",
+        "other_2"
+      ],
+      "val_runs": [
+        "valve2_1",
+        "valve1_13",
+        "valve1_8",
+        "other_4",
+        "valve2_2",
+        "other_8"
+      ],
+      "test_runs": [
+        "valve1_2",
+        "other_3",
+        "valve1_6",
+        "valve2_0",
+        "valve1_5",
+        "valve1_0",
+        "valve1_3",
+        "valve1_9",
+        "other_7",
+        "valve1_1",
+        "anomaly-free_anomaly-free"
+      ],
+      "row_counts": {
+        "train_rows": 12415,
+        "val_rows": 6814,
+        "test_rows": 20728,
+        "train_positive_rows": 0,
+        "val_positive_rows": 2325,
+        "test_positive_rows": 3893
+      },
+      "window_counts": {
+        "official_train_windows_step1": 12368,
+        "official_test_windows_step1": 20681,
+        "official_thre_windows_step_win_size": 431,
+        "patched_val_windows_step1": 6767
+      },
+      "files": {
+        "train_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\psm_compatible\\train.csv",
+        "val_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\psm_compatible\\val.csv",
+        "val_label_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\psm_compatible\\val_label.csv",
+        "test_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\psm_compatible\\test.csv",
+        "test_label_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\psm_compatible\\test_label.csv",
+        "train_meta_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\psm_compatible\\train_meta.csv",
+        "val_meta_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\psm_compatible\\val_meta.csv",
+        "test_meta_csv": "knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\psm_compatible\\test_meta.csv"
+      },
+      "commands": {
+        "official_unmodified_train_command": "cd C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\anomaly_transformer && python main.py --dataset PSM --data_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\psm_compatible --input_c 8 --output_c 8 --win_size 48 --batch_size 256 --model_save_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\official_checkpoints --num_epochs 10 --mode train",
+        "official_unmodified_test_command": "cd C:\\Users\\CPILAB\\aaai_external_baseline_checkouts\\anomaly_transformer && python main.py --dataset PSM --data_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\psm_compatible --input_c 8 --output_c 8 --win_size 48 --batch_size 256 --model_save_path knowledge_exports\\external_baseline_protocol_runs\\anomaly_transformer_official_skab_adapter\\seed_44\\official_checkpoints --mode test",
+        "required_matched_wrapper": "patch Solver.train to validate on val.csv, patch Solver.test to tune thresholds on val scores only, emit raw validation/test scores and disable label-based point adjustment unless explicitly reported"
+      },
+      "protocol_alignment": {
+        "official_unmodified_loader_usable": true,
+        "official_external_score": false,
+        "matched_protocol_score_ready": false,
+        "requires_solver_patch": true,
+        "validation_only_thresholds": "requires patched score path; official unmodified test uses train+test percentile",
+        "point_adjustment": "official unmodified test uses label-based point adjustment; must be disabled or separately declared",
+        "early_stopping": "official train currently validates on test_loader; matched wrapper must validate on val.csv",
+        "claim_boundary": "This artifact prepares official-source input files and commands only. It is not an official Anomaly Transformer score until the patched wrapper emits seed-level validation/test scores, threshold provenance, metrics, and budget records."
+      }
+    }
+  ]
+}

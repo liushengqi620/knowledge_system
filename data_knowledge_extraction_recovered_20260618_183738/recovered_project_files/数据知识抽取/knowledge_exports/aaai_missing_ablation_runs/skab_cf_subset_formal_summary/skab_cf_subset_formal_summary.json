@@ -1,0 +1,158 @@
+{
+  "schema": "skab_cf_subset_summary_v2",
+  "summary_kind": "formal",
+  "status": "complete_formal",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "rows": [
+    {
+      "seed": 42,
+      "branch": "cf_standard",
+      "status": "ok",
+      "test_macro_f1": 0.9083644478942858,
+      "test_gain": 0.019270303618826645,
+      "validation_gain": 0.019641509539935043,
+      "kept_edges": 1,
+      "admitted": true,
+      "counterfactual_max_macro_drop": 0.04732328890784776,
+      "counterfactual_passing_modes": [
+        "reverse_direction",
+        "lag_shift",
+        "random_target"
+      ],
+      "edge_labels": [
+        "Current->Temperature@2"
+      ]
+    },
+    {
+      "seed": 42,
+      "branch": "no_cf",
+      "status": "ok",
+      "test_macro_f1": 0.9089866157738175,
+      "test_gain": 0.019735513349023237,
+      "validation_gain": 0.020695671786335135,
+      "kept_edges": 1,
+      "admitted": true,
+      "counterfactual_max_macro_drop": 0.0,
+      "counterfactual_passing_modes": [],
+      "edge_labels": [
+        "Current->Temperature@2"
+      ]
+    },
+    {
+      "seed": 43,
+      "branch": "cf_standard",
+      "status": "ok",
+      "test_macro_f1": 0.8355939137169193,
+      "test_gain": 0.025234640340987324,
+      "validation_gain": 0.011512543177393253,
+      "kept_edges": 1,
+      "admitted": true,
+      "counterfactual_max_macro_drop": 0.12433527498182251,
+      "counterfactual_passing_modes": [
+        "reverse_direction",
+        "random_target"
+      ],
+      "edge_labels": [
+        "Accelerometer1RMS->Accelerometer2RMS@1"
+      ]
+    },
+    {
+      "seed": 43,
+      "branch": "no_cf",
+      "status": "ok",
+      "test_macro_f1": 0.8359912207895058,
+      "test_gain": 0.026495584968275643,
+      "validation_gain": 0.011554251041587915,
+      "kept_edges": 1,
+      "admitted": true,
+      "counterfactual_max_macro_drop": 0.0,
+      "counterfactual_passing_modes": [],
+      "edge_labels": [
+        "Accelerometer1RMS->Accelerometer2RMS@1"
+      ]
+    },
+    {
+      "seed": 44,
+      "branch": "cf_standard",
+      "status": "ok",
+      "test_macro_f1": 0.8954374634282573,
+      "test_gain": -0.029715345358258483,
+      "validation_gain": 0.046073639528325994,
+      "kept_edges": 2,
+      "admitted": true,
+      "counterfactual_max_macro_drop": 0.027940076327541252,
+      "counterfactual_passing_modes": [
+        "random_target"
+      ],
+      "edge_labels": [
+        "Accelerometer1RMS->Accelerometer2RMS@1",
+        "Accelerometer2RMS->Accelerometer1RMS@1"
+      ]
+    },
+    {
+      "seed": 44,
+      "branch": "no_cf",
+      "status": "ok",
+      "test_macro_f1": 0.8953028241271391,
+      "test_gain": -0.029849984659376605,
+      "validation_gain": 0.046073639528325994,
+      "kept_edges": 2,
+      "admitted": true,
+      "counterfactual_max_macro_drop": 0.0,
+      "counterfactual_passing_modes": [],
+      "edge_labels": [
+        "Accelerometer1RMS->Accelerometer2RMS@1",
+        "Accelerometer2RMS->Accelerometer1RMS@1"
+      ]
+    }
+  ],
+  "aggregates": {
+    "cf_standard": {
+      "n": 3,
+      "test_macro_f1": {
+        "mean": 0.8797986083464875,
+        "std": 0.03169982126465139
+      },
+      "test_gain": {
+        "mean": 0.004929866200518496,
+        "std": 0.02461857484499782
+      },
+      "validation_gain": {
+        "mean": 0.025742564081884762,
+        "std": 0.014754309994879419
+      },
+      "kept_edges": {
+        "mean": 1.3333333333333333,
+        "std": 0.4714045207910317
+      }
+    },
+    "no_cf": {
+      "n": 3,
+      "test_macro_f1": {
+        "mean": 0.8800935535634875,
+        "std": 0.03168147045764224
+      },
+      "test_gain": {
+        "mean": 0.005460371219307425,
+        "std": 0.02512025167448026
+      },
+      "validation_gain": {
+        "mean": 0.02610785411874968,
+        "std": 0.01460287263004695
+      },
+      "kept_edges": {
+        "mean": 1.3333333333333333,
+        "std": 0.4714045207910317
+      }
+    }
+  },
+  "cf_minus_no_cf_test_macro_f1": {
+    "mean": -0.00029494521700001997,
+    "std": 0.00031733025833253836
+  },
+  "interpretation": "Validation-positive edge subsets make the CF/no-CF comparison runnable. If CF and no-CF stay close, the main performance driver is the validation-admitted candidate itself; CF should be described as a reliability/interpretability guard rather than the primary source of accuracy."
+}

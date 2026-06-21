@@ -1,0 +1,48 @@
+{
+  "schema": "public_benchmark_data_processing_v1",
+  "dataset": "skab",
+  "display_name": "Skoltech Anomaly Benchmark",
+  "task": "binary point/run anomaly detection",
+  "source_summary": {
+    "source": "C:\\Users\\CPILAB\\Documents\\xwechat_files\\wxid_fn3terjpgaio22_c340\\msg\\file\\2026-06\\codex_recovery\\data_knowledge_extraction_recovered_20260618_183738\\recovered_project_files\\数据知识抽取\\knowledge_exports\\public_datasets",
+    "task": "skab_binary_anomaly_detection",
+    "n_rows": 46806,
+    "n_features": 8
+  },
+  "ready_files": [
+    "X_process_features.csv",
+    "y_labels.csv",
+    "xy_public_benchmark.csv"
+  ],
+  "label_columns": [
+    "anomaly",
+    "changepoint"
+  ],
+  "split_protocol": "run-held-out split, validation runs selected from training runs",
+  "temporal_unit": "run_id sample_index",
+  "feature_blocks": {
+    "role_counts": {
+      "identifier_or_group": 2,
+      "observed_process_variable": 8,
+      "time_index": 1
+    },
+    "subsystem_counts": {
+      "electrical_drive": 2,
+      "hydraulic_flow": 2,
+      "identity": 2,
+      "mechanical_vibration": 2,
+      "temporal_context": 1,
+      "thermal": 2
+    }
+  },
+  "cleaning": {
+    "numeric_casting": "coerce non-numeric values to NaN",
+    "imputation": "median imputation inside the sklearn pipeline",
+    "scaling": "standard scaling inside the sklearn pipeline",
+    "leakage_guards": [
+      "validation split is drawn from training-only units/runs/files where official test exists",
+      "RUL labels are used only to form stage labels, not as input features",
+      "residual center is fitted on train data only"
+    ]
+  }
+}

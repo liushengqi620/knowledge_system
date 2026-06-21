@@ -1,0 +1,62 @@
+{
+  "status": "seed_proxy_experiment_completed",
+  "dataset_manifest": {
+    "dataset": "mechanism_kg_seed",
+    "status": "generated_seed_dataset",
+    "records": 1000,
+    "splits": {
+      "train": 600,
+      "dev": 200,
+      "test": 200
+    },
+    "source_policy": "Generated mechanism-layer seed text from papers/manuals/expert-rule style statements; no processed Baosteel production data used.",
+    "evaluation_policy": "Final seed metrics are reported on the test split only. The rule-based baseline uses only train-split entity lexicon to avoid full-dataset leakage.",
+    "challenge_tag_counts": {
+      "explicit_template": 399,
+      "hard_negative": 201,
+      "implicit": 500,
+      "nested": 500,
+      "multi-hop": 100,
+      "pronoun": 100,
+      "alias": 100,
+      "interference": 100
+    },
+    "nested_entity_count": 500,
+    "entity_types": [
+      "ControlAction",
+      "DefectMechanism",
+      "EquipmentState",
+      "MaterialState",
+      "ProcessParameter",
+      "ProcessStage",
+      "QualityDefect",
+      "QualityIndicator"
+    ],
+    "relation_types": [
+      "affect",
+      "cause",
+      "controlled_by",
+      "improve",
+      "increase_risk_of",
+      "indicates",
+      "located_at",
+      "no_relation",
+      "suppress"
+    ],
+    "caveats": [
+      "This is an expanded engineering seed dataset with challenge records, not a paper-scale benchmark.",
+      "Use real papers/manuals and double annotation before reporting publishable results."
+    ]
+  },
+  "methods": [
+    "rule_based",
+    "plm_candidate_proxy",
+    "proposed_atom_adjudication_proxy"
+  ],
+  "best_method": "proposed_atom_adjudication_proxy",
+  "metrics_path": "outputs\\mechanism_kg_seed_experiment\\metrics.json",
+  "challenge_metrics_path": "outputs\\mechanism_kg_seed_experiment\\challenge_metrics.json",
+  "final_records_path": "outputs\\mechanism_kg_seed_experiment\\final_records_with_predictions.jsonl",
+  "graph_path": "outputs\\mechanism_kg_seed_experiment\\mechanism_seed_graph.json",
+  "caveat": "Deterministic seed/proxy experiment; replace proxy extractor/adjudicator with real PLM and LLM backends for publishable results."
+}

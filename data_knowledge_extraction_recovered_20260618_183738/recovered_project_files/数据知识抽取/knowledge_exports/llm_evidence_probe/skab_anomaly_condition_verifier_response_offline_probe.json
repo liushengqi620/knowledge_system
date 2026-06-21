@@ -1,0 +1,69 @@
+{
+  "verifications": [
+    {
+      "expert_edge_id": "skab_000_Current_Temperature",
+      "source": "Current",
+      "target": "Temperature",
+      "activation": "activate",
+      "activation_score": 0.72,
+      "confidence": 0.62,
+      "class_scope": ["all"],
+      "regime_scope": ["pump-load", "transient"],
+      "residual_pattern": "temperature residual follows abnormal current elevation",
+      "temporal_pattern": "short-lag persistence rather than isolated spike",
+      "rationale": "Offline protocol probe: motor current changes can precede thermal response under abnormal load."
+    },
+    {
+      "expert_edge_id": "skab_001_Voltage_Current",
+      "source": "Voltage",
+      "target": "Current",
+      "activation": "activate",
+      "activation_score": 0.65,
+      "confidence": 0.58,
+      "class_scope": ["all"],
+      "regime_scope": ["electrical"],
+      "residual_pattern": "current residual changes with voltage instability",
+      "temporal_pattern": "same-window or one-step response",
+      "rationale": "Offline protocol probe: supply variation is a plausible condition for current response."
+    },
+    {
+      "expert_edge_id": "skab_002_Volume_Flow_RateRMS_Pressure",
+      "source": "Volume Flow RateRMS",
+      "target": "Pressure",
+      "activation": "activate",
+      "activation_score": 0.70,
+      "confidence": 0.60,
+      "class_scope": ["all"],
+      "regime_scope": ["hydraulic-flow"],
+      "residual_pattern": "pressure residual co-activates after flow-rate RMS deviation",
+      "temporal_pattern": "short hydraulic propagation lag",
+      "rationale": "Offline protocol probe: flow-rate RMS shifts can conditionally activate pressure response paths."
+    },
+    {
+      "expert_edge_id": "skab_003_Pressure_Volume_Flow_RateRMS",
+      "source": "Pressure",
+      "target": "Volume Flow RateRMS",
+      "activation": "uncertain",
+      "activation_score": 0.35,
+      "confidence": 0.45,
+      "class_scope": ["all"],
+      "regime_scope": ["hydraulic-flow"],
+      "residual_pattern": "bidirectional coupling needs data confirmation",
+      "temporal_pattern": "direction may reverse under control action",
+      "rationale": "Offline protocol probe: reverse hydraulic direction should not be strongly activated without data support."
+    },
+    {
+      "expert_edge_id": "skab_004_Accelerometer1RMS_Volume_Flow_RateRMS",
+      "source": "Accelerometer1RMS",
+      "target": "Volume Flow RateRMS",
+      "activation": "suppress",
+      "activation_score": 0.40,
+      "confidence": 0.42,
+      "class_scope": ["all"],
+      "regime_scope": ["mechanical-vibration"],
+      "residual_pattern": "vibration may be an effect rather than driver when flow anomaly dominates",
+      "temporal_pattern": "suppress if vibration lags flow-rate deviation",
+      "rationale": "Offline protocol probe: vibration-to-flow direction should be downweighted unless residual timing supports it."
+    }
+  ]
+}

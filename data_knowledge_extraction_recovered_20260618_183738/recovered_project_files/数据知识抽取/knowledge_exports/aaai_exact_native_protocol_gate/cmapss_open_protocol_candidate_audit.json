@@ -1,0 +1,159 @@
+{
+  "version": "cmapss-open-protocol-candidate-audit-v1",
+  "status": "open_candidates_identified_exact_profile_pending",
+  "claim_boundary": "Accessible published C-MAPSS baselines exist, but none is promoted to exact-native evidence until dataset-count conflicts, preprocessing, source-matched budget, and prediction archives are resolved.",
+  "candidate_sources": [
+    {
+      "id": "mdfa_2025",
+      "title": "Remaining Useful Life Prediction for Aero-Engines Based on Multi-Scale Dilated Fusion Attention Model",
+      "url": "https://www.mdpi.com/2076-3417/15/17/9813",
+      "source_type": "open_fulltext_published_baseline",
+      "subset_scope": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "model_family": "multi-scale dilated convolution plus channel/spatial attention",
+      "extractable_fields": {
+        "rul_cap_or_plateau": "125",
+        "window_size": "30",
+        "batch_size": "32",
+        "epochs": "100",
+        "optimizer": "Adam",
+        "loss": "MSE",
+        "learning_rate": "0.0001",
+        "dropout": "0.3",
+        "preprocessing": "PCA-based dimensionality reduction and key-sensor selection are described.",
+        "metrics": "RMSE, MAE, and Score are declared; FD001-FD004 table is reported.",
+        "architecture": "dilated branches with dilation rates 1, 2, 4; global pooling; channel/spatial attention; 1x1 compression."
+      },
+      "blocking_fields": [
+        "The bundled C-MAPSS readme has an FD004 train/test count inconsistency, but the raw-file unique-unit counts match the MDFA table after source-profile reconciliation.",
+        "PCA component-selection details and exact train-only fitting procedure are not fully machine-readable from the HTML tables.",
+        "No official code snapshot is linked in the current source audit.",
+        "No source-matched MDFA runner or seed-level prediction archive exists yet."
+      ],
+      "priority": "p0_open_exact_candidate_after_count_reconciliation"
+    },
+    {
+      "id": "acb_2021",
+      "title": "Effective Latent Representation for Prediction of Remaining Useful Life",
+      "url": "https://www.techscience.com/csse/v36n1/40892/html",
+      "source_type": "open_fulltext_published_baseline",
+      "subset_scope": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "model_family": "autoencoder plus CNN plus Bi-LSTM",
+      "extractable_fields": {
+        "window_size": "90",
+        "rul_cap_or_degradation_start": "R=120 for FD001/FD003 and R=130 for FD002/FD004",
+        "penalty": "P-RMSE penalty term selected by grid search; lambda=0.3 is described as suitable.",
+        "architecture": "CNN autoencoder, CNN layers, Bi-LSTM, dropout 0.2, batch normalization, global average pooling, fully connected RUL head.",
+        "metrics": "RMSE and PHM-style Score are declared; FD001-FD004 results are reported."
+      },
+      "blocking_fields": [
+        "Optimizer, learning rate, epochs, batch size, random seeds, and exact normalization procedure are not fully declared in accessible HTML text.",
+        "The published comparison table imports several baselines from other papers, so exact baseline reproduction still needs separate source matching."
+      ],
+      "priority": "p0_open_all_subset_candidate_training_budget_missing"
+    },
+    {
+      "id": "attention_lstm_ijphm_2025",
+      "title": "Remaining Useful Life Prediction Using Attention-LSTM Neural Network of Aircraft Engines",
+      "url": "https://doi.org/10.36001/ijphm.2025.v16i2.4274",
+      "source_type": "open_fulltext_subset_reference",
+      "subset_scope": [
+        "FD001",
+        "FD003"
+      ],
+      "model_family": "self-attention plus LSTM",
+      "extractable_fields": {
+        "metrics": "RMSE and Score are reported for FD001 and FD003.",
+        "architecture": "self-attention feature transformation followed by LSTM family model."
+      },
+      "blocking_fields": [
+        "Only FD001 and FD003 are reported, so it cannot close the all-subset FD001-FD004 C-MAPSS gate.",
+        "It is useful as a subset reference, not the primary all-subset exact-native baseline."
+      ],
+      "priority": "p1_subset_reference"
+    },
+    {
+      "id": "fd001_change_point_cnn_lstm_2023",
+      "title": "Remaining Useful Life Estimation of Turbofan Engines with Deep Learning Using Change-Point Detection Based Labeling and Feature Engineering",
+      "url": "https://www.mdpi.com/2076-3417/13/21/11893",
+      "source_type": "open_fulltext_fd001_reference",
+      "subset_scope": [
+        "FD001"
+      ],
+      "model_family": "change-point labeling plus 1D-CNN-LSTM",
+      "extractable_fields": {
+        "sensor_selection": "14 selected sensors after dropping constant/non-trending sensors.",
+        "normalization": "min-max scaling is described.",
+        "filtering": "first-order low-pass filter at 0.08 Hz is described.",
+        "metrics": "RMSE and Score are reported."
+      },
+      "blocking_fields": [
+        "FD001-only protocol cannot close an FD001-FD004 all-subset gate.",
+        "Change-point label construction would be an auxiliary protocol, not the current terminal-test RUL contract without additional alignment."
+      ],
+      "priority": "p2_fd001_auxiliary"
+    },
+    {
+      "id": "lstm_rul_2017",
+      "title": "Long Short-Term Memory Network for Remaining Useful Life estimation",
+      "url": "https://doi.org/10.1109/ICPHM.2017.7998311",
+      "source_type": "primary_metadata_only_in_current_environment",
+      "subset_scope": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "model_family": "deep LSTM",
+      "extractable_fields": {
+        "local_candidate": "Local lstm_sequence has three-seed FD001-FD004 archives, but source protocol fields are unavailable."
+      },
+      "blocking_fields": [
+        "IEEE full-text protocol is unavailable in the current environment.",
+        "Exact sensor selection, normalization, architecture, sequence length, validation, and budget fields are not verified."
+      ],
+      "priority": "blocked_until_primary_fulltext_available"
+    }
+  ],
+  "all_subset_candidates": [
+    "mdfa_2025",
+    "acb_2021",
+    "lstm_rul_2017"
+  ],
+  "training_budget_candidates": [
+    "mdfa_2025"
+  ],
+  "recommended_next_target": {
+    "primary": "mdfa_2025",
+    "reason": "It is open full text, covers FD001-FD004, and exposes window, batch, epochs, optimizer, learning rate, dropout, sensor/PCA preprocessing, architecture, and result table fields; raw-file counts now match the MDFA table, but PCA/key-sensor preprocessing and a source-matched runner are still needed before exact claims.",
+    "fallback": "acb_2021",
+    "fallback_reason": "It is open full text and all-subset, but lacks enough budget fields in the accessible HTML text."
+  },
+  "gates": {
+    "open_candidate_audit_present": true,
+    "accessible_all_subset_candidate_present": true,
+    "accessible_training_budget_candidate_present": true,
+    "mdfa_count_profile_reconciled": true,
+    "exact_source_profile_ready": false,
+    "safe_to_flip_published_baseline_gate": false
+  },
+  "missing_gates": [
+    "exact_source_profile_ready",
+    "safe_to_flip_published_baseline_gate"
+  ],
+  "next_actions": [
+    "Use cmapss_mdfa_source_profile as the count-reconciled MDFA source profile and treat the bundled readme FD004 mismatch as a disclosed data-package caveat.",
+    "Implement a source-matched MDFA runner with window=30, batch=32, epochs=100, Adam, lr=0.0001, dropout=0.3, PCA/key-sensor preprocessing, and FD001-FD004 terminal RUL records.",
+    "Run a three-seed reproduction and archive per-test-engine predictions before considering a published-baseline gate flip.",
+    "Keep ACB as the fallback all-subset open baseline if MDFA source-count reconciliation fails."
+  ]
+}

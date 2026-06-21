@@ -1,0 +1,28 @@
+{
+  "schema": "public_benchmark_llm_candidate_edges_v1",
+  "dataset": "skab",
+  "target": "anomaly",
+  "model": "gpt-5.5",
+  "base_url": "https://api.n1n.ai/v1",
+  "dry_run": true,
+  "prompt_messages": [
+    {
+      "role": "system",
+      "content": "You generate weak candidate mechanism edges for industrial multivariate time-series models. Return only valid JSON. These edges are not causal truth; they are low-confidence candidates that must be validated by downstream experiments."
+    },
+    {
+      "role": "user",
+      "content": "Propose feature-to-feature mechanism edges only from the allowed feature names. Avoid label targets, identifiers, duplicates, and generic correlations. Prefer edges that could explain propagation, thermal/flow/pressure/electrical coupling, or degradation dynamics. JSON input:\n{\"dataset\": \"skab\", \"target\": \"anomaly\", \"task\": \"binary point/run anomaly detection\", \"allowed_features\": [\"Accelerometer1RMS\", \"Accelerometer2RMS\", \"Current\", \"Pressure\", \"Temperature\", \"Thermocouple\", \"Voltage\", \"Volume Flow RateRMS\"], \"feature_catalog\": [{\"name\": \"Accelerometer1RMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"mechanical_vibration\", \"n_unique\": 31964}, {\"name\": \"Accelerometer2RMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"mechanical_vibration\", \"n_unique\": 35252}, {\"name\": \"Current\", \"role\": \"observed_process_variable\", \"subsystem\": \"electrical_drive\", \"n_unique\": 42271}, {\"name\": \"Pressure\", \"role\": \"observed_process_variable\", \"subsystem\": \"hydraulic_flow\", \"n_unique\": 10}, {\"name\": \"Temperature\", \"role\": \"observed_process_variable\", \"subsystem\": \"thermal\", \"n_unique\": 37593}, {\"name\": \"Thermocouple\", \"role\": \"observed_process_variable\", \"subsystem\": \"thermal\", \"n_unique\": 24917}, {\"name\": \"Voltage\", \"role\": \"observed_process_variable\", \"subsystem\": \"electrical_drive\", \"n_unique\": 26895}, {\"name\": \"Volume Flow RateRMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"hydraulic_flow\", \"n_unique\": 1994}], \"existing_candidate_edges\": [{\"source\": \"Current\", \"target\": \"Temperature\", \"relation\": \"motor_load_heating\", \"source_type\": \"expert_lag_prior\"}, {\"source\": \"Voltage\", \"target\": \"Current\", \"relation\": \"drive_electrical_response\", \"source_type\": \"expert_lag_prior\"}, {\"source\": \"Volume Flow RateRMS\", \"target\": \"Pressure\", \"relation\": \"flow_pressure_coupling\", \"source_type\": \"expert_lag_prior\"}, {\"source\": \"Pressure\", \"target\": \"Volume Flow RateRMS\", \"relation\": \"hydraulic_feedback\", \"source_type\": \"expert_lag_prior\"}, {\"source\": \"Accelerometer1RMS\", \"target\": \"Volume Flow RateRMS\", \"relation\": \"mechanical_vibration_flow\", \"source_type\": \"expert_lag_prior\"}, {\"source\": \"Temperature\", \"target\": \"Thermocouple\", \"relation\": \"thermal_transfer\", \"source_type\": \"expert_lag_prior\"}], \"max_edges\": 8, \"required_json_schema\": {\"edges\": [{\"source\": \"one allowed feature name\", \"target\": \"one allowed feature name\", \"relation\": \"short mechanism relation\", \"lag\": \"integer 0 to 5\", \"reliability\": \"float 0.05 to 0.55\", \"rationale\": \"one short falsifiable mechanism sentence\"}]}}"
+    }
+  ],
+  "raw_response": "",
+  "edges": [],
+  "diagnostics": {
+    "accepted_edges": 0,
+    "skipped_edges": 0,
+    "n_allowed_features": 8,
+    "n_prompt_features": 8,
+    "ready_graph": "C:\\Users\\CPILAB\\Documents\\xwechat_files\\wxid_fn3terjpgaio22_c340\\msg\\file\\2026-06\\codex_recovery\\data_knowledge_extraction_recovered_20260618_183738\\recovered_project_files\\数据知识抽取\\knowledge_exports\\public_benchmark_ready\\skab\\knowledge_model\\knowledge_graph.json",
+    "api_key_saved": false
+  }
+}

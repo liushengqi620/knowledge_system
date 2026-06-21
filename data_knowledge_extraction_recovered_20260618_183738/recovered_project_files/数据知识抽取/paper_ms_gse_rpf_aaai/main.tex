@@ -1,0 +1,244 @@
+\documentclass[letterpaper]{article}
+\usepackage[submission]{aaai2026}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\urlstyle{rm}
+\def\UrlFont{\rm}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\title{Reliable Mechanism Path Fusion for Multivariate Industrial Time-Series Diagnosis}
+
+\author{
+    Anonymous Authors
+}
+
+\affiliations{
+    Anonymous Affiliation
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Industrial multivariate time-series diagnosis is often reduced to label prediction, even though practical decisions depend on whether a prediction is supported by reliable process evidence. Existing deep models usually emphasize one inductive bias, such as temporal convolution, variable graphs, or self-attention, and then pool hidden states into a classifier. This design makes it difficult to separate transient disturbances, variable propagation, long-term state memory, and evidence reliability. We propose MS-GSE + RPF, a unified algorithmic evidence network for industrial diagnosis. The model first tokenizes each variable through multi-scale temporal filters, learns a sample-wise dynamic variable graph, updates variable states with graph-conditioned selective memory, and then fuses only the top evidence paths through a reliability-calibrated path router. The framework outputs both a task prediction and evidence objects: dynamic graph, selected paths, and path reliability. It supports fault diagnosis, anomaly detection, component condition monitoring, and degradation-stage recognition under the same backbone. Full SOTA experiments will be reported on TEP, SKAB, Hydraulic, and C-MAPSS after completing the full-budget protocol.
+\end{abstract}
+
+\section{Introduction}
+
+Industrial failures are rarely isolated point events. A transient fault may first appear as a local slope or oscillation, propagate through coupled process variables, and only later become visible in a global operating state. A model that only predicts a label from a pooled representation can be accurate yet operationally weak: it does not reveal which variable relation supports the decision, whether the relation is stable, or whether the model is relying on a spurious shortcut.
+
+Recent time-series models provide useful pieces of this problem. Graph-based methods model variable interactions \citep{deng2021gdn}; Transformer-based anomaly detectors model long-range associations \citep{xu2022anomalytransformer,tuli2022tranad}; multi-scale architectures reshape or mix time-series patterns \citep{wu2023timesnet,wang2024timemixer}; and selective state-space models provide efficient long-context memory \citep{gu2024mamba}. However, these components are often used as alternative backbones rather than as a unified evidence mechanism.
+
+We study reliable mechanism evidence learning for multivariate industrial time series. Given a causal window \(X_{t-L:t}\), the model should output
+\[
+X_{t-L:t} \rightarrow (\hat y_t, A_t, \mathcal{P}_t, \rho_t),
+\]
+where \(\hat y_t\) is the task prediction, \(A_t\) is a dynamic variable graph, \(\mathcal{P}_t\) is a set of selected evidence paths, and \(\rho_t\) is path reliability. The classifier is therefore only the final readout of a structured evidence system.
+
+Our contributions are:
+\begin{itemize}
+    \item We propose MS-GSE, a multi-scale graph selective evidence backbone that captures abrupt changes, variable propagation, and long-memory state evolution in one model.
+    \item We propose RPF, a reliable path fusion module that separates path importance from path reliability and fuses evidence paths rather than arbitrary hidden tokens.
+    \item We provide a unified experimental protocol for TEP, SKAB, Hydraulic, and C-MAPSS, with shared model code and dataset-specific task heads only.
+    \item We design an extensible interface where expert mechanism evidence and LLM-assisted evidence can later enter as candidate edge/path priors without replacing the algorithmic backbone.
+\end{itemize}
+
+\section{Related Work}
+
+\paragraph{Graph-based industrial time-series diagnosis.}
+GDN learns a sensor graph for multivariate time-series anomaly detection \citep{deng2021gdn}, and MTAD-GAT combines graph attention with forecasting and reconstruction objectives \citep{zhao2020mtadgat}. GCAD further detects anomalies from changes in dynamically discovered Granger-causal patterns \citep{liu2025gcad}. These models show that variable relations are important, but they do not explicitly distinguish path importance from path reliability.
+
+\paragraph{Attention-based anomaly detection.}
+Anomaly Transformer introduces association discrepancy to identify abnormal temporal associations \citep{xu2022anomalytransformer}. TranAD uses Transformer reconstruction with self-conditioning for multivariate anomaly detection \citep{tuli2022tranad}. DCdetector uses dual attention and contrastive representation learning \citep{yang2023dcdetector}. RTdetector uses reconstruction-trend attention and self-conditioning to prevent reconstruction models from fitting anomalous trends \citep{liu2025rtdetector}. These works motivate attention as an anomaly criterion, but full attention over all tokens can obscure mechanism-level evidence paths.
+
+\paragraph{Multi-scale and selective-memory models.}
+TimesNet transforms 1D time series into 2D temporal variation structures \citep{wu2023timesnet}; TimeMixer decomposes and mixes multi-scale patterns \citep{wang2024timemixer}; Mamba introduces selective state-space modeling for efficient long-sequence memory \citep{gu2024mamba}. Recent anomaly detectors such as MAAT integrate Mamba-SSM with sparse attention and gated reconstruction \citep{sellam2025maat}. Our method borrows the inductive goal of selective memory while conditioning state updates on learned variable graphs and path reliability.
+
+\section{Method}
+
+\subsection{Problem Definition}
+
+For each sample, we observe a causal multivariate window
+\[
+X_{t-L:t} \in \mathbb{R}^{L \times C},
+\]
+where \(L\) is the window length and \(C\) is the number of variables. The task label can be a fault class, anomaly state, component condition, or degradation stage.
+
+\subsection{Multi-Scale Event Tokenization}
+
+For variable \(i\), we apply depthwise temporal filters under multiple scales \(s \in \mathcal{S}\):
+\[
+u_{i,t}^{(s)} = \text{DWConv}_{s}(x_{i,t-L:t}).
+\]
+A learnable scale gate produces the final event token:
+\[
+u_{i,t} = \sum_{s \in \mathcal{S}} \gamma_{i,t}^{(s)} u_{i,t}^{(s)}.
+\]
+This captures abrupt shocks, short oscillations, and slow degradation within the same tokenizer.
+
+\subsection{Dynamic Variable Graph}
+
+The model learns a directed sparse graph:
+\[
+A_{ij,t} = \text{TopKSoftmax}(q_i^\top k_j),
+\]
+where \(A_{ij,t}\) measures how much target variable \(i\) attends to source variable \(j\). This graph is sample-wise and supports both message passing and evidence path construction.
+
+When expert or LLM-assisted evidence proposes a candidate edge, it is encoded as a prior matrix \(B\):
+\[
+A_{ij,t} = \text{TopKSoftmax}(q_i^\top k_j + \lambda B_{ij}).
+\]
+The prior strength \(\lambda\) controls whether the evidence only acts as a path feature (\(\lambda=0\)) or also biases graph search (\(\lambda>0\)). This design keeps expert and LLM suggestions falsifiable: RPF may accept, down-weight, or ignore them.
+
+\subsection{Graph-Conditioned Selective Memory}
+
+We use a selective state update:
+\[
+h_{i,\ell} = z_{i,\ell} h_{i,\ell-1} + g_{i,\ell} \tilde h_{i,\ell}.
+\]
+The final state is graph-conditioned:
+\[
+\bar h_{i,t} = h_{i,t} + \eta_{i,t}\sum_j A_{ij,t} W_m h_{j,t}.
+\]
+This unifies long-memory state retention and variable-level propagation.
+
+\subsection{Reliable Path Fusion}
+
+An optional variant converts prediction residuals into node-level surprise evidence:
+\[
+r_{i,t}=|\hat x_{i,t}-x_{i,t}|.
+\]
+The residual embedding can be added to the variable state so that abnormal reconstruction behavior directly affects path discovery and fusion. We keep this as an ablation variant until full-budget results confirm whether it improves robustness across datasets.
+
+RPF builds evidence tokens from selected graph edges. To avoid path collapse on high-dimensional sensor sets, the selector is group-aware: part of the path budget is assigned to globally strongest edges, and the rest is assigned to representative incoming edges from high-scoring feature groups. Groups are inferred by removing only statistic suffixes. Thus Hydraulic statistics such as \texttt{PS2\_mean} and \texttt{PS2\_std} compete within the physical family \texttt{PS2}, while raw numbered variables such as \texttt{sensor\_15}, \texttt{xmeas\_01}, and \texttt{xmv\_04} remain distinct groups. We also expose an explicit source-target group-pair compression mode for high-dimensional raw-sensor tasks; this mode is evaluated as a candidate rather than silently becoming the default.
+\[
+e_k = f([h_s, h_d, h_d-h_s, h_s \odot h_d, A_{ds}, B_{ds}]).
+\]
+Each path receives an importance score \(\alpha_k\) and a reliability score \(\rho_k\):
+\[
+\rho_k=\sigma(r_k), \quad
+g=\text{softplus}(\eta), \quad
+w_k = \text{softmax}(\alpha_k + g\tanh(r_k)).
+\]
+The gain \(g\) is initialized near zero, so reliability is learned as a residual calibration signal instead of being imposed as a hard penalty.
+The final path evidence is
+\[
+z_p = \sum_k w_k e_k.
+\]
+The classifier reads out from node context and path evidence:
+\[
+\hat y = \text{Head}([z_n, z_p]).
+\]
+
+\begin{algorithm}[t]
+\caption{MS-GSE + RPF}
+\begin{algorithmic}[1]
+\STATE Input causal window \(X_{t-L:t}\)
+\STATE Build multi-scale event tokens \(u_{i,t}\)
+\STATE Learn dynamic graph \(A_t\) by sparse variable attention
+\STATE Update selective variable states \(h_{i,t}\)
+\STATE Construct top evidence paths \(\mathcal{P}_t\) from \(A_t\)
+\STATE Estimate path importance \(\alpha_k\) and reliability \(\rho_k\)
+\STATE Fuse paths with \(w_k = \text{softmax}(\alpha_k + g\tanh(r_k))\)
+\STATE Predict \(\hat y_t\) and export \(A_t,\mathcal{P}_t,\rho_t\)
+\end{algorithmic}
+\end{algorithm}
+
+\section{Experiments}
+
+\subsection{Datasets}
+
+We evaluate on four public industrial benchmarks: TEP for fault diagnosis, SKAB for anomaly detection, Hydraulic for component condition monitoring, and C-MAPSS for degradation-stage recognition.
+
+We use official public test splits whenever they are available and reserve validation only from the training side. To avoid optimistic validation admission, C-MAPSS validation is selected by engine unit, TEP validation uses tail blocks within each training source trajectory, and SKAB uses run-level splits. Hydraulic rows are cycle-level operating summaries and are split with stratification. Each result JSON stores the exact split protocol.
+
+\subsection{Baselines}
+
+The planned comparison set includes GDN, MTAD-GAT, GCAD, TranAD, Anomaly Transformer, DCdetector, RTdetector, TimesNet/TimeMixer, and a Mamba/SSM anomaly variant such as MAAT. Tree-based anchors are retained only as legacy references, not as the main comparison.
+
+\subsection{Main Results}
+
+\begin{table}[t]
+\centering
+\caption{Main results. Full-budget numbers will be filled after the multi-seed protocol finishes.}
+\begin{tabular}{lccc}
+\toprule
+Dataset & Metric & Best Baseline & MS-GSE+RPF \\
+\midrule
+TEP & Macro-F1 & TBD & TBD \\
+SKAB & F1/AUC & TBD & TBD \\
+Hydraulic & Macro-F1 & TBD & TBD \\
+C-MAPSS & Macro-F1/RMSE & TBD & TBD \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Current evidence from the modern protocol. SKAB and Hydraulic valve use validation-admitted evidence under the updated soft-redundancy RPF protocol; the other Hydraulic rows are soft-redundancy baselines under the same protocol. These numbers are not final SOTA claims.}
+\begin{tabular}{llcc}
+\toprule
+Dataset/target & Prior & Macro-F1 & Bal. Acc. \\
+\midrule
+SKAB anomaly & admitted salience & \(0.8307{\pm}0.0141\) & \(0.8281{\pm}0.0164\) \\
+TEP 22-class & group-pair RPF & \(0.6140\) & \(0.6250\) \\
+TEP 22-class & group-pair RPF + path aux & \(0.6214\) & \(0.6291\) \\
+Hydraulic cooler & soft RPF & \(0.9994{\pm}0.0009\) & \(0.9994{\pm}0.0009\) \\
+Hydraulic valve & burden-admitted evidence & \(0.7641{\pm}0.0350\) & \(0.7738{\pm}0.0335\) \\
+Hydraulic pump leak & soft RPF & \(0.9790{\pm}0.0118\) & \(0.9792{\pm}0.0116\) \\
+Hydraulic accumulator & admitted baseline & \(0.9327{\pm}0.0078\) & \(0.9339{\pm}0.0052\) \\
+C-MAPSS stage & strict unit-val soft RPF & \(0.6860{\pm}0.0236\) & \(0.6811{\pm}0.0242\) \\
+C-MAPSS stage & regime residual + RPF & \(0.8105{\pm}0.0021\) & \(0.8097{\pm}0.0017\) \\
+C-MAPSS stage & regime residual + protected paths & \(0.8086{\pm}0.0041\) & \(0.8073{\pm}0.0041\) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+On SKAB, expert prior edges under the updated soft-redundancy protocol reach \(0.8117{\pm}0.0297\) Macro-F1 and expose nonzero prior mass in selected paths. The candidate helps seed 42 but hurts seed 44, so it is not a universally safe add-on. We therefore use burden-aware admission: external expert or LLM priors receive a source-burden term \(B_k\), and they must overcome this burden on validation before they can replace internal algorithmic evidence. With \(B_{\mathrm{expert}}=0.01\), the tiny seed-43 expert validation advantage is rejected and the final SKAB admitted result remains \(0.8307{\pm}0.0141\). Older corrected runs also showed that biasing graph search with expert+LLM priors at \(\lambda=0.1\) can reduce performance, supporting our design choice to keep external evidence falsifiable through RPF instead of hard-coding it into the dynamic graph.
+
+Under the updated soft-redundancy protocol, SKAB baseline RPF reaches \(0.8150{\pm}0.0257\) Macro-F1. Raw salience hurts seed 42, but validation admission rejects that candidate and accepts salience on seeds 43 and 44, reaching \(0.8307{\pm}0.0141\). This does not yet exceed the older corrected checkpoint, but it gives a lower-variance result under the current path-fusion standard.
+
+TEP is the largest remaining gap for the updated backbone. In the strict 22-class seed-42 screen, `group_pair_inclusive' hard de-duplicated RPF reaches \(0.6140\) Macro-F1, and adding a path auxiliary loss of \(0.05\) raises it slightly to \(0.6214\). Train-only class salience, a coarse class-0/nonzero auxiliary loss, and default soft redundancy are all negative. Per-class diagnostics show that several faults are nearly solved, while IDV 21, 9, 13, 15, 3 and the normal class remain weak. This suggests that the next TEP update should construct fault-family or mechanism-path evidence candidates and admit them through RPF validation, rather than adding another generic classifier head.
+
+On Hydraulic valve, hard path de-duplication reduced the duplicate rate to zero but dropped Macro-F1 to \(0.6569{\pm}0.0458\), showing that repeated high-value evidence should not be mechanically removed. The current RPF therefore uses soft redundancy: globally selected paths are penalized before group coverage but remain admissible when they are strong. This reaches \(0.7098{\pm}0.0196\) Macro-F1 as the baseline and reports duplicate rate \(0.3671\). Train-only salience is then admitted only when validation Macro-F1 improves over the baseline. Adding exact expert priors as another burdened candidate selects salience for seeds 42 and 43 and expert evidence for seed 44, reaching \(0.7641{\pm}0.0350\) Macro-F1. A group-expanded expert prior increases prior-path visibility but drops Macro-F1 to \(0.6375{\pm}0.0495\), so broad expert expansion is retained as a stress-test ablation rather than a default.
+
+On Hydraulic accumulator, the same admission rule rejects train-only salience for all three seeds. The soft-redundancy baseline reaches \(0.9327{\pm}0.0078\) Macro-F1, while raw salience drops to \(0.8978{\pm}0.0103\). This result is important for the method claim because the evidence module is not an always-on feature injector; it is a candidate evidence source that must pass validation before entering RPF.
+
+The remaining Hydraulic targets validate the unified protocol rather than a target-specific classifier choice. Cooler reaches \(0.9994{\pm}0.0009\) Macro-F1 and internal pump leakage reaches \(0.9790{\pm}0.0118\) under the same soft-redundancy RPF backbone and hyperparameters. Therefore the current weakness is concentrated in valve-state discrimination, not in a general failure of the backbone across Hydraulic component monitoring.
+
+C-MAPSS shows why the contribution should be framed as an algorithmic evidence pipeline rather than a classifier swap. Under the strict official-test and unit-disjoint validation protocol, the earlier soft-RPF baseline reaches only \(0.6860{\pm}0.0236\) Macro-F1, and source-target group-pair compression reaches \(0.6958{\pm}0.0032\). The decisive change is train-only regime prototype residualization: we cluster operating settings, estimate healthy sensor prototypes per regime from training samples, subtract those prototypes from sensor channels, and keep operating settings plus cycle as context. This raises C-MAPSS to \(0.8105{\pm}0.0021\) Macro-F1. With order-anchor path-node protection, cycle remains available to the temporal encoder but cannot appear as an RPF source, target, or bridge; the model still reaches \(0.8086{\pm}0.0041\) and reports cleaner sensor-level evidence paths. The remaining C-MAPSS work is modern SOTA comparison and cross-seed path-stability improvement, not basic degradation-stage accuracy.
+
+\subsection{Ablation Study}
+
+\begin{table}[t]
+\centering
+\caption{Core ablations for the proposed evidence path design.}
+\begin{tabular}{lcc}
+\toprule
+Variant & Tested Component & Expected Role \\
+\midrule
+Single-scale & Multi-scale event tokenizer & abrupt/slow dynamics \\
+No graph & Dynamic variable graph & variable propagation \\
+No reliability & Reliability router & robust path admission \\
+No path fusion & RPF & mechanism path evidence \\
+With residual evidence & residual injection & surprise evidence \\
+Full & all components & complete method \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+
+We introduced MS-GSE + RPF, a unified algorithmic evidence model for multivariate industrial time-series diagnosis. The method shifts the contribution from classifier choice to structured evidence generation and reliable path fusion. The next stage is to complete full-budget SOTA comparisons, path stability analysis, and expert/LLM evidence injection.
+
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,124 @@
+{
+  "version": "cmapss-rul-backbone-optimization-audit-v1",
+  "status": "cmapss_rul_backbone_optimization_partial",
+  "claim_boundary": "The current C-MAPSS evidence supports a cap-corrected long-window temporal anchor. Path residual fusion is not admitted for C-MAPSS until it beats the same-window temporal anchor under validation-safe evidence.",
+  "rows": [
+    {
+      "name": "gru_w80_cap125",
+      "role": "old matched GRU anchor",
+      "source": "knowledge_exports\\cmapss_rul_deep_baselines_regime_w80\\cmapss_rul_matched_baselines_summary.json",
+      "rul_cap": 125.0,
+      "window_size": 80,
+      "status": "materialized",
+      "n_seeds": 3,
+      "rmse_mean": 20.755885280500312,
+      "rmse_std": 0.14016573394887194,
+      "mae_mean": 13.303885401447445,
+      "score_mean": 7531.0016728078235,
+      "score_std": 231.663314513474
+    },
+    {
+      "name": "gru_w80_cap150",
+      "role": "cap-corrected GRU anchor",
+      "source": "knowledge_exports\\cmapss_rul_deep_baselines_regime_w80_cap150\\cmapss_rul_matched_baselines_summary.json",
+      "rul_cap": 150.0,
+      "window_size": 80,
+      "status": "materialized",
+      "n_seeds": 3,
+      "rmse_mean": 18.436454314925147,
+      "rmse_std": 0.16862067371111192,
+      "mae_mean": 12.544103681563433,
+      "score_mean": 6428.784002615687,
+      "score_std": 161.43251736674867
+    },
+    {
+      "name": "gru_w160_cap150",
+      "role": "long-window cap-corrected GRU anchor",
+      "source": "knowledge_exports\\cmapss_rul_deep_baselines_regime_w160_cap150\\cmapss_rul_matched_baselines_summary.json",
+      "rul_cap": 150.0,
+      "window_size": 160,
+      "status": "materialized",
+      "n_seeds": 3,
+      "rmse_mean": 18.061742134161992,
+      "rmse_std": 0.36207622950472945,
+      "mae_mean": 12.064823664566752,
+      "score_mean": 6525.4598370911945,
+      "score_std": 744.192785148096
+    },
+    {
+      "name": "anchorpath_w80_cap125",
+      "role": "old AnchorPath-BiGRU path-fusion branch",
+      "source": "knowledge_exports\\aaai_formal_public_runs\\cmapss_rul_anchorpath_bigru_cls020_w80_e20\\ms_gse_rpf_cmapss_full_summary.json",
+      "rul_cap": 125.0,
+      "window_size": 80,
+      "status": "materialized",
+      "n_seeds": 3,
+      "rmse_mean": 20.479162446515367,
+      "rmse_std": 0.13443212611606004,
+      "mae_mean": 13.239735853778816,
+      "score_mean": 7185.615197220618,
+      "score_std": 84.8346078921937
+    },
+    {
+      "name": "anchorpath_w80_cap150",
+      "role": "cap-corrected AnchorPath-BiGRU path-fusion branch",
+      "source": "knowledge_exports\\aaai_formal_public_runs\\cmapss_rul_anchorpath_bigru_cls020_cap150_w80_e20\\ms_gse_rpf_cmapss_full_summary.json",
+      "rul_cap": 150.0,
+      "window_size": 80,
+      "status": "materialized",
+      "n_seeds": 3,
+      "rmse_mean": 18.666551569904016,
+      "rmse_std": 0.20673379009193785,
+      "mae_mean": 12.679266669513032,
+      "score_mean": 6981.53791397403,
+      "score_std": 728.4842347133302
+    },
+    {
+      "name": "anchorpath_w160_cap150_seed42_smoke",
+      "role": "long-window path-fusion smoke",
+      "source": "knowledge_exports\\cmapss_rul_anchorpath_bigru_cls020_cap150_w160_seed42_smoke\\ms_gse_rpf_cmapss_full_summary.json",
+      "rul_cap": 150.0,
+      "window_size": 160,
+      "status": "materialized",
+      "n_seeds": 1,
+      "rmse_mean": 18.85169960941336,
+      "rmse_std": 0.0,
+      "mae_mean": 12.83936612676866,
+      "score_mean": 7017.042377736261,
+      "score_std": 0.0
+    }
+  ],
+  "deltas": {
+    "cap150_vs_cap125_gru_rmse_reduction": 2.3194309655751653,
+    "w160_vs_w80_cap150_gru_rmse_reduction": 0.3747121807631544,
+    "anchorpath_w80_cap150_minus_gru_w80_cap150_rmse": 0.2300972549788689,
+    "anchorpath_w160_cap150_seed42_minus_gru_w160_cap150_seed42_rmse": 1.2676987369150687
+  },
+  "pseudo_terminal_validation": {
+    "present": true,
+    "status": "pseudo_truncation_validation_complete_with_score_tradeoff",
+    "selected_by_pseudo_validation": "gru_w160_cap150",
+    "best_by_official_test": "gru_w160_cap150",
+    "official_score_tradeoff": {
+      "present": true,
+      "selected_candidate": "gru_w160_cap150",
+      "selected_official_test_score": 6619.390412637503,
+      "best_score_candidate": "gru_w80_cap150",
+      "best_official_test_score": 6211.187716199135,
+      "score_gap": 408.20269643836764
+    }
+  },
+  "gates": {
+    "cap150_improves_w80_gru": true,
+    "long_window_improves_cap150_gru": true,
+    "pseudo_terminal_rmse_selection_supports_long_window": true,
+    "path_fusion_admitted_for_cmapss": false,
+    "long_window_path_smoke_admitted": false
+  },
+  "recommended_cmapss_role": "Use C-MAPSS as original-task RUL transfer evidence with a long-window temporal anchor. Do not claim C-MAPSS path-fusion gain unless a future validation-admitted path branch improves this anchor.",
+  "next_actions": [
+    "Use the pseudo-terminal validation audit when reporting C-MAPSS cap/window selection, and disclose the PHM-score trade-off.",
+    "Promote w160/cap150 GRU or an equivalent temporal anchor as the C-MAPSS local matched anchor for RMSE-oriented claims.",
+    "Redesign RUL path fusion as a challenger: deploy it only when the same pseudo-terminal panel improves RMSE and passes a predeclared score trade-off rule."
+  ]
+}

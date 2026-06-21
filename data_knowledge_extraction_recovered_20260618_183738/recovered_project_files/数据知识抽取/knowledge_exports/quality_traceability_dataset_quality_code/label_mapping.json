@@ -1,0 +1,72 @@
+{
+  "binary_task": {
+    "column": "quality_label",
+    "negative": {
+      "id": 0,
+      "name": "无品质异常",
+      "rule": "品质异常代码1-5均为空、0或缺失"
+    },
+    "positive": {
+      "id": 1,
+      "name": "目标质量异常",
+      "rule": "品质异常代码命中目标质量异常大类"
+    }
+  },
+  "single_label_multiclass_task": {
+    "id_column": "quality_multiclass_id",
+    "code_column": "quality_multiclass_code",
+    "name_column": "quality_multiclass_name",
+    "classes": [
+      {
+        "id": 0,
+        "code": "no_quality_abnormal",
+        "name": "无品质异常"
+      },
+      {
+        "id": 1,
+        "code": "temperature_flux",
+        "name": "温度/保护渣质量异常"
+      },
+      {
+        "id": 2,
+        "code": "mold_level_slag_risk",
+        "name": "液面波动/卷渣风险异常"
+      },
+      {
+        "id": 3,
+        "code": "speed_stopper_flow",
+        "name": "拉速/塞棒/流量控制异常"
+      },
+      {
+        "id": 4,
+        "code": "heat_transfer_imbalance",
+        "name": "结晶器传热不均异常"
+      },
+      {
+        "id": 5,
+        "code": "process_fluctuation",
+        "name": "过程参数波动异常"
+      }
+    ],
+    "priority_rule": "一条记录命中多个目标异常大类时，按温度/保护渣、液面/卷渣、拉速/塞棒/流量、传热不均、过程波动的顺序选主类。"
+  },
+  "multi_label_task": {
+    "columns": [
+      "quality_group_temperature_flux",
+      "quality_group_mold_level_slag_risk",
+      "quality_group_speed_stopper_flow",
+      "quality_group_heat_transfer_imbalance",
+      "quality_group_process_fluctuation"
+    ],
+    "count_column": "quality_target_label_count",
+    "multiple_flag_column": "has_multiple_quality_targets",
+    "usage": "用于保留同一记录同时命中多个异常机理的情况，不强制压成单一类别。"
+  },
+  "auxiliary_samples": {
+    "excluded_from_main_training": [
+      "transition_tundish",
+      "other_quality_abnormal"
+    ],
+    "usage": "作为知识图谱、历史案例和规则沉淀数据，不直接进入主二分类/多分类训练集。"
+  }
+}

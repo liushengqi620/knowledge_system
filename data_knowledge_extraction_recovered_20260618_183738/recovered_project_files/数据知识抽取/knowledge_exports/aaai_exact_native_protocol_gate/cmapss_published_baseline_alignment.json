@@ -1,0 +1,457 @@
+{
+  "version": "cmapss-published-baseline-alignment-v1",
+  "status": "published_baseline_alignment_partial_not_sota_proof",
+  "claim_boundary": "This artifact separates local matched C-MAPSS baselines from published-reference baselines. It materializes the alignment table, but does not mark any published baseline as reproduced or budget-matched.",
+  "reference_sources": [
+    {
+      "id": "nasa_open_data_cmapss",
+      "title": "NASA CMAPSS Jet Engine Simulated Data",
+      "url": "https://data.nasa.gov/dataset/cmapss-jet-engine-simulated-data",
+      "protocol_use": "Primary data source for train/test trajectories, terminal test-unit RUL labels, three operating settings, and sensor columns."
+    },
+    {
+      "id": "nasa_pcoe_repository",
+      "title": "NASA PCoE Turbofan Engine Degradation Simulation",
+      "url": "https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/",
+      "protocol_use": "Repository-level description of four C-MAPSS subsets under different operating-condition and fault-mode combinations."
+    },
+    {
+      "id": "saxena2008_cmapss",
+      "title": "Damage Propagation Modeling for Aircraft Engine Run-to-Failure Simulation",
+      "url": "https://doi.org/10.1109/PHM.2008.4711414",
+      "protocol_use": "Original PHM 2008 C-MAPSS simulation reference; use for dataset lineage and PHM-style RUL scoring context."
+    }
+  ],
+  "native_protocol_contract": [
+    "Use NASA FD001-FD004 train/test units and terminal test-unit RUL labels.",
+    "Report subset RMSE and PHM-style asymmetric RUL score; pooled RMSE is secondary.",
+    "Declare RUL cap, selected sensors, scaler/regime fit scope, window length, seeds, epochs, and validation-unit split.",
+    "Treat local GRU/TCN/tabular rows as matched-protocol controls, not published paper reproductions.",
+    "Treat LSTM local matched rows as published-style candidates until the exact published configuration, preprocessing, and budget are reproduced.",
+    "Admit literature-wide SOTA wording only after a cited baseline has the same split, cap, preprocessing, metric, budget, and seed-level prediction archive."
+  ],
+  "coverage_summary": {
+    "native_manifest_present": true,
+    "native_manifest_status": "native_preprocessing_manifest_complete",
+    "native_manifest_gates": {
+      "native_fd001_fd004_split_present": true,
+      "terminal_test_unit_records_present": true,
+      "rul_cap_declared": true,
+      "subset_rmse_score_present": true,
+      "primary_task_is_continuous_rul": true,
+      "train_only_preprocessing_declared": true,
+      "published_baseline_alignment_present": true
+    },
+    "matched_baseline_summary_present": true,
+    "local_matched_baselines": [
+      "gru_sequence",
+      "tcn_sequence"
+    ],
+    "local_matched_baseline_subset_coverage": {
+      "gru_sequence": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "tcn_sequence": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ]
+    },
+    "published_style_candidates": [
+      {
+        "name": "lstm_sequence",
+        "published_reference_id": "lstm_rul_2017",
+        "n_seeds": 3,
+        "subsets": [
+          "FD001",
+          "FD002",
+          "FD003",
+          "FD004"
+        ],
+        "alignment_status": "published_style_seed_archive_not_exact_reproduction"
+      }
+    ]
+  },
+  "local_protocol_rows": [
+    {
+      "source": "current_proposed_or_formal_branch",
+      "name": "cmapss_original_rul_terminal_anchor_w48_e20",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        125.0
+      ],
+      "window_sizes": [
+        48
+      ],
+      "rmse_mean": 31.255410783574018,
+      "score_mean": 41469.989800426134,
+      "alignment_status": "local_matched_protocol_seed_archive"
+    },
+    {
+      "source": "current_proposed_or_formal_branch",
+      "name": "cmapss_rul_anchorpath_bigru_cls020_cap150_w80_e20",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        150.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 18.666551569904016,
+      "score_mean": 6981.53791397403,
+      "alignment_status": "local_matched_protocol_seed_archive"
+    },
+    {
+      "source": "current_proposed_or_formal_branch",
+      "name": "cmapss_rul_anchorpath_bigru_cls020_w80_e20",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        125.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 20.479162446515367,
+      "score_mean": 7185.615197220618,
+      "alignment_status": "local_matched_protocol_seed_archive"
+    },
+    {
+      "source": "current_proposed_or_formal_branch",
+      "name": "cmapss_rul_direct_regime_bitempmix_w80_e20",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        125.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 21.688186618719524,
+      "score_mean": 8816.968621741724,
+      "alignment_status": "local_matched_protocol_seed_archive"
+    },
+    {
+      "source": "current_proposed_or_formal_branch",
+      "name": "cmapss_rul_direct_regime_tempmix_w80_e20",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        125.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 23.839502855986797,
+      "score_mean": 12964.146730393515,
+      "alignment_status": "local_matched_protocol_seed_archive"
+    },
+    {
+      "source": "current_proposed_or_formal_branch",
+      "name": "gru_sequence_w80_cap125",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        125.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 20.755885280500312,
+      "score_mean": 7531.0016728078235,
+      "alignment_status": "local_matched_protocol_seed_archive"
+    },
+    {
+      "source": "current_proposed_or_formal_branch",
+      "name": "gru_sequence_w80_cap150",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        150.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 18.436454314925147,
+      "score_mean": 6428.784002615687,
+      "alignment_status": "local_matched_protocol_seed_archive"
+    },
+    {
+      "source": "current_proposed_or_formal_branch",
+      "name": "gru_sequence_w160_cap150",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        150.0
+      ],
+      "window_sizes": [
+        160
+      ],
+      "rmse_mean": 18.06174213416199,
+      "score_mean": 6525.4598370911945,
+      "alignment_status": "local_matched_protocol_seed_archive"
+    },
+    {
+      "source": "current_proposed_or_formal_branch",
+      "name": "lstm_sequence",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        125.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 21.652053761486993,
+      "score_mean": 9679.965381654756,
+      "alignment_status": "local_matched_protocol_seed_archive"
+    },
+    {
+      "source": "current_proposed_or_formal_branch",
+      "name": "tcn_sequence_w80_cap125",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        125.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 25.889380352489393,
+      "score_mean": 19477.529090489916,
+      "alignment_status": "local_matched_protocol_seed_archive"
+    },
+    {
+      "source": "current_proposed_or_formal_branch",
+      "name": "tcn_sequence_w80_cap150",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        150.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 25.694187153798186,
+      "score_mean": 25817.310701495135,
+      "alignment_status": "local_matched_protocol_seed_archive"
+    },
+    {
+      "source": "local_matched_baseline",
+      "name": "gru_sequence",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        125.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 20.755885280500312,
+      "score_mean": 7531.0016728078235,
+      "alignment_status": "local_matched_protocol_not_published_reproduction"
+    },
+    {
+      "source": "local_matched_baseline",
+      "name": "tcn_sequence",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        125.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 25.889380352489393,
+      "score_mean": 19477.529090489916,
+      "alignment_status": "local_matched_protocol_not_published_reproduction"
+    },
+    {
+      "source": "published_style_local_candidate",
+      "name": "lstm_sequence",
+      "n_seeds": 3,
+      "subsets": [
+        "FD001",
+        "FD002",
+        "FD003",
+        "FD004"
+      ],
+      "rul_cap_values": [
+        125.0
+      ],
+      "window_sizes": [
+        80
+      ],
+      "rmse_mean": 21.652053761486993,
+      "score_mean": 9679.965381654756,
+      "alignment_status": "published_style_seed_archive_not_exact_reproduction",
+      "published_reference_id": "lstm_rul_2017"
+    }
+  ],
+  "published_reference_registry": [
+    {
+      "id": "deep_cnn_rul_2016",
+      "family": "CNN regression",
+      "title": "Deep convolutional neural network based regression approach for estimation of remaining useful life",
+      "url": "https://doi.org/10.1007/978-3-319-32025-0_14",
+      "year": 2016,
+      "reported_scope": "C-MAPSS RUL baseline family; frequently cited in later FD001-FD004 comparison tables.",
+      "alignment_status": "reference_only_not_reproduced",
+      "blocking_fields": [
+        "exact sensor selection",
+        "RUL cap",
+        "normalization scope",
+        "training budget",
+        "seed-level prediction archive"
+      ]
+    },
+    {
+      "id": "lstm_rul_2017",
+      "family": "LSTM sequence RUL",
+      "title": "Long Short-Term Memory Network for Remaining Useful Life Estimation",
+      "url": "https://doi.org/10.1109/ICPHM.2017.7998311",
+      "year": 2017,
+      "reported_scope": "Canonical LSTM RUL baseline family on C-MAPSS.",
+      "alignment_status": "reference_only_not_reproduced",
+      "blocking_fields": [
+        "subset table reproduction",
+        "RUL cap",
+        "validation split",
+        "epochs and hidden size",
+        "seed-level prediction archive"
+      ]
+    },
+    {
+      "id": "attention_lstm_ijphm_2025",
+      "family": "attention LSTM",
+      "title": "Remaining Useful Life Prediction Using Attention-LSTM Neural Networks",
+      "url": "https://papers.phmsociety.org/index.php/ijphm/article/download/4274/2620",
+      "year": 2025,
+      "reported_scope": "Recent attention-LSTM comparison using RMSE and score on NASA C-MAPSS subsets.",
+      "alignment_status": "reference_only_not_reproduced",
+      "blocking_fields": [
+        "covered FD subsets",
+        "preprocessing equivalence",
+        "RUL cap equivalence",
+        "matched training budget",
+        "seed-level prediction archive"
+      ]
+    },
+    {
+      "id": "hierarchical_transformer_sensors_2024",
+      "family": "hierarchical Transformer",
+      "title": "A Two-Stage Attention-Based Hierarchical Transformer for Turbofan Engine Remaining Useful Life Prediction",
+      "url": "https://www.mdpi.com/1424-8220/24/3/824",
+      "year": 2024,
+      "reported_scope": "Recent Transformer-style C-MAPSS RUL reference; useful as a candidate architecture/baseline family.",
+      "alignment_status": "reference_only_not_reproduced",
+      "blocking_fields": [
+        "windowing",
+        "label cap",
+        "feature scaling",
+        "FD001-FD004 table comparability",
+        "training budget"
+      ]
+    }
+  ],
+  "gates": {
+    "alignment_artifact_present": true,
+    "native_manifest_present": true,
+    "local_fd001_fd004_seed_archive_present": true,
+    "local_matched_baseline_protocol_present": true,
+    "published_reference_registry_present": true,
+    "published_style_candidate_seed_archive_present": true,
+    "published_reproduction_seed_artifacts_present": false,
+    "exact_published_preprocessing_matched": false,
+    "matched_budget_present": false,
+    "literature_wide_sota_admissible": false
+  },
+  "missing_gates": [
+    "published_reproduction_seed_artifacts_present",
+    "exact_published_preprocessing_matched",
+    "matched_budget_present",
+    "literature_wide_sota_admissible"
+  ],
+  "recommended_paper_wording": {
+    "safe": "C-MAPSS supports original terminal RUL transfer under local matched FD001-FD004 controls; current path-fusion branches remain challengers unless admitted over the temporal anchor.",
+    "unsafe": "C-MAPSS proves literature-wide or official RUL SOTA, or proves path-fusion benefit before validation-safe admission."
+  },
+  "next_actions": [
+    "Use cmapss_published_baseline_contract as the field-level checklist before promoting any published-style row into an exact published-baseline reproduction.",
+    "Select at least two published C-MAPSS RUL baselines and reproduce them with identical FD001-FD004 split, RUL cap, preprocessing, and metrics.",
+    "Promote the LSTM published-style candidate only after the exact LSTM paper configuration, preprocessing, epochs, hidden size, and subset table are matched.",
+    "Archive per-test-engine predictions for every reproduced published baseline and compute subset RMSE/score from the frozen records.",
+    "Normalize or explicitly match training budget: window length, epochs, batch size, hidden size, seeds, and train/validation unit split."
+  ]
+}

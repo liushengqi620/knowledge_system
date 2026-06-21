@@ -1,0 +1,125 @@
+{
+  "status": "ok",
+  "task": "skab_external_reconstruction_baselines",
+  "protocol": "run_level_skab_reconstruction_anomaly_baselines",
+  "methods": [
+    "anomaly_transformer"
+  ],
+  "seeds": [
+    42
+  ],
+  "window_size": 8,
+  "epochs": 1,
+  "hidden_dim": 8,
+  "association_weight": 0.1,
+  "runs": [
+    {
+      "seed": 42,
+      "train_runs": [
+        "other_4",
+        "valve1_6",
+        "other_11",
+        "anomaly-free_anomaly-free",
+        "valve1_0",
+        "valve1_10",
+        "valve1_7",
+        "other_7",
+        "valve1_14",
+        "other_6",
+        "other_9",
+        "valve2_2",
+        "other_10",
+        "other_12",
+        "valve2_1",
+        "other_1",
+        "other_8",
+        "other_3"
+      ],
+      "val_runs": [
+        "valve1_2",
+        "valve2_0",
+        "valve1_11",
+        "other_14",
+        "valve1_5",
+        "valve1_15"
+      ],
+      "test_runs": [
+        "valve1_4",
+        "valve1_1",
+        "valve1_3",
+        "other_13",
+        "valve1_9",
+        "valve1_13",
+        "valve2_3",
+        "other_2",
+        "other_5",
+        "valve1_8",
+        "valve1_12"
+      ],
+      "n_train_windows": 21824,
+      "n_val_windows": 6550,
+      "n_test_windows": 11813,
+      "anomaly_transformer": {
+        "metrics": {
+          "accuracy": 0.5735206975366122,
+          "balanced_accuracy": 0.5721444297426834,
+          "macro_f1": 0.5609482183852793,
+          "macro_precision": 0.5663584928543182,
+          "macro_recall": 0.5721444297426834,
+          "positive_f1": 0.48665172202975343,
+          "positive_precision": 0.42604817127564676,
+          "positive_recall": 0.5673556664290805
+        },
+        "protocol": {
+          "binary": {
+            "f1": 0.48665172202975343,
+            "precision": 0.42604817127564676,
+            "recall": 0.5673556664290805,
+            "far_percent": 42.30668069437138,
+            "mar_percent": 43.264433357091946
+          },
+          "point_adjusted": {
+            "f1": 1.0,
+            "detected_runs": 11,
+            "anomalous_runs": 11
+          },
+          "right_window_changepoint": {
+            "window_steps": 60,
+            "detected_runs": 11,
+            "anomalous_runs": 11
+          }
+        },
+        "threshold_tuning": {
+          "threshold": 1.0394375622272491,
+          "f1": 0.47551686615886835,
+          "scale": 0.158714485168457,
+          "score_min": 0.2573749219998717,
+          "score_max": 1.5261597156524658
+        },
+        "diagnostics": {
+          "model": "anomaly_transformer_style_association_discrepancy",
+          "epochs": 1,
+          "hidden_dim": 8,
+          "association_weight": 0.1,
+          "loss_final": 0.7741729825042015,
+          "reconstruction_loss_final": 0.6886932323145312,
+          "association_loss_final": 1.709595009338024,
+          "loss_history": [
+            0.7741729825042015
+          ],
+          "score_components": {
+            "val_reconstruction_mean": 0.8422107965072603,
+            "val_association_mean": 1.6451608200911574,
+            "test_reconstruction_mean": 0.9231434382247873,
+            "test_association_mean": 1.6435748094062983
+          }
+        },
+        "score_summary": {
+          "val_mean": 1.0067268785163759,
+          "test_mean": 1.087500919165417,
+          "test_p95": 1.316762137413025
+        }
+      }
+    }
+  ]
+}

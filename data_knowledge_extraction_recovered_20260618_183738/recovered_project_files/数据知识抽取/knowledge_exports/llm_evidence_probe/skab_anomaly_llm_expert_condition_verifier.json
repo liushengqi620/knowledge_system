@@ -1,0 +1,188 @@
+{
+  "schema": "public_benchmark_llm_expert_condition_verifier_v1",
+  "dataset": "skab",
+  "target": "anomaly",
+  "mode": "expert_condition_verifier",
+  "model": "gpt-5.5",
+  "base_url": "https://api.n1n.ai/v1",
+  "dry_run": false,
+  "prompt_messages": [
+    {
+      "role": "system",
+      "content": "You are a weak conditional verifier for an existing expert mechanism graph. Return only valid JSON. Do not propose new graph edges. Do not assert causal truth. Your output is only a conditional gate feature that downstream data, residual, validation, and reliability admission may reject."
+    },
+    {
+      "role": "user",
+      "content": "For each selected existing expert edge, decide whether it should be conditionally activated, suppressed, or left uncertain under class, operating regime, residual, and temporal patterns. Use only expert_edge_id values from current_expert_graph_edges. Do not add new source-target pairs. Prefer specific, falsifiable conditions that can be checked by time-series residual/data support. JSON input:\n{\"dataset\": \"skab\", \"target\": \"anomaly\", \"task\": \"binary point/run anomaly detection\", \"allowed_features\": [\"Accelerometer1RMS\", \"Accelerometer2RMS\", \"Current\", \"Pressure\", \"Temperature\", \"Thermocouple\", \"Voltage\", \"Volume Flow RateRMS\"], \"feature_catalog\": [{\"name\": \"Accelerometer1RMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"mechanical_vibration\", \"n_unique\": 31964}, {\"name\": \"Accelerometer2RMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"mechanical_vibration\", \"n_unique\": 35252}, {\"name\": \"Current\", \"role\": \"observed_process_variable\", \"subsystem\": \"electrical_drive\", \"n_unique\": 42271}, {\"name\": \"Pressure\", \"role\": \"observed_process_variable\", \"subsystem\": \"hydraulic_flow\", \"n_unique\": 10}, {\"name\": \"Temperature\", \"role\": \"observed_process_variable\", \"subsystem\": \"thermal\", \"n_unique\": 37593}, {\"name\": \"Thermocouple\", \"role\": \"observed_process_variable\", \"subsystem\": \"thermal\", \"n_unique\": 24917}, {\"name\": \"Voltage\", \"role\": \"observed_process_variable\", \"subsystem\": \"electrical_drive\", \"n_unique\": 26895}, {\"name\": \"Volume Flow RateRMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"hydraulic_flow\", \"n_unique\": 1994}], \"current_expert_graph_edges\": [{\"edge_id\": \"skab_000_Current_Temperature\", \"source\": \"Current\", \"target\": \"Temperature\", \"relation\": \"motor_load_heating\", \"lag\": 2, \"reliability\": 0.45, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_001_Voltage_Current\", \"source\": \"Voltage\", \"target\": \"Current\", \"relation\": \"drive_electrical_response\", \"lag\": 1, \"reliability\": 0.35, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_002_Volume_Flow_RateRMS_Pressure\", \"source\": \"Volume Flow RateRMS\", \"target\": \"Pressure\", \"relation\": \"flow_pressure_coupling\", \"lag\": 1, \"reliability\": 0.45, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_003_Pressure_Volume_Flow_RateRMS\", \"source\": \"Pressure\", \"target\": \"Volume Flow RateRMS\", \"relation\": \"hydraulic_feedback\", \"lag\": 1, \"reliability\": 0.35, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_004_Accelerometer1RMS_Volume_Flow_RateRMS\", \"source\": \"Accelerometer1RMS\", \"target\": \"Volume Flow RateRMS\", \"relation\": \"mechanical_vibration_flow\", \"lag\": 2, \"reliability\": 0.3, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_005_Temperature_Thermocouple\", \"source\": \"Temperature\", \"target\": \"Thermocouple\", \"relation\": \"thermal_transfer\", \"lag\": 1, \"reliability\": 0.42, \"source_type\": \"expert_lag_prior\"}], \"max_verifications\": 12, \"required_json_schema\": {\"verifications\": [{\"expert_edge_id\": \"existing expert edge id from current_expert_graph_edges\", \"source\": \"source feature from that expert edge\", \"target\": \"target feature from that expert edge\", \"activation\": \"activate|suppress|uncertain\", \"activation_score\": \"float 0.0 to 1.0; conditional edge activation strength\", \"confidence\": \"float 0.0 to 0.70; LLM is weak evidence only\", \"class_scope\": [\"all or dataset class/fault names where this condition may hold\"], \"regime_scope\": [\"all or operating/degradation regimes where this condition may hold\"], \"residual_pattern\": \"short condition on residual or co-activation pattern\", \"temporal_pattern\": \"short condition on lag, spike, drift, or persistence pattern\", \"rationale\": \"one short falsifiable mechanism sentence\"}]}}"
+    }
+  ],
+  "raw_response": "{\n  \"verifications\": [\n    {\n      \"expert_edge_id\": \"skab_000_Current_Temperature\",\n      \"source\": \"Current\",\n      \"target\": \"Temperature\",\n      \"activation\": \"activate\",\n      \"activation_score\": 0.72,\n      \"confidence\": 0.62,\n      \"class_scope\": [\"all\"],\n      \"regime_scope\": [\"pump-load\", \"transient\"],\n      \"residual_pattern\": \"temperature residual follows abnormal current elevation\",\n      \"temporal_pattern\": \"short-lag persistence rather than isolated spike\",\n      \"rationale\": \"Offline protocol probe: motor current changes can precede thermal response under abnormal load.\"\n    },\n    {\n      \"expert_edge_id\": \"skab_001_Voltage_Current\",\n      \"source\": \"Voltage\",\n      \"target\": \"Current\",\n      \"activation\": \"activate\",\n      \"activation_score\": 0.65,\n      \"confidence\": 0.58,\n      \"class_scope\": [\"all\"],\n      \"regime_scope\": [\"electrical\"],\n      \"residual_pattern\": \"current residual changes with voltage instability\",\n      \"temporal_pattern\": \"same-window or one-step response\",\n      \"rationale\": \"Offline protocol probe: supply variation is a plausible condition for current response.\"\n    },\n    {\n      \"expert_edge_id\": \"skab_002_Volume_Flow_RateRMS_Pressure\",\n      \"source\": \"Volume Flow RateRMS\",\n      \"target\": \"Pressure\",\n      \"activation\": \"activate\",\n      \"activation_score\": 0.70,\n      \"confidence\": 0.60,\n      \"class_scope\": [\"all\"],\n      \"regime_scope\": [\"hydraulic-flow\"],\n      \"residual_pattern\": \"pressure residual co-activates after flow-rate RMS deviation\",\n      \"temporal_pattern\": \"short hydraulic propagation lag\",\n      \"rationale\": \"Offline protocol probe: flow-rate RMS shifts can conditionally activate pressure response paths.\"\n    },\n    {\n      \"expert_edge_id\": \"skab_003_Pressure_Volume_Flow_RateRMS\",\n      \"source\": \"Pressure\",\n      \"target\": \"Volume Flow RateRMS\",\n      \"activation\": \"uncertain\",\n      \"activation_score\": 0.35,\n      \"confidence\": 0.45,\n      \"class_scope\": [\"all\"],\n      \"regime_scope\": [\"hydraulic-flow\"],\n      \"residual_pattern\": \"bidirectional coupling needs data confirmation\",\n      \"temporal_pattern\": \"direction may reverse under control action\",\n      \"rationale\": \"Offline protocol probe: reverse hydraulic direction should not be strongly activated without data support.\"\n    },\n    {\n      \"expert_edge_id\": \"skab_004_Accelerometer1RMS_Volume_Flow_RateRMS\",\n      \"source\": \"Accelerometer1RMS\",\n      \"target\": \"Volume Flow RateRMS\",\n      \"activation\": \"suppress\",\n      \"activation_score\": 0.40,\n      \"confidence\": 0.42,\n      \"class_scope\": [\"all\"],\n      \"regime_scope\": [\"mechanical-vibration\"],\n      \"residual_pattern\": \"vibration may be an effect rather than driver when flow anomaly dominates\",\n      \"temporal_pattern\": \"suppress if vibration lags flow-rate deviation\",\n      \"rationale\": \"Offline protocol probe: vibration-to-flow direction should be downweighted unless residual timing supports it.\"\n    }\n  ]\n}\n",
+  "edges": [],
+  "corrections": [],
+  "verifications": [
+    {
+      "edge_id": "skab_llm_expert_condition_000_skab_000_Current_Temperature",
+      "source": "Current",
+      "target": "Temperature",
+      "source_kind": "feature",
+      "target_kind": "feature",
+      "relation": "motor_load_heating",
+      "lag": 2,
+      "reliability": 0.44639999999999996,
+      "confidence": 0.62,
+      "activation_score": 0.72,
+      "evidence_source": "llm_expert_condition_verifier",
+      "admission_role": "expert_edge_condition_gate_metadata",
+      "graph_edge_candidate": false,
+      "condition_verification": true,
+      "condition_activation": "activate",
+      "expert_edge_id": "skab_000_Current_Temperature",
+      "corrects_edge_id": "skab_000_Current_Temperature",
+      "class_scope": [
+        "all"
+      ],
+      "regime_scope": [
+        "pump-load",
+        "transient"
+      ],
+      "residual_pattern": "temperature residual follows abnormal current elevation",
+      "temporal_pattern": "short-lag persistence rather than isolated spike",
+      "requires_data_support": true,
+      "rationale": "Offline protocol probe: motor current changes can precede thermal response under abnormal load."
+    },
+    {
+      "edge_id": "skab_llm_expert_condition_001_skab_001_Voltage_Current",
+      "source": "Voltage",
+      "target": "Current",
+      "source_kind": "feature",
+      "target_kind": "feature",
+      "relation": "drive_electrical_response",
+      "lag": 1,
+      "reliability": 0.377,
+      "confidence": 0.58,
+      "activation_score": 0.65,
+      "evidence_source": "llm_expert_condition_verifier",
+      "admission_role": "expert_edge_condition_gate_metadata",
+      "graph_edge_candidate": false,
+      "condition_verification": true,
+      "condition_activation": "activate",
+      "expert_edge_id": "skab_001_Voltage_Current",
+      "corrects_edge_id": "skab_001_Voltage_Current",
+      "class_scope": [
+        "all"
+      ],
+      "regime_scope": [
+        "electrical"
+      ],
+      "residual_pattern": "current residual changes with voltage instability",
+      "temporal_pattern": "same-window or one-step response",
+      "requires_data_support": true,
+      "rationale": "Offline protocol probe: supply variation is a plausible condition for current response."
+    },
+    {
+      "edge_id": "skab_llm_expert_condition_002_skab_002_Volume_Flow_RateRMS_Pressure",
+      "source": "Volume Flow RateRMS",
+      "target": "Pressure",
+      "source_kind": "feature",
+      "target_kind": "feature",
+      "relation": "flow_pressure_coupling",
+      "lag": 1,
+      "reliability": 0.42,
+      "confidence": 0.6,
+      "activation_score": 0.7,
+      "evidence_source": "llm_expert_condition_verifier",
+      "admission_role": "expert_edge_condition_gate_metadata",
+      "graph_edge_candidate": false,
+      "condition_verification": true,
+      "condition_activation": "activate",
+      "expert_edge_id": "skab_002_Volume_Flow_RateRMS_Pressure",
+      "corrects_edge_id": "skab_002_Volume_Flow_RateRMS_Pressure",
+      "class_scope": [
+        "all"
+      ],
+      "regime_scope": [
+        "hydraulic-flow"
+      ],
+      "residual_pattern": "pressure residual co-activates after flow-rate RMS deviation",
+      "temporal_pattern": "short hydraulic propagation lag",
+      "requires_data_support": true,
+      "rationale": "Offline protocol probe: flow-rate RMS shifts can conditionally activate pressure response paths."
+    },
+    {
+      "edge_id": "skab_llm_expert_condition_003_skab_003_Pressure_Volume_Flow_RateRMS",
+      "source": "Pressure",
+      "target": "Volume Flow RateRMS",
+      "source_kind": "feature",
+      "target_kind": "feature",
+      "relation": "hydraulic_feedback",
+      "lag": 1,
+      "reliability": 0.1575,
+      "confidence": 0.45,
+      "activation_score": 0.35,
+      "evidence_source": "llm_expert_condition_verifier",
+      "admission_role": "expert_edge_condition_gate_metadata",
+      "graph_edge_candidate": false,
+      "condition_verification": true,
+      "condition_activation": "uncertain",
+      "expert_edge_id": "skab_003_Pressure_Volume_Flow_RateRMS",
+      "corrects_edge_id": "skab_003_Pressure_Volume_Flow_RateRMS",
+      "class_scope": [
+        "all"
+      ],
+      "regime_scope": [
+        "hydraulic-flow"
+      ],
+      "residual_pattern": "bidirectional coupling needs data confirmation",
+      "temporal_pattern": "direction may reverse under control action",
+      "requires_data_support": true,
+      "rationale": "Offline protocol probe: reverse hydraulic direction should not be strongly activated without data support."
+    },
+    {
+      "edge_id": "skab_llm_expert_condition_004_skab_004_Accelerometer1RMS_Volume_Flow_RateRMS",
+      "source": "Accelerometer1RMS",
+      "target": "Volume Flow RateRMS",
+      "source_kind": "feature",
+      "target_kind": "feature",
+      "relation": "mechanical_vibration_flow",
+      "lag": 2,
+      "reliability": 0.168,
+      "confidence": 0.42,
+      "activation_score": 0.4,
+      "evidence_source": "llm_expert_condition_verifier",
+      "admission_role": "expert_edge_condition_gate_metadata",
+      "graph_edge_candidate": false,
+      "condition_verification": true,
+      "condition_activation": "suppress",
+      "expert_edge_id": "skab_004_Accelerometer1RMS_Volume_Flow_RateRMS",
+      "corrects_edge_id": "skab_004_Accelerometer1RMS_Volume_Flow_RateRMS",
+      "class_scope": [
+        "all"
+      ],
+      "regime_scope": [
+        "mechanical-vibration"
+      ],
+      "residual_pattern": "vibration may be an effect rather than driver when flow anomaly dominates",
+      "temporal_pattern": "suppress if vibration lags flow-rate deviation",
+      "requires_data_support": true,
+      "rationale": "Offline protocol probe: vibration-to-flow direction should be downweighted unless residual timing supports it."
+    }
+  ],
+  "diagnostics": {
+    "raw_verification_count": 5,
+    "accepted_verifications": 5,
+    "accepted_edges": 0,
+    "skipped_verifications": 0,
+    "activation_counts": {
+      "activate": 3,
+      "suppress": 1,
+      "uncertain": 1
+    },
+    "evidence_source": "llm_expert_condition_verifier",
+    "n_allowed_features": 8,
+    "n_prompt_features": 8,
+    "n_expert_edges_in_prompt": 6,
+    "ready_graph": "knowledge_exports\\public_benchmark_ready_llm_probe\\skab\\knowledge_model\\knowledge_graph.json",
+    "api_key_saved": false
+  },
+  "merged_graph_path": "knowledge_exports\\public_benchmark_ready_llm_probe\\skab\\knowledge_model\\knowledge_graph.json"
+}

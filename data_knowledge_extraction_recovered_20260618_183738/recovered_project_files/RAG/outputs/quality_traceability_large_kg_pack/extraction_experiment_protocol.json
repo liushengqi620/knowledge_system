@@ -1,0 +1,119 @@
+{
+  "status": "seed_plus_paper_scale_protocol",
+  "completed_seed_evidence": {
+    "best_method": {
+      "method": "proposed_atom_adjudication_proxy",
+      "entity_precision": 1.0,
+      "entity_recall": 1.0,
+      "entity_f1": 1.0,
+      "relation_precision": 1.0,
+      "relation_recall": 1.0,
+      "relation_f1": 1.0,
+      "triple_f1": 1.0,
+      "relation_tp": 353,
+      "relation_fp": 0,
+      "relation_fn": 0,
+      "hallucination_rate": 0.0,
+      "hard_negative_accuracy": 1.0,
+      "estimated_prompt_chars": 215283,
+      "evaluated_split": "test",
+      "evaluated_records": 200,
+      "status": "seed_proxy_result"
+    },
+    "proposed_vs_candidate_triple_f1_delta": 0.0574,
+    "proposed_vs_candidate_hallucination_rate_reduction": 0.1086,
+    "metric_status": "seed_proxy_result",
+    "publication_caveat": "Use these results only as engineering evidence. Paper claims require real mechanism text corpus, real PLM/LLM backends, and held-out test reporting."
+  },
+  "planned_experiments": [
+    {
+      "experiment_id": "QKG-E0",
+      "track": "completed_seed_evidence",
+      "purpose": "Check that the mechanism extraction pipeline can produce schema-valid records, final predictions, metrics, and a seed graph.",
+      "dataset": "generated_mechanism_kg_seed",
+      "methods": "rule_based; plm_candidate_proxy; proposed_atom_adjudication_proxy",
+      "primary_metrics": "Entity F1; Relation F1; Triple F1; Hallucination Rate; Hard Negative Accuracy",
+      "expected_evidence": "A reproducible seed run with machine-readable outputs and validation reports.",
+      "status": "completed_seed_proxy",
+      "current_result": "best=proposed_atom_adjudication_proxy; nodes=3570; edges=1788"
+    },
+    {
+      "experiment_id": "QKG-E1",
+      "track": "main_extraction_effectiveness",
+      "purpose": "Prove the proposed PLM-guided prompt-atom adjudication method improves mechanism KG extraction.",
+      "dataset": "document-split mechanism corpus from papers/manuals/expert rules",
+      "methods": "rule_based; plm_only; llm_zero_shot; llm_few_shot; GLiNER; InstructUIE; GoLLIE; Code4UIE; KnowCoder; DeepKE-LLM; constrained_json_llm; proposed",
+      "primary_metrics": "Entity F1; Relation F1; Triple F1; Evidence F1; Direction Accuracy",
+      "expected_evidence": "Proposed improves Triple F1 and evidence grounding over PLM-only, LLM-only, and simple cascade baselines.",
+      "status": "planned_paper_scale",
+      "current_result": "requires real corpus and real model backends"
+    },
+    {
+      "experiment_id": "QKG-E2",
+      "track": "low_resource_extraction",
+      "purpose": "Show why the method fits low-annotation industrial mechanism extraction.",
+      "dataset": "50/100/300/500-record train budgets with fixed dev/test documents",
+      "methods": "plm_only; llm_few_shot; plm_llm_cascade; proposed",
+      "primary_metrics": "Triple F1; low-resource area under curve; Token/record; Time/record",
+      "expected_evidence": "Proposed is more stable than PLM-only under few labels and cheaper than LLM-only full extraction.",
+      "status": "planned_paper_scale",
+      "current_result": "requires budgeted train splits"
+    },
+    {
+      "experiment_id": "QKG-E3",
+      "track": "plm_prompt_fusion_ablation",
+      "purpose": "Prove PLM is structurally useful rather than an optional add-on.",
+      "dataset": "same held-out mechanism corpus",
+      "methods": "no_atom; full_prompt; random_atom; rule_atom; plm_uncertainty_atom; proposed_full",
+      "primary_metrics": "Triple F1; hallucination rate; LLM call precision; Token/record",
+      "expected_evidence": "PLM uncertainty/evidence/atom routing outperforms random or static prompts and reduces unnecessary LLM calls.",
+      "status": "planned_paper_scale",
+      "current_result": "seed proxy already shows lower hallucination for proposed method"
+    },
+    {
+      "experiment_id": "QKG-E4",
+      "track": "hard_negative_and_hallucination",
+      "purpose": "Verify that unsupported but plausible triples are rejected.",
+      "dataset": "mechanism corpus plus hard negative entity pairs",
+      "methods": "llm_free_extraction; plm_llm_cascade; proposed",
+      "primary_metrics": "Hard Negative Accuracy; Unsupported Triple Rate; Hallucination Rate",
+      "expected_evidence": "Constrained adjudication plus evidence atoms rejects plausible-but-unsupported triples better than free extraction.",
+      "status": "planned_paper_scale",
+      "current_result": "seed proposed hard-negative accuracy=1.0"
+    },
+    {
+      "experiment_id": "QKG-E5",
+      "track": "graph_level_quality",
+      "purpose": "Evaluate whether better extraction creates a better mechanism graph.",
+      "dataset": "assembled KG from each extraction method",
+      "methods": "graph_exact; graph_canonicalized; expert_audit",
+      "primary_metrics": "node duplicate rate; relation conflict rate; mechanism-chain completeness; expert acceptability",
+      "expected_evidence": "The proposed method yields cleaner causal/control chains and fewer unsupported graph edges.",
+      "status": "planned_paper_scale",
+      "current_result": "seed graph files are available for graph-level tooling"
+    },
+    {
+      "experiment_id": "QKG-E6",
+      "track": "traceability_attachment_validation",
+      "purpose": "Show that the mechanism KG can be attached to later quality traceability work without using production rows as extraction gold.",
+      "dataset": "downstream production/event records attached after extraction",
+      "methods": "entity alignment; event-to-mechanism explanation paths; case-study expert audit",
+      "primary_metrics": "trace path hit rate; explanation completeness; expert acceptability; case retrieval precision",
+      "expected_evidence": "Quality events can be explained through evidence-backed mechanism paths and recommended actions.",
+      "status": "planned_downstream_validation",
+      "current_result": "available instance-pool records=104436"
+    },
+    {
+      "experiment_id": "QKG-E7",
+      "track": "frontier_baseline_comparison",
+      "purpose": "Benchmark recent generalist, guideline-following, code-generation, and constrained-output IE methods against the proposed PLM-guided atom adjudication framework.",
+      "dataset": "same document-split mechanism corpus and seed proxy dataset for smoke testing",
+      "methods": "GLiNER; InstructUIE; GoLLIE; Code4UIE; KnowCoder; DeepKE-LLM; constrained_json_llm; retrieval_augmented_schema_prompt",
+      "primary_metrics": "Entity F1; Relation F1; Triple F1; Evidence F1; Invalid Output Rate",
+      "expected_evidence": "Frontier baselines clarify whether gains come from schema following, retrieval, constrained decoding, or PLM-guided atom routing.",
+      "status": "planned_paper_scale",
+      "current_result": "experiment matrix generated; external adapters required"
+    }
+  ],
+  "reporting_rule": "Use QKG-E0 only as seed engineering evidence; use QKG-E1 to QKG-E7 for paper-scale claims."
+}

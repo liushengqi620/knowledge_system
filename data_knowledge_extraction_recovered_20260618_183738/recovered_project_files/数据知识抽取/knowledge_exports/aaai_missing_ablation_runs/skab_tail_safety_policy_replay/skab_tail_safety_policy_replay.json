@@ -1,0 +1,507 @@
+{
+  "schema": "skab_tail_safety_policy_replay_v1",
+  "status": "complete_policy_replay",
+  "source_matrices": [
+    "knowledge_exports/ms_gse_rpf_mechanism_gate_ablation_full/mechanism_gate_ablation_matrix.json",
+    "knowledge_exports/aaai_missing_ablation_runs/skab_no_complexity_full/mechanism_gate_ablation_matrix.json"
+  ],
+  "guarded_max_low_tail_f1_drop": 0.02,
+  "no_tail_max_low_tail_f1_drop": 999.0,
+  "tail_group_definition": "For each seed, compute candidate minus baseline validation F1 for every common class and take the configured low-tail quantile; removing H_k means this term is not allowed to reject admission.",
+  "rows": [
+    {
+      "matrix": "knowledge_exports/ms_gse_rpf_mechanism_gate_ablation_full/mechanism_gate_ablation_matrix.json",
+      "output_root": "C:\\kg_runs\\mechanism_gate_full_matrix",
+      "variant": "no_mechanism",
+      "role": "baseline",
+      "n_runs": 3,
+      "test_macro_f1_mean": 0.6989389161920699,
+      "test_macro_f1_std": 0.10950152883545378,
+      "mean_val_gain_vs_baseline": 0.0,
+      "low_tail_val_f1_gain": 0.0,
+      "low_tail_quantile": 0.1,
+      "guarded_admitted": true,
+      "guarded_reject_reasons": [],
+      "no_tail_admitted": true,
+      "no_tail_reject_reasons": [],
+      "admission_changed_by_removing_h": false,
+      "per_seed_low_tail": [
+        {
+          "seed": 42,
+          "low_tail_delta": 0.0,
+          "class_f1_delta": {
+            "0": 0.0,
+            "1": 0.0
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json"
+        },
+        {
+          "seed": 43,
+          "low_tail_delta": 0.0,
+          "class_f1_delta": {
+            "0": 0.0,
+            "1": 0.0
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json"
+        },
+        {
+          "seed": 44,
+          "low_tail_delta": 0.0,
+          "class_f1_delta": {
+            "0": 0.0,
+            "1": 0.0
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json"
+        }
+      ]
+    },
+    {
+      "matrix": "knowledge_exports/ms_gse_rpf_mechanism_gate_ablation_full/mechanism_gate_ablation_matrix.json",
+      "output_root": "C:\\kg_runs\\mechanism_gate_full_matrix",
+      "variant": "raw_expert_graph",
+      "role": "negative_control",
+      "n_runs": 3,
+      "test_macro_f1_mean": 0.6945680082026018,
+      "test_macro_f1_std": 0.1046423744285983,
+      "mean_val_gain_vs_baseline": 0.0018082759889674522,
+      "low_tail_val_f1_gain": -0.011318699825543121,
+      "low_tail_quantile": 0.1,
+      "guarded_admitted": true,
+      "guarded_reject_reasons": [],
+      "no_tail_admitted": true,
+      "no_tail_reject_reasons": [],
+      "admission_changed_by_removing_h": false,
+      "per_seed_low_tail": [
+        {
+          "seed": 42,
+          "low_tail_delta": 0.002906380139365411,
+          "class_f1_delta": {
+            "0": 0.03244446060544742,
+            "1": -0.00037562880131036813
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/raw_expert_graph/ms_gse_rpf_skab_anomaly_full_prior-expert_s0p05_seed42.json"
+        },
+        {
+          "seed": 43,
+          "low_tail_delta": 0.002994762954034036,
+          "class_f1_delta": {
+            "0": 0.002661277367189574,
+            "1": 0.005996133235634193
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/raw_expert_graph/ms_gse_rpf_skab_anomaly_full_prior-expert_s0p05_seed43.json"
+        },
+        {
+          "seed": 44,
+          "low_tail_delta": -0.012845791492197979,
+          "class_f1_delta": {
+            "0": -0.0034622718821838427,
+            "1": -0.013888404782199548
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/raw_expert_graph/ms_gse_rpf_skab_anomaly_full_prior-expert_s0p05_seed44.json"
+        }
+      ]
+    },
+    {
+      "matrix": "knowledge_exports/ms_gse_rpf_mechanism_gate_ablation_full/mechanism_gate_ablation_matrix.json",
+      "output_root": "C:\\kg_runs\\mechanism_gate_full_matrix",
+      "variant": "late_expert_path",
+      "role": "late_mechanism",
+      "n_runs": 3,
+      "test_macro_f1_mean": 0.8166182079592117,
+      "test_macro_f1_std": 0.0250547339501384,
+      "mean_val_gain_vs_baseline": 0.09203807097907439,
+      "low_tail_val_f1_gain": -0.004206367516075116,
+      "low_tail_quantile": 0.1,
+      "guarded_admitted": true,
+      "guarded_reject_reasons": [],
+      "no_tail_admitted": true,
+      "no_tail_reject_reasons": [],
+      "admission_changed_by_removing_h": false,
+      "per_seed_low_tail": [
+        {
+          "seed": 42,
+          "low_tail_delta": 0.30915892421537006,
+          "class_f1_delta": {
+            "0": 0.6529438092413808,
+            "1": 0.2709606036569244
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/late_expert_path/ms_gse_rpf_skab_anomaly_full_prior-expert_seed42.json"
+        },
+        {
+          "seed": 43,
+          "low_tail_delta": 0.0015586848187372105,
+          "class_f1_delta": {
+            "0": 0.0013815785378800127,
+            "1": 0.00315264134645199
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/late_expert_path/ms_gse_rpf_skab_anomaly_full_prior-expert_seed43.json"
+        },
+        {
+          "seed": 44,
+          "low_tail_delta": -0.004752317322220823,
+          "class_f1_delta": {
+            "0": -0.0007597572186066603,
+            "1": -0.005195935111511285
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/late_expert_path/ms_gse_rpf_skab_anomaly_full_prior-expert_seed44.json"
+        }
+      ]
+    },
+    {
+      "matrix": "knowledge_exports/ms_gse_rpf_mechanism_gate_ablation_full/mechanism_gate_ablation_matrix.json",
+      "output_root": "C:\\kg_runs\\mechanism_gate_full_matrix",
+      "variant": "expert_candidate_no_gate",
+      "role": "ungated_candidate",
+      "n_runs": 3,
+      "test_macro_f1_mean": 0.794714067582161,
+      "test_macro_f1_std": 0.047340676408719334,
+      "mean_val_gain_vs_baseline": 0.09767382804939724,
+      "low_tail_val_f1_gain": 0.0029265073190896107,
+      "low_tail_quantile": 0.1,
+      "guarded_admitted": true,
+      "guarded_reject_reasons": [],
+      "no_tail_admitted": true,
+      "no_tail_reject_reasons": [],
+      "admission_changed_by_removing_h": false,
+      "per_seed_low_tail": [
+        {
+          "seed": 42,
+          "low_tail_delta": 0.06443158316948572,
+          "class_f1_delta": {
+            "0": 0.20917647428320174,
+            "1": 0.04834881749018394
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/expert_candidate_no_gate/ms_gse_rpf_skab_anomaly_full_prior-expert_seed42.json"
+        },
+        {
+          "seed": 43,
+          "low_tail_delta": 0.002149126329414941,
+          "class_f1_delta": {
+            "0": 0.0019594794801099935,
+            "1": 0.003855947973159468
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/expert_candidate_no_gate/ms_gse_rpf_skab_anomaly_full_prior-expert_seed43.json"
+        },
+        {
+          "seed": 44,
+          "low_tail_delta": 0.00029933168120528376,
+          "class_f1_delta": {
+            "0": 0.00018945880942711213,
+            "1": 0.0012881875272088283
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/expert_candidate_no_gate/ms_gse_rpf_skab_anomaly_full_prior-expert_seed44.json"
+        }
+      ]
+    },
+    {
+      "matrix": "knowledge_exports/ms_gse_rpf_mechanism_gate_ablation_full/mechanism_gate_ablation_matrix.json",
+      "output_root": "C:\\kg_runs\\mechanism_gate_full_matrix",
+      "variant": "expert_candidate_data_gate",
+      "role": "mechanism_gate",
+      "n_runs": 3,
+      "test_macro_f1_mean": 0.7630665433139221,
+      "test_macro_f1_std": 0.07376101082799563,
+      "mean_val_gain_vs_baseline": 0.050904041767553254,
+      "low_tail_val_f1_gain": -0.0020688661151817556,
+      "low_tail_quantile": 0.1,
+      "guarded_admitted": true,
+      "guarded_reject_reasons": [],
+      "no_tail_admitted": true,
+      "no_tail_reject_reasons": [],
+      "admission_changed_by_removing_h": false,
+      "per_seed_low_tail": [
+        {
+          "seed": 42,
+          "low_tail_delta": 0.02179266912321411,
+          "class_f1_delta": {
+            "0": 0.0807299532097146,
+            "1": 0.015244082002491832
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/expert_candidate_data_gate/ms_gse_rpf_skab_anomaly_full_prior-expert_seed42.json"
+        },
+        {
+          "seed": 43,
+          "low_tail_delta": 0.004098198732450021,
+          "class_f1_delta": {
+            "0": 0.003593054126961759,
+            "1": 0.008644500181844372
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/expert_candidate_data_gate/ms_gse_rpf_skab_anomaly_full_prior-expert_seed43.json"
+        },
+        {
+          "seed": 44,
+          "low_tail_delta": -0.008352877704455043,
+          "class_f1_delta": {
+            "0": -0.003912493588162258,
+            "1": -0.008846253717376462
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/expert_candidate_data_gate/ms_gse_rpf_skab_anomaly_full_prior-expert_seed44.json"
+        }
+      ]
+    },
+    {
+      "matrix": "knowledge_exports/ms_gse_rpf_mechanism_gate_ablation_full/mechanism_gate_ablation_matrix.json",
+      "output_root": "C:\\kg_runs\\mechanism_gate_full_matrix",
+      "variant": "expert_candidate_data_gate_consistency",
+      "role": "mechanism_gate_plus_path_consistency",
+      "n_runs": 3,
+      "test_macro_f1_mean": 0.7466892402542571,
+      "test_macro_f1_std": 0.07976668390821773,
+      "mean_val_gain_vs_baseline": 0.03747894930872205,
+      "low_tail_val_f1_gain": 0.0005160375313424947,
+      "low_tail_quantile": 0.1,
+      "guarded_admitted": true,
+      "guarded_reject_reasons": [],
+      "no_tail_admitted": true,
+      "no_tail_reject_reasons": [],
+      "admission_changed_by_removing_h": false,
+      "per_seed_low_tail": [
+        {
+          "seed": 42,
+          "low_tail_delta": 0.13286903875605097,
+          "class_f1_delta": {
+            "0": 0.5211314889587155,
+            "1": 0.08972876651131045
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/expert_candidate_data_gate_consistency/ms_gse_rpf_skab_anomaly_full_prior-expert_seed42.json"
+        },
+        {
+          "seed": 43,
+          "low_tail_delta": -0.0010767948986229682,
+          "class_f1_delta": {
+            "0": -0.0013696193001752066,
+            "1": 0.0015586247153471788
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/expert_candidate_data_gate_consistency/ms_gse_rpf_skab_anomaly_full_prior-expert_seed43.json"
+        },
+        {
+          "seed": 44,
+          "low_tail_delta": -0.007773500496954821,
+          "class_f1_delta": {
+            "0": -0.003419313812541347,
+            "1": -0.008257299017445208
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/expert_candidate_data_gate_consistency/ms_gse_rpf_skab_anomaly_full_prior-expert_seed44.json"
+        }
+      ]
+    },
+    {
+      "matrix": "knowledge_exports/ms_gse_rpf_mechanism_gate_ablation_full/mechanism_gate_ablation_matrix.json",
+      "output_root": "C:\\kg_runs\\mechanism_gate_full_matrix",
+      "variant": "algorithmic_candidate_gate_control",
+      "role": "algorithmic_control",
+      "n_runs": 3,
+      "test_macro_f1_mean": 0.7533625307408338,
+      "test_macro_f1_std": 0.05489488307076391,
+      "mean_val_gain_vs_baseline": 0.04686775108086568,
+      "low_tail_val_f1_gain": -0.004272963401944441,
+      "low_tail_quantile": 0.1,
+      "guarded_admitted": true,
+      "guarded_reject_reasons": [],
+      "no_tail_admitted": true,
+      "no_tail_reject_reasons": [],
+      "admission_changed_by_removing_h": false,
+      "per_seed_low_tail": [
+        {
+          "seed": 42,
+          "low_tail_delta": 0.12056500004529244,
+          "class_f1_delta": {
+            "0": 0.5658666969153541,
+            "1": 0.07108703372639669
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/algorithmic_candidate_gate_control/ms_gse_rpf_skab_anomaly_full_prior-alg-edge_dual_lattice_s0p05_seed42.json"
+        },
+        {
+          "seed": 43,
+          "low_tail_delta": 0.001028451238924466,
+          "class_f1_delta": {
+            "0": 0.0009032239339415993,
+            "1": 0.0021554969837702664
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/algorithmic_candidate_gate_control/ms_gse_rpf_skab_anomaly_full_prior-alg-edge_dual_lattice_s0p05_seed43.json"
+        },
+        {
+          "seed": 44,
+          "low_tail_delta": -0.014020670202020647,
+          "class_f1_delta": {
+            "0": -0.004884796835655125,
+            "1": -0.015035767242727927
+          },
+          "baseline_source": "C:/kg_runs/mechanism_gate_full_matrix/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json",
+          "candidate_source": "C:/kg_runs/mechanism_gate_full_matrix/algorithmic_candidate_gate_control/ms_gse_rpf_skab_anomaly_full_prior-alg-edge_dual_lattice_s0p05_seed44.json"
+        }
+      ]
+    },
+    {
+      "matrix": "knowledge_exports/aaai_missing_ablation_runs/skab_no_complexity_full/mechanism_gate_ablation_matrix.json",
+      "output_root": "C:\\kg_runs\\aaai_no_complexity_full",
+      "variant": "no_mechanism",
+      "role": "baseline",
+      "n_runs": 3,
+      "test_macro_f1_mean": 0.7254619702635774,
+      "test_macro_f1_std": 0.059662293513353254,
+      "mean_val_gain_vs_baseline": 0.0,
+      "low_tail_val_f1_gain": 0.0,
+      "low_tail_quantile": 0.1,
+      "guarded_admitted": true,
+      "guarded_reject_reasons": [],
+      "no_tail_admitted": true,
+      "no_tail_reject_reasons": [],
+      "admission_changed_by_removing_h": false,
+      "per_seed_low_tail": [
+        {
+          "seed": 42,
+          "low_tail_delta": 0.0,
+          "class_f1_delta": {
+            "0": 0.0,
+            "1": 0.0
+          },
+          "baseline_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json",
+          "candidate_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json"
+        },
+        {
+          "seed": 43,
+          "low_tail_delta": 0.0,
+          "class_f1_delta": {
+            "0": 0.0,
+            "1": 0.0
+          },
+          "baseline_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json",
+          "candidate_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json"
+        },
+        {
+          "seed": 44,
+          "low_tail_delta": 0.0,
+          "class_f1_delta": {
+            "0": 0.0,
+            "1": 0.0
+          },
+          "baseline_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json",
+          "candidate_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json"
+        }
+      ]
+    },
+    {
+      "matrix": "knowledge_exports/aaai_missing_ablation_runs/skab_no_complexity_full/mechanism_gate_ablation_matrix.json",
+      "output_root": "C:\\kg_runs\\aaai_no_complexity_full",
+      "variant": "expert_llm_candidate_data_gate_no_complexity",
+      "role": "no_complexity_penalty",
+      "n_runs": 3,
+      "test_macro_f1_mean": 0.8233968426875745,
+      "test_macro_f1_std": 0.015334679567717925,
+      "mean_val_gain_vs_baseline": 0.07499804562061745,
+      "low_tail_val_f1_gain": 0.0042947551361840475,
+      "low_tail_quantile": 0.1,
+      "guarded_admitted": true,
+      "guarded_reject_reasons": [],
+      "no_tail_admitted": true,
+      "no_tail_reject_reasons": [],
+      "admission_changed_by_removing_h": false,
+      "per_seed_low_tail": [
+        {
+          "seed": 42,
+          "low_tail_delta": 0.20848619105089194,
+          "class_f1_delta": {
+            "0": 0.20454579257286176,
+            "1": 0.24394977735316348
+          },
+          "baseline_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json",
+          "candidate_source": "C:/kg_runs/aaai_no_complexity_full/expert_llm_candidate_data_gate_no_complexity/ms_gse_rpf_skab_anomaly_full_prior-expert_llm_seed42.json"
+        },
+        {
+          "seed": 43,
+          "low_tail_delta": 0.00477314210535006,
+          "class_f1_delta": {
+            "0": 0.005325070757915218,
+            "1": 0.004711816699509486
+          },
+          "baseline_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json",
+          "candidate_source": "C:/kg_runs/aaai_no_complexity_full/expert_llm_candidate_data_gate_no_complexity/ms_gse_rpf_skab_anomaly_full_prior-expert_llm_seed43.json"
+        },
+        {
+          "seed": 44,
+          "low_tail_delta": 0.0036466285890354947,
+          "class_f1_delta": {
+            "0": 0.004956622223714513,
+            "1": 0.0035010737407378256
+          },
+          "baseline_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json",
+          "candidate_source": "C:/kg_runs/aaai_no_complexity_full/expert_llm_candidate_data_gate_no_complexity/ms_gse_rpf_skab_anomaly_full_prior-expert_llm_seed44.json"
+        }
+      ]
+    },
+    {
+      "matrix": "knowledge_exports/aaai_missing_ablation_runs/skab_no_complexity_full/mechanism_gate_ablation_matrix.json",
+      "output_root": "C:\\kg_runs\\aaai_no_complexity_full",
+      "variant": "expert_llm_candidate_data_gate_complexity_guarded",
+      "role": "complexity_guarded_twin",
+      "n_runs": 3,
+      "test_macro_f1_mean": 0.826058885835027,
+      "test_macro_f1_std": 0.013834264227600632,
+      "mean_val_gain_vs_baseline": 0.06808835678600574,
+      "low_tail_val_f1_gain": -0.001126246029159339,
+      "low_tail_quantile": 0.1,
+      "guarded_admitted": true,
+      "guarded_reject_reasons": [],
+      "no_tail_admitted": true,
+      "no_tail_reject_reasons": [],
+      "admission_changed_by_removing_h": false,
+      "per_seed_low_tail": [
+        {
+          "seed": 42,
+          "low_tail_delta": 0.20430970047786257,
+          "class_f1_delta": {
+            "0": 0.20298089155521692,
+            "1": 0.21626898078167345
+          },
+          "baseline_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed42.json",
+          "candidate_source": "C:/kg_runs/aaai_no_complexity_full/expert_llm_candidate_data_gate_complexity_guarded/ms_gse_rpf_skab_anomaly_full_prior-expert_llm_seed42.json"
+        },
+        {
+          "seed": 43,
+          "low_tail_delta": -0.00047695073994528107,
+          "class_f1_delta": {
+            "0": 0.0001912633628197158,
+            "1": -0.000551196751363614
+          },
+          "baseline_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed43.json",
+          "candidate_source": "C:/kg_runs/aaai_no_complexity_full/expert_llm_candidate_data_gate_complexity_guarded/ms_gse_rpf_skab_anomaly_full_prior-expert_llm_seed43.json"
+        },
+        {
+          "seed": 44,
+          "low_tail_delta": 0.002688383280248541,
+          "class_f1_delta": {
+            "0": 0.004626289413408147,
+            "1": 0.00247306037656414
+          },
+          "baseline_source": "C:/kg_runs/aaai_no_complexity_full/no_mechanism/ms_gse_rpf_skab_anomaly_full_prior-none_seed44.json",
+          "candidate_source": "C:/kg_runs/aaai_no_complexity_full/expert_llm_candidate_data_gate_complexity_guarded/ms_gse_rpf_skab_anomaly_full_prior-expert_llm_seed44.json"
+        }
+      ]
+    }
+  ],
+  "changed_admissions": 0,
+  "candidate_low_tail_gain_mean": -0.0019069803626609524,
+  "candidate_low_tail_gain_std": 0.004579798241322499,
+  "conclusion": "Removing H_k does not change the final SKAB admissions because all full-protocol candidates satisfy the low-tail safety threshold; this is evidence that the reported SKAB gains are not obtained by sacrificing the weak validation class. A separate tail-stress branch is optional if the paper needs a visibly differential safety example."
+}

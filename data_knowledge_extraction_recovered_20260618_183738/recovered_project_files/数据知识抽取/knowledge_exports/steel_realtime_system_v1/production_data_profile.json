@@ -1,0 +1,617 @@
+{
+  "structured_csv_path": "Z:\\knowledge_exports\\continuous_casting_grouped_quality_code\\continuous_casting_all.csv",
+  "model_ready_csv_path": "Z:\\knowledge_exports\\continuous_casting_grouped_quality_code\\categories\\model_ready.csv",
+  "summary_path": "Z:\\knowledge_exports\\continuous_casting_grouped_quality_code\\continuous_casting_summary.json",
+  "records": 104316,
+  "columns": 159,
+  "time_range": {
+    "start": "2022-01-01 03:55:36",
+    "end": "2022-12-31 23:45:20"
+  },
+  "labels": {
+    "defect_label": {
+      "0": 57129,
+      "1": 47187
+    },
+    "defect_label_lock": {
+      "0": 102673,
+      "1": 1643
+    },
+    "quality_abnormal_label": {
+      "0": 57129,
+      "1": 47187
+    },
+    "quality_code_present_label": {
+      "1": 71177,
+      "0": 33139
+    },
+    "quality_label": {
+      "1": 47187,
+      "0": 33139,
+      "<NA>": 23990
+    },
+    "quality_sample_role": {
+      "target_positive": 47187,
+      "clean_negative": 33139,
+      "auxiliary_excluded": 23990
+    }
+  },
+  "model_task_summary": {
+    "dataset_dir": "Z:\\knowledge_exports\\quality_traceability_dataset_quality_code",
+    "n_rows": 80326,
+    "n_source_rows": 104316,
+    "n_auxiliary_rows": 23990,
+    "binary_label_counts": {
+      "1.0": 47187,
+      "0.0": 33139
+    },
+    "multiclass_counts": {
+      "无品质异常": 33139,
+      "温度/保护渣质量异常": 25282,
+      "液面波动/卷渣风险异常": 16419,
+      "过程参数波动异常": 2887,
+      "拉速/塞棒/流量控制异常": 2320,
+      "结晶器传热不均异常": 279
+    },
+    "multilabel_counts": {
+      "quality_group_temperature_flux": 25282,
+      "quality_group_mold_level_slag_risk": 21323,
+      "quality_group_speed_stopper_flow": 5317,
+      "quality_group_heat_transfer_imbalance": 543,
+      "quality_group_process_fluctuation": 6727
+    },
+    "multiple_target_sample_count": 10474,
+    "outputs": {
+      "y_quality_multiclass": "knowledge_exports\\quality_traceability_dataset_quality_code\\y_quality_multiclass.csv",
+      "y_quality_multilabel": "knowledge_exports\\quality_traceability_dataset_quality_code\\y_quality_multilabel.csv",
+      "label_mapping": "knowledge_exports\\quality_traceability_dataset_quality_code\\label_mapping.json"
+    }
+  },
+  "label_policy": {
+    "name": "quality_abnormal_code_1_5",
+    "positive": "品质异常代码1-5命中目标质量异常大类",
+    "negative": "品质异常代码1-5均为空、0或缺失",
+    "auxiliary_excluded": "仅命中过渡/中间包状态或其他未归因品质代码"
+  },
+  "source_status": "available",
+  "profile_version": "structured_csv_processing_v1",
+  "label_distribution": {
+    "quality_label": {
+      "1": 47187,
+      "0": 33139,
+      "missing": 23990
+    },
+    "quality_sample_role": {
+      "target_positive": 47187,
+      "clean_negative": 33139,
+      "auxiliary_excluded": 23990
+    },
+    "quality_code_present_label": {
+      "1": 71177,
+      "0": 33139
+    },
+    "quality_abnormal_label": {
+      "1": 47187,
+      "0": 57129
+    },
+    "defect_label": {
+      "1": 47187,
+      "0": 57129
+    },
+    "defect_label_lock": {
+      "0": 102673,
+      "1": 1643
+    }
+  },
+  "quality_group_distribution": {
+    "process_fluctuation": 6727,
+    "none": 33139,
+    "mold_level_slag_risk": 21323,
+    "transition_tundish": 44779,
+    "temperature_flux": 25282,
+    "speed_stopper_flow": 5317,
+    "other_quality_abnormal": 2002,
+    "heat_transfer_imbalance": 543
+  },
+  "field_mapping": [
+    {
+      "field": "TD_weight_mean",
+      "label": "中间包吨位平均值",
+      "unit": "吨",
+      "variable_group": "tundish_weight",
+      "variable_group_label": "中间包吨位",
+      "process_step": "tundish",
+      "process_step_label": "中间包",
+      "mechanism": "process_fluctuation",
+      "mechanism_label": "过程参数波动",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "TD_weight_range",
+      "label": "中间包吨位波动",
+      "unit": "吨",
+      "variable_group": "tundish_weight",
+      "variable_group_label": "中间包吨位",
+      "process_step": "tundish",
+      "process_step_label": "中间包",
+      "mechanism": "process_fluctuation",
+      "mechanism_label": "过程参数波动",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "TD_avg_temp",
+      "label": "中包平均温度",
+      "unit": "摄氏度",
+      "variable_group": "temperature",
+      "variable_group_label": "温度制度",
+      "process_step": "tundish",
+      "process_step_label": "中间包",
+      "mechanism": "temperature_flux",
+      "mechanism_label": "温度/保护渣异常",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "liquidus_temp",
+      "label": "液相线温度",
+      "unit": "摄氏度",
+      "variable_group": "temperature",
+      "variable_group_label": "温度制度",
+      "process_step": "tundish",
+      "process_step_label": "中间包",
+      "mechanism": "temperature_flux",
+      "mechanism_label": "温度/保护渣异常",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "superheat",
+      "label": "过热度",
+      "unit": "摄氏度",
+      "variable_group": "temperature",
+      "variable_group_label": "温度制度",
+      "process_step": "tundish",
+      "process_step_label": "中间包",
+      "mechanism": "temperature_flux",
+      "mechanism_label": "温度/保护渣异常",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "cast_speed_mean",
+      "label": "拉速平均值",
+      "unit": "米/分钟",
+      "variable_group": "casting_speed",
+      "variable_group_label": "拉速/铸速",
+      "process_step": "flow_control",
+      "process_step_label": "流量控制",
+      "mechanism": "speed_stopper_flow",
+      "mechanism_label": "拉速/塞棒/流量异常",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "cast_speed_range",
+      "label": "拉速波动",
+      "unit": "米/分钟",
+      "variable_group": "casting_speed",
+      "variable_group_label": "拉速/铸速",
+      "process_step": "flow_control",
+      "process_step_label": "流量控制",
+      "mechanism": "speed_stopper_flow",
+      "mechanism_label": "拉速/塞棒/流量异常",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "cover_flux_1",
+      "label": "保护渣1使用量",
+      "unit": "ppm",
+      "variable_group": "flux",
+      "variable_group_label": "保护渣状态",
+      "process_step": "mold",
+      "process_step_label": "结晶器",
+      "mechanism": "temperature_flux",
+      "mechanism_label": "温度/保护渣异常",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "cover_flux_2",
+      "label": "保护渣2使用量",
+      "unit": "ppm",
+      "variable_group": "flux",
+      "variable_group_label": "保护渣状态",
+      "process_step": "mold",
+      "process_step_label": "结晶器",
+      "mechanism": "temperature_flux",
+      "mechanism_label": "温度/保护渣异常",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "cover_flux_total",
+      "label": "保护渣总量",
+      "unit": "ppm",
+      "variable_group": "flux",
+      "variable_group_label": "保护渣状态",
+      "process_step": "mold",
+      "process_step_label": "结晶器",
+      "mechanism": "temperature_flux",
+      "mechanism_label": "温度/保护渣异常",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "cover_flux_ratio",
+      "label": "保护渣配比",
+      "unit": "比例",
+      "variable_group": "flux",
+      "variable_group_label": "保护渣状态",
+      "process_step": "mold",
+      "process_step_label": "结晶器",
+      "mechanism": "temperature_flux",
+      "mechanism_label": "温度/保护渣异常",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "mold_level_range",
+      "label": "结晶器液位波动",
+      "unit": "毫米",
+      "variable_group": "mold_level",
+      "variable_group_label": "结晶器液位",
+      "process_step": "mold",
+      "process_step_label": "结晶器",
+      "mechanism": "mold_level_slag_risk",
+      "mechanism_label": "液面/卷渣风险",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "mold_level_mean",
+      "label": "结晶器液位均值",
+      "unit": "毫米",
+      "variable_group": "mold_level",
+      "variable_group_label": "结晶器液位",
+      "process_step": "mold",
+      "process_step_label": "结晶器",
+      "mechanism": "mold_level_slag_risk",
+      "mechanism_label": "液面/卷渣风险",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "mold_level_ge7",
+      "label": "液位波动大于等于7毫米次数",
+      "unit": "次数",
+      "variable_group": "mold_level",
+      "variable_group_label": "结晶器液位",
+      "process_step": "mold",
+      "process_step_label": "结晶器",
+      "mechanism": "mold_level_slag_risk",
+      "mechanism_label": "液面/卷渣风险",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "mold_level_ge10",
+      "label": "液位波动大于等于10毫米次数",
+      "unit": "次数",
+      "variable_group": "mold_level",
+      "variable_group_label": "结晶器液位",
+      "process_step": "mold",
+      "process_step_label": "结晶器",
+      "mechanism": "mold_level_slag_risk",
+      "mechanism_label": "液面/卷渣风险",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "tundish_sequence_count",
+      "label": "中间包连浇炉数",
+      "unit": "炉",
+      "variable_group": "sequence_transition",
+      "variable_group_label": "过渡段序列",
+      "process_step": "tundish",
+      "process_step_label": "中间包",
+      "mechanism": "transition_tundish",
+      "mechanism_label": "过渡/中间包状态",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "heat_exchange_mean",
+      "label": "结晶器热交换平均",
+      "unit": "摄氏度",
+      "variable_group": "heat_transfer",
+      "variable_group_label": "传热/冷却",
+      "process_step": "heat_transfer",
+      "process_step_label": "传热/冷却",
+      "mechanism": "heat_transfer_imbalance",
+      "mechanism_label": "传热不均",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "heat_exchange_ew_diff",
+      "label": "东西拔热量差",
+      "unit": "摄氏度",
+      "variable_group": "heat_transfer",
+      "variable_group_label": "传热/冷却",
+      "process_step": "heat_transfer",
+      "process_step_label": "传热/冷却",
+      "mechanism": "heat_transfer_imbalance",
+      "mechanism_label": "传热不均",
+      "target_type": "model_feature"
+    },
+    {
+      "field": "heat_exchange_ns_diff",
+      "label": "南北拔热量差",
+      "unit": "摄氏度",
+      "variable_group": "heat_transfer",
+      "variable_group_label": "传热/冷却",
+      "process_step": "heat_transfer",
+      "process_step_label": "传热/冷却",
+      "mechanism": "heat_transfer_imbalance",
+      "mechanism_label": "传热不均",
+      "target_type": "model_feature"
+    }
+  ],
+  "feature_statistics": {
+    "TD_weight_mean": {
+      "label": "中间包吨位平均值",
+      "variable_group": "tundish_weight",
+      "process_step": "tundish",
+      "mechanism": "process_fluctuation",
+      "count": 104279,
+      "missing": 37,
+      "missing_ratio": 0.000355,
+      "mean": 55.341073,
+      "std": 6.191731,
+      "min": 0.0,
+      "max": 74.4
+    },
+    "TD_weight_range": {
+      "label": "中间包吨位波动",
+      "variable_group": "tundish_weight",
+      "process_step": "tundish",
+      "mechanism": "process_fluctuation",
+      "count": 104279,
+      "missing": 37,
+      "missing_ratio": 0.000355,
+      "mean": 6.216989,
+      "std": 10.008717,
+      "min": 0.0,
+      "max": 76.6
+    },
+    "TD_avg_temp": {
+      "label": "中包平均温度",
+      "variable_group": "temperature",
+      "process_step": "tundish",
+      "mechanism": "temperature_flux",
+      "count": 104273,
+      "missing": 43,
+      "missing_ratio": 0.000412,
+      "mean": 1563.983476,
+      "std": 20.305889,
+      "min": 0.0,
+      "max": 1632.0
+    },
+    "liquidus_temp": {
+      "label": "液相线温度",
+      "variable_group": "temperature",
+      "process_step": "tundish",
+      "mechanism": "temperature_flux",
+      "count": 104310,
+      "missing": 6,
+      "missing_ratio": 5.8e-05,
+      "mean": 1534.333333,
+      "std": 42.830166,
+      "min": 0.0,
+      "max": 1537.0
+    },
+    "superheat": {
+      "label": "过热度",
+      "variable_group": "temperature",
+      "process_step": "tundish",
+      "mechanism": "temperature_flux",
+      "count": 104273,
+      "missing": 43,
+      "missing_ratio": 0.000412,
+      "mean": 29.650696,
+      "std": 47.267627,
+      "min": -1536.0,
+      "max": 1570.0
+    },
+    "cast_speed_mean": {
+      "label": "拉速平均值",
+      "variable_group": "casting_speed",
+      "process_step": "flow_control",
+      "mechanism": "speed_stopper_flow",
+      "count": 104279,
+      "missing": 37,
+      "missing_ratio": 0.000355,
+      "mean": 1.074602,
+      "std": 0.180068,
+      "min": 0.0,
+      "max": 1.52
+    },
+    "cast_speed_range": {
+      "label": "拉速波动",
+      "variable_group": "casting_speed",
+      "process_step": "flow_control",
+      "mechanism": "speed_stopper_flow",
+      "count": 104279,
+      "missing": 37,
+      "missing_ratio": 0.000355,
+      "mean": 0.063053,
+      "std": 0.185817,
+      "min": 0.0,
+      "max": 1.5
+    },
+    "cover_flux_1": {
+      "label": "保护渣1使用量",
+      "variable_group": "flux",
+      "process_step": "mold",
+      "mechanism": "temperature_flux",
+      "count": 104316,
+      "missing": 0,
+      "missing_ratio": 0.0,
+      "mean": 70.086698,
+      "std": 142.150941,
+      "min": 0.0,
+      "max": 813.0
+    },
+    "cover_flux_2": {
+      "label": "保护渣2使用量",
+      "variable_group": "flux",
+      "process_step": "mold",
+      "mechanism": "temperature_flux",
+      "count": 104316,
+      "missing": 0,
+      "missing_ratio": 0.0,
+      "mean": 0.340274,
+      "std": 2.838444,
+      "min": 0.0,
+      "max": 26.0
+    },
+    "cover_flux_total": {
+      "label": "保护渣总量",
+      "variable_group": "flux",
+      "process_step": "mold",
+      "mechanism": "temperature_flux",
+      "count": 104316,
+      "missing": 0,
+      "missing_ratio": 0.0,
+      "mean": 70.426972,
+      "std": 142.079248,
+      "min": 0.0,
+      "max": 813.0
+    },
+    "cover_flux_ratio": {
+      "label": "保护渣配比",
+      "variable_group": "flux",
+      "process_step": "mold",
+      "mechanism": "temperature_flux",
+      "count": 104316,
+      "missing": 0,
+      "missing_ratio": 0.0,
+      "mean": 0.006515,
+      "std": 0.054377,
+      "min": 0.0,
+      "max": 0.5
+    },
+    "mold_level_range": {
+      "label": "结晶器液位波动",
+      "variable_group": "mold_level",
+      "process_step": "mold",
+      "mechanism": "mold_level_slag_risk",
+      "count": 104279,
+      "missing": 37,
+      "missing_ratio": 0.000355,
+      "mean": 11.393569,
+      "std": 13.448207,
+      "min": 0.0,
+      "max": 160.0
+    },
+    "mold_level_mean": {
+      "label": "结晶器液位均值",
+      "variable_group": "mold_level",
+      "process_step": "mold",
+      "mechanism": "mold_level_slag_risk",
+      "count": 104279,
+      "missing": 37,
+      "missing_ratio": 0.000355,
+      "mean": 7.82753,
+      "std": 6.555659,
+      "min": 0.0,
+      "max": 160.0
+    },
+    "mold_level_ge7": {
+      "label": "液位波动大于等于7毫米次数",
+      "variable_group": "mold_level",
+      "process_step": "mold",
+      "mechanism": "mold_level_slag_risk",
+      "count": 104316,
+      "missing": 0,
+      "missing_ratio": 0.0,
+      "mean": 0.397763,
+      "std": 0.489436,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "mold_level_ge10": {
+      "label": "液位波动大于等于10毫米次数",
+      "variable_group": "mold_level",
+      "process_step": "mold",
+      "mechanism": "mold_level_slag_risk",
+      "count": 104316,
+      "missing": 0,
+      "missing_ratio": 0.0,
+      "mean": 0.108286,
+      "std": 0.310742,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "tundish_sequence_count": {
+      "label": "中间包连浇炉数",
+      "variable_group": "sequence_transition",
+      "process_step": "tundish",
+      "mechanism": "transition_tundish",
+      "count": 104310,
+      "missing": 6,
+      "missing_ratio": 5.8e-05,
+      "mean": 3.253811,
+      "std": 1.649115,
+      "min": 1.0,
+      "max": 10.0
+    },
+    "heat_exchange_mean": {
+      "label": "结晶器热交换平均",
+      "variable_group": "heat_transfer",
+      "process_step": "heat_transfer",
+      "mechanism": "heat_transfer_imbalance",
+      "count": 104279,
+      "missing": 37,
+      "missing_ratio": 0.000355,
+      "mean": 933.294029,
+      "std": 128.135557,
+      "min": 0.0,
+      "max": 1471.0
+    },
+    "heat_exchange_ew_diff": {
+      "label": "东西拔热量差",
+      "variable_group": "heat_transfer",
+      "process_step": "heat_transfer",
+      "mechanism": "heat_transfer_imbalance",
+      "count": 104279,
+      "missing": 37,
+      "missing_ratio": 0.000355,
+      "mean": 38.6747,
+      "std": 33.465398,
+      "min": 0.0,
+      "max": 370.0
+    },
+    "heat_exchange_ns_diff": {
+      "label": "南北拔热量差",
+      "variable_group": "heat_transfer",
+      "process_step": "heat_transfer",
+      "mechanism": "heat_transfer_imbalance",
+      "count": 104279,
+      "missing": 37,
+      "missing_ratio": 0.000355,
+      "mean": 33.279788,
+      "std": 30.502884,
+      "min": 0.0,
+      "max": 489.0
+    }
+  },
+  "data_quality": {
+    "selected_feature_count": 19,
+    "normal_sample_count": 33139,
+    "abnormal_sample_count": 47187,
+    "auxiliary_sample_count": 23990,
+    "normal_sample_available": true,
+    "all_rows_are_abnormal_labels": false,
+    "high_missing_features": []
+  },
+  "window_strategy": {
+    "name": "row_as_event_window_v1",
+    "description": "当前 CSV 每行已经是按连铸生产记录聚合后的工艺窗口，先按单条记录构建生产事件窗口。",
+    "time_column": "process_time",
+    "alignment_keys": [
+      "材料跟踪号",
+      "炼钢材料号",
+      "铸机号",
+      "连铸处理号",
+      "中间包号",
+      "记录识别码"
+    ]
+  }
+}

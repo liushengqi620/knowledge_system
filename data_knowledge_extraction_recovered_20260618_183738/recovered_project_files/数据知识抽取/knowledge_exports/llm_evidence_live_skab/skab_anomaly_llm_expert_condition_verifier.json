@@ -1,0 +1,216 @@
+{
+  "schema": "public_benchmark_llm_expert_condition_verifier_v1",
+  "dataset": "skab",
+  "target": "anomaly",
+  "mode": "expert_condition_verifier",
+  "model": "gpt-5.5",
+  "base_url": "https://api.n1n.ai/v1",
+  "dry_run": false,
+  "prompt_messages": [
+    {
+      "role": "system",
+      "content": "You are a weak conditional verifier for an existing expert mechanism graph. Return only valid JSON. Do not propose new graph edges. Do not assert causal truth. Your output is only a conditional gate feature that downstream data, residual, validation, and reliability admission may reject."
+    },
+    {
+      "role": "user",
+      "content": "For each selected existing expert edge, decide whether it should be conditionally activated, suppressed, or left uncertain under class, operating regime, residual, and temporal patterns. Use only expert_edge_id values from current_expert_graph_edges. Do not add new source-target pairs. Prefer specific, falsifiable conditions that can be checked by time-series residual/data support. JSON input:\n{\"dataset\": \"skab\", \"target\": \"anomaly\", \"task\": \"binary point/run anomaly detection\", \"allowed_features\": [\"Accelerometer1RMS\", \"Accelerometer2RMS\", \"Current\", \"Pressure\", \"Temperature\", \"Thermocouple\", \"Voltage\", \"Volume Flow RateRMS\"], \"feature_catalog\": [{\"name\": \"Accelerometer1RMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"mechanical_vibration\", \"n_unique\": 31964}, {\"name\": \"Accelerometer2RMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"mechanical_vibration\", \"n_unique\": 35252}, {\"name\": \"Current\", \"role\": \"observed_process_variable\", \"subsystem\": \"electrical_drive\", \"n_unique\": 42271}, {\"name\": \"Pressure\", \"role\": \"observed_process_variable\", \"subsystem\": \"hydraulic_flow\", \"n_unique\": 10}, {\"name\": \"Temperature\", \"role\": \"observed_process_variable\", \"subsystem\": \"thermal\", \"n_unique\": 37593}, {\"name\": \"Thermocouple\", \"role\": \"observed_process_variable\", \"subsystem\": \"thermal\", \"n_unique\": 24917}, {\"name\": \"Voltage\", \"role\": \"observed_process_variable\", \"subsystem\": \"electrical_drive\", \"n_unique\": 26895}, {\"name\": \"Volume Flow RateRMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"hydraulic_flow\", \"n_unique\": 1994}], \"current_expert_graph_edges\": [{\"edge_id\": \"skab_000_Current_Temperature\", \"source\": \"Current\", \"target\": \"Temperature\", \"relation\": \"motor_load_heating\", \"lag\": 2, \"reliability\": 0.45, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_001_Voltage_Current\", \"source\": \"Voltage\", \"target\": \"Current\", \"relation\": \"drive_electrical_response\", \"lag\": 1, \"reliability\": 0.35, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_002_Volume_Flow_RateRMS_Pressure\", \"source\": \"Volume Flow RateRMS\", \"target\": \"Pressure\", \"relation\": \"flow_pressure_coupling\", \"lag\": 1, \"reliability\": 0.45, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_003_Pressure_Volume_Flow_RateRMS\", \"source\": \"Pressure\", \"target\": \"Volume Flow RateRMS\", \"relation\": \"hydraulic_feedback\", \"lag\": 1, \"reliability\": 0.35, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_004_Accelerometer1RMS_Volume_Flow_RateRMS\", \"source\": \"Accelerometer1RMS\", \"target\": \"Volume Flow RateRMS\", \"relation\": \"mechanical_vibration_flow\", \"lag\": 2, \"reliability\": 0.3, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_005_Temperature_Thermocouple\", \"source\": \"Temperature\", \"target\": \"Thermocouple\", \"relation\": \"thermal_transfer\", \"lag\": 1, \"reliability\": 0.42, \"source_type\": \"expert_lag_prior\"}], \"max_verifications\": 8, \"required_json_schema\": {\"verifications\": [{\"expert_edge_id\": \"existing expert edge id from current_expert_graph_edges\", \"source\": \"source feature from that expert edge\", \"target\": \"target feature from that expert edge\", \"activation\": \"activate|suppress|uncertain\", \"activation_score\": \"float 0.0 to 1.0; conditional edge activation strength\", \"confidence\": \"float 0.0 to 0.70; LLM is weak evidence only\", \"class_scope\": [\"all or dataset class/fault names where this condition may hold\"], \"regime_scope\": [\"all or operating/degradation regimes where this condition may hold\"], \"residual_pattern\": \"short condition on residual or co-activation pattern\", \"temporal_pattern\": \"short condition on lag, spike, drift, or persistence pattern\", \"rationale\": \"one short falsifiable mechanism sentence\"}]}}"
+    }
+  ],
+  "raw_response": "{\n  \"verifications\": [\n    {\n      \"expert_edge_id\": \"skab_000_Current_Temperature\",\n      \"source\": \"Current\",\n      \"target\": \"Temperature\",\n      \"activation\": \"activate\",\n      \"activation_score\": 0.58,\n      \"confidence\": 0.55,\n      \"class_scope\": [\n        \"all\"\n      ],\n      \"regime_scope\": [\n        \"non-steady or elevated-load regimes with persistent Current residual support\"\n      ],\n      \"residual_pattern\": \"activate when positive Current residuals co-occur with later positive Temperature residuals; suppress if Temperature residuals lead or are isolated\",\n      \"temporal_pattern\": \"Current residual elevation persists for at least 2 samples and Temperature rises near lag 2 or as a short drift\",\n      \"rationale\": \"A sustained electrical-load residual can be checked for a lagged thermal residual response.\"\n    },\n    {\n      \"expert_edge_id\": \"skab_001_Voltage_Current\",\n      \"source\": \"Voltage\",\n      \"target\": \"Current\",\n      \"activation\": \"uncertain\",\n      \"activation_score\": 0.32,\n      \"confidence\": 0.38,\n      \"class_scope\": [\n        \"all\"\n      ],\n      \"regime_scope\": [\n        \"electrical transients; not steady regulated-voltage periods\"\n      ],\n      \"residual_pattern\": \"leave uncertain unless Voltage residual excursions repeatedly precede Current residual excursions at lag 1 with stable sign or magnitude relation\",\n      \"temporal_pattern\": \"short spike or step in Voltage followed by Current change within 1 sample\",\n      \"rationale\": \"A regulated drive may weaken direct Voltage-to-Current residual predictability, so lagged support is required.\"\n    },\n    {\n      \"expert_edge_id\": \"skab_002_Volume_Flow_RateRMS_Pressure\",\n      \"source\": \"Volume Flow RateRMS\",\n      \"target\": \"Pressure\",\n      \"activation\": \"activate\",\n      \"activation_score\": 0.56,\n      \"confidence\": 0.52,\n      \"class_scope\": [\n        \"all\"\n      ],\n      \"regime_scope\": [\n        \"hydraulic-flow transients or abnormal flow excursions\"\n      ],\n      \"residual_pattern\": \"activate when Volume Flow RateRMS residual shifts are followed by Pressure residual level changes; suppress during constant quantized Pressure plateaus without flow support\",\n      \"temporal_pattern\": \"flow spike or step precedes a Pressure step at lag 0 to 1\",\n      \"rationale\": \"Flow residual changes can be tested for near-lagged pressure-level responses.\"\n    },\n    {\n      \"expert_edge_id\": \"skab_003_Pressure_Volume_Flow_RateRMS\",\n      \"source\": \"Pressure\",\n      \"target\": \"Volume Flow RateRMS\",\n      \"activation\": \"uncertain\",\n      \"activation_score\": 0.34,\n      \"confidence\": 0.36,\n      \"class_scope\": [\n        \"all\"\n      ],\n      \"regime_scope\": [\n        \"hydraulic feedback or control-correction intervals\"\n      ],\n      \"residual_pattern\": \"leave uncertain unless Pressure step residuals precede compensating Volume Flow RateRMS residual changes at lag 1\",\n      \"temporal_pattern\": \"quantized Pressure step followed by flow RMS adjustment within 1 sample\",\n      \"rationale\": \"Pressure-to-flow feedback is plausible only if discrete pressure residual changes consistently lead flow residual changes.\"\n    },\n    {\n      \"expert_edge_id\": \"skab_004_Accelerometer1RMS_Volume_Flow_RateRMS\",\n      \"source\": \"Accelerometer1RMS\",\n      \"target\": \"Volume Flow RateRMS\",\n      \"activation\": \"suppress\",\n      \"activation_score\": 0.22,\n      \"confidence\": 0.34,\n      \"class_scope\": [\n        \"all\"\n      ],\n      \"regime_scope\": [\n        \"steady operation or vibration-only excursions without hydraulic residual support\"\n      ],\n      \"residual_pattern\": \"suppress when Accelerometer1RMS residual spikes are not followed by Volume Flow RateRMS residual changes; reconsider only if repeated lagged co-activation appears\",\n      \"temporal_pattern\": \"isolated vibration spikes with no flow response within about 2 samples\",\n      \"rationale\": \"A vibration-to-flow gate should be disabled when mechanical residual spikes lack lagged hydraulic residual support.\"\n    },\n    {\n      \"expert_edge_id\": \"skab_005_Temperature_Thermocouple\",\n      \"source\": \"Temperature\",\n      \"target\": \"Thermocouple\",\n      \"activation\": \"activate\",\n      \"activation_score\": 0.57,\n      \"confidence\": 0.54,\n      \"class_scope\": [\n        \"all\"\n      ],\n      \"regime_scope\": [\n        \"thermal drift, heating, or cooling intervals\"\n      ],\n      \"residual_pattern\": \"activate when Temperature residual drift is followed by same-direction Thermocouple residual drift; suppress if Thermocouple changes independently\",\n      \"temporal_pattern\": \"Temperature change leads Thermocouple change by about 1 sample with persistence over multiple samples\",\n      \"rationale\": \"Coupled thermal sensors can be checked for same-direction lagged residual drift.\"\n    }\n  ]\n}",
+  "edges": [],
+  "corrections": [],
+  "verifications": [
+    {
+      "edge_id": "skab_llm_expert_condition_000_skab_000_Current_Temperature",
+      "source": "Current",
+      "target": "Temperature",
+      "source_kind": "feature",
+      "target_kind": "feature",
+      "relation": "motor_load_heating",
+      "lag": 2,
+      "reliability": 0.319,
+      "confidence": 0.55,
+      "activation_score": 0.58,
+      "evidence_source": "llm_expert_condition_verifier",
+      "admission_role": "expert_edge_condition_gate_metadata",
+      "graph_edge_candidate": false,
+      "condition_verification": true,
+      "condition_activation": "activate",
+      "expert_edge_id": "skab_000_Current_Temperature",
+      "corrects_edge_id": "skab_000_Current_Temperature",
+      "class_scope": [
+        "all"
+      ],
+      "regime_scope": [
+        "non-steady or elevated-load regimes with persistent Current residual support"
+      ],
+      "residual_pattern": "activate when positive Current residuals co-occur with later positive Temperature residuals; suppress if Temperature residuals lead or are isolated",
+      "temporal_pattern": "Current residual elevation persists for at least 2 samples and Temperature rises near lag 2 or as a short drift",
+      "requires_data_support": true,
+      "rationale": "A sustained electrical-load residual can be checked for a lagged thermal residual response."
+    },
+    {
+      "edge_id": "skab_llm_expert_condition_001_skab_001_Voltage_Current",
+      "source": "Voltage",
+      "target": "Current",
+      "source_kind": "feature",
+      "target_kind": "feature",
+      "relation": "drive_electrical_response",
+      "lag": 1,
+      "reliability": 0.1216,
+      "confidence": 0.38,
+      "activation_score": 0.32,
+      "evidence_source": "llm_expert_condition_verifier",
+      "admission_role": "expert_edge_condition_gate_metadata",
+      "graph_edge_candidate": false,
+      "condition_verification": true,
+      "condition_activation": "uncertain",
+      "expert_edge_id": "skab_001_Voltage_Current",
+      "corrects_edge_id": "skab_001_Voltage_Current",
+      "class_scope": [
+        "all"
+      ],
+      "regime_scope": [
+        "electrical transients; not steady regulated-voltage periods"
+      ],
+      "residual_pattern": "leave uncertain unless Voltage residual excursions repeatedly precede Current residual excursions at lag 1 with stable sign or magnitude relation",
+      "temporal_pattern": "short spike or step in Voltage followed by Current change within 1 sample",
+      "requires_data_support": true,
+      "rationale": "A regulated drive may weaken direct Voltage-to-Current residual predictability, so lagged support is required."
+    },
+    {
+      "edge_id": "skab_llm_expert_condition_002_skab_002_Volume_Flow_RateRMS_Pressure",
+      "source": "Volume Flow RateRMS",
+      "target": "Pressure",
+      "source_kind": "feature",
+      "target_kind": "feature",
+      "relation": "flow_pressure_coupling",
+      "lag": 1,
+      "reliability": 0.2912,
+      "confidence": 0.52,
+      "activation_score": 0.56,
+      "evidence_source": "llm_expert_condition_verifier",
+      "admission_role": "expert_edge_condition_gate_metadata",
+      "graph_edge_candidate": false,
+      "condition_verification": true,
+      "condition_activation": "activate",
+      "expert_edge_id": "skab_002_Volume_Flow_RateRMS_Pressure",
+      "corrects_edge_id": "skab_002_Volume_Flow_RateRMS_Pressure",
+      "class_scope": [
+        "all"
+      ],
+      "regime_scope": [
+        "hydraulic-flow transients or abnormal flow excursions"
+      ],
+      "residual_pattern": "activate when Volume Flow RateRMS residual shifts are followed by Pressure residual level changes; suppress during constant quantized Pressure plateaus without flow support",
+      "temporal_pattern": "flow spike or step precedes a Pressure step at lag 0 to 1",
+      "requires_data_support": true,
+      "rationale": "Flow residual changes can be tested for near-lagged pressure-level responses."
+    },
+    {
+      "edge_id": "skab_llm_expert_condition_003_skab_003_Pressure_Volume_Flow_RateRMS",
+      "source": "Pressure",
+      "target": "Volume Flow RateRMS",
+      "source_kind": "feature",
+      "target_kind": "feature",
+      "relation": "hydraulic_feedback",
+      "lag": 1,
+      "reliability": 0.12240000000000001,
+      "confidence": 0.36,
+      "activation_score": 0.34,
+      "evidence_source": "llm_expert_condition_verifier",
+      "admission_role": "expert_edge_condition_gate_metadata",
+      "graph_edge_candidate": false,
+      "condition_verification": true,
+      "condition_activation": "uncertain",
+      "expert_edge_id": "skab_003_Pressure_Volume_Flow_RateRMS",
+      "corrects_edge_id": "skab_003_Pressure_Volume_Flow_RateRMS",
+      "class_scope": [
+        "all"
+      ],
+      "regime_scope": [
+        "hydraulic feedback or control-correction intervals"
+      ],
+      "residual_pattern": "leave uncertain unless Pressure step residuals precede compensating Volume Flow RateRMS residual changes at lag 1",
+      "temporal_pattern": "quantized Pressure step followed by flow RMS adjustment within 1 sample",
+      "requires_data_support": true,
+      "rationale": "Pressure-to-flow feedback is plausible only if discrete pressure residual changes consistently lead flow residual changes."
+    },
+    {
+      "edge_id": "skab_llm_expert_condition_004_skab_004_Accelerometer1RMS_Volume_Flow_RateRMS",
+      "source": "Accelerometer1RMS",
+      "target": "Volume Flow RateRMS",
+      "source_kind": "feature",
+      "target_kind": "feature",
+      "relation": "mechanical_vibration_flow",
+      "lag": 2,
+      "reliability": 0.0748,
+      "confidence": 0.34,
+      "activation_score": 0.22,
+      "evidence_source": "llm_expert_condition_verifier",
+      "admission_role": "expert_edge_condition_gate_metadata",
+      "graph_edge_candidate": false,
+      "condition_verification": true,
+      "condition_activation": "suppress",
+      "expert_edge_id": "skab_004_Accelerometer1RMS_Volume_Flow_RateRMS",
+      "corrects_edge_id": "skab_004_Accelerometer1RMS_Volume_Flow_RateRMS",
+      "class_scope": [
+        "all"
+      ],
+      "regime_scope": [
+        "steady operation or vibration-only excursions without hydraulic residual support"
+      ],
+      "residual_pattern": "suppress when Accelerometer1RMS residual spikes are not followed by Volume Flow RateRMS residual changes; reconsider only if repeated lagged co-activation appears",
+      "temporal_pattern": "isolated vibration spikes with no flow response within about 2 samples",
+      "requires_data_support": true,
+      "rationale": "A vibration-to-flow gate should be disabled when mechanical residual spikes lack lagged hydraulic residual support."
+    },
+    {
+      "edge_id": "skab_llm_expert_condition_005_skab_005_Temperature_Thermocouple",
+      "source": "Temperature",
+      "target": "Thermocouple",
+      "source_kind": "feature",
+      "target_kind": "feature",
+      "relation": "thermal_transfer",
+      "lag": 1,
+      "reliability": 0.3078,
+      "confidence": 0.54,
+      "activation_score": 0.57,
+      "evidence_source": "llm_expert_condition_verifier",
+      "admission_role": "expert_edge_condition_gate_metadata",
+      "graph_edge_candidate": false,
+      "condition_verification": true,
+      "condition_activation": "activate",
+      "expert_edge_id": "skab_005_Temperature_Thermocouple",
+      "corrects_edge_id": "skab_005_Temperature_Thermocouple",
+      "class_scope": [
+        "all"
+      ],
+      "regime_scope": [
+        "thermal drift, heating, or cooling intervals"
+      ],
+      "residual_pattern": "activate when Temperature residual drift is followed by same-direction Thermocouple residual drift; suppress if Thermocouple changes independently",
+      "temporal_pattern": "Temperature change leads Thermocouple change by about 1 sample with persistence over multiple samples",
+      "requires_data_support": true,
+      "rationale": "Coupled thermal sensors can be checked for same-direction lagged residual drift."
+    }
+  ],
+  "diagnostics": {
+    "raw_verification_count": 6,
+    "accepted_verifications": 6,
+    "accepted_edges": 0,
+    "skipped_verifications": 0,
+    "activation_counts": {
+      "activate": 3,
+      "suppress": 1,
+      "uncertain": 2
+    },
+    "evidence_source": "llm_expert_condition_verifier",
+    "n_allowed_features": 8,
+    "n_prompt_features": 8,
+    "n_expert_edges_in_prompt": 6,
+    "ready_graph": "knowledge_exports\\public_benchmark_ready_llm_live_skab\\skab\\knowledge_model\\knowledge_graph.json",
+    "api_key_saved": false
+  },
+  "merged_graph_path": "knowledge_exports\\public_benchmark_ready_llm_live_skab\\skab\\knowledge_model\\knowledge_graph.json"
+}

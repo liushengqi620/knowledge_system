@@ -1,0 +1,32 @@
+{
+  "schema": "public_benchmark_llm_expert_condition_verifier_v1",
+  "dataset": "skab",
+  "target": "anomaly",
+  "mode": "expert_condition_verifier",
+  "model": "gpt-5.5",
+  "base_url": "https://api.n1n.ai/v1",
+  "dry_run": true,
+  "prompt_messages": [
+    {
+      "role": "system",
+      "content": "You are a weak conditional verifier for an existing expert mechanism graph. Return only valid JSON. Do not propose new graph edges. Do not assert causal truth. Your output is only a conditional gate feature that downstream data, residual, validation, and reliability admission may reject."
+    },
+    {
+      "role": "user",
+      "content": "For each selected existing expert edge, decide whether it should be conditionally activated, suppressed, or left uncertain under class, operating regime, residual, and temporal patterns. Use only expert_edge_id values from current_expert_graph_edges. Do not add new source-target pairs. Prefer specific, falsifiable conditions that can be checked by time-series residual/data support. JSON input:\n{\"dataset\": \"skab\", \"target\": \"anomaly\", \"task\": \"binary point/run anomaly detection\", \"allowed_features\": [\"Accelerometer1RMS\", \"Accelerometer2RMS\", \"Current\", \"Pressure\", \"Temperature\", \"Thermocouple\", \"Voltage\", \"Volume Flow RateRMS\"], \"feature_catalog\": [{\"name\": \"Accelerometer1RMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"mechanical_vibration\", \"n_unique\": 31964}, {\"name\": \"Accelerometer2RMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"mechanical_vibration\", \"n_unique\": 35252}, {\"name\": \"Current\", \"role\": \"observed_process_variable\", \"subsystem\": \"electrical_drive\", \"n_unique\": 42271}, {\"name\": \"Pressure\", \"role\": \"observed_process_variable\", \"subsystem\": \"hydraulic_flow\", \"n_unique\": 10}, {\"name\": \"Temperature\", \"role\": \"observed_process_variable\", \"subsystem\": \"thermal\", \"n_unique\": 37593}, {\"name\": \"Thermocouple\", \"role\": \"observed_process_variable\", \"subsystem\": \"thermal\", \"n_unique\": 24917}, {\"name\": \"Voltage\", \"role\": \"observed_process_variable\", \"subsystem\": \"electrical_drive\", \"n_unique\": 26895}, {\"name\": \"Volume Flow RateRMS\", \"role\": \"observed_process_variable\", \"subsystem\": \"hydraulic_flow\", \"n_unique\": 1994}], \"current_expert_graph_edges\": [{\"edge_id\": \"skab_000_Current_Temperature\", \"source\": \"Current\", \"target\": \"Temperature\", \"relation\": \"motor_load_heating\", \"lag\": 2, \"reliability\": 0.45, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_001_Voltage_Current\", \"source\": \"Voltage\", \"target\": \"Current\", \"relation\": \"drive_electrical_response\", \"lag\": 1, \"reliability\": 0.35, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_002_Volume_Flow_RateRMS_Pressure\", \"source\": \"Volume Flow RateRMS\", \"target\": \"Pressure\", \"relation\": \"flow_pressure_coupling\", \"lag\": 1, \"reliability\": 0.45, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_003_Pressure_Volume_Flow_RateRMS\", \"source\": \"Pressure\", \"target\": \"Volume Flow RateRMS\", \"relation\": \"hydraulic_feedback\", \"lag\": 1, \"reliability\": 0.35, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_004_Accelerometer1RMS_Volume_Flow_RateRMS\", \"source\": \"Accelerometer1RMS\", \"target\": \"Volume Flow RateRMS\", \"relation\": \"mechanical_vibration_flow\", \"lag\": 2, \"reliability\": 0.3, \"source_type\": \"expert_lag_prior\"}, {\"edge_id\": \"skab_005_Temperature_Thermocouple\", \"source\": \"Temperature\", \"target\": \"Thermocouple\", \"relation\": \"thermal_transfer\", \"lag\": 1, \"reliability\": 0.42, \"source_type\": \"expert_lag_prior\"}], \"max_verifications\": 3, \"required_json_schema\": {\"verifications\": [{\"expert_edge_id\": \"existing expert edge id from current_expert_graph_edges\", \"source\": \"source feature from that expert edge\", \"target\": \"target feature from that expert edge\", \"activation\": \"activate|suppress|uncertain\", \"activation_score\": \"float 0.0 to 1.0; conditional edge activation strength\", \"confidence\": \"float 0.0 to 0.70; LLM is weak evidence only\", \"class_scope\": [\"all or dataset class/fault names where this condition may hold\"], \"regime_scope\": [\"all or operating/degradation regimes where this condition may hold\"], \"residual_pattern\": \"short condition on residual or co-activation pattern\", \"temporal_pattern\": \"short condition on lag, spike, drift, or persistence pattern\", \"rationale\": \"one short falsifiable mechanism sentence\"}]}}"
+    }
+  ],
+  "raw_response": "",
+  "edges": [],
+  "corrections": [],
+  "verifications": [],
+  "diagnostics": {
+    "accepted_edges": 0,
+    "skipped_edges": 0,
+    "n_allowed_features": 8,
+    "n_prompt_features": 8,
+    "n_expert_edges_in_prompt": 6,
+    "ready_graph": "C:\\Users\\CPILAB\\Documents\\xwechat_files\\wxid_fn3terjpgaio22_c340\\msg\\file\\2026-06\\codex_recovery\\data_knowledge_extraction_recovered_20260618_183738\\recovered_project_files\\数据知识抽取\\knowledge_exports\\public_benchmark_ready\\skab\\knowledge_model\\knowledge_graph.json",
+    "api_key_saved": false
+  }
+}

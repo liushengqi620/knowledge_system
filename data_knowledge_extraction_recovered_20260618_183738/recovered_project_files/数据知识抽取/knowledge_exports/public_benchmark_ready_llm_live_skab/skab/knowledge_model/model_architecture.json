@@ -1,0 +1,64 @@
+{
+  "schema": "public_benchmark_model_architecture_v1",
+  "dataset": "skab",
+  "input": {
+    "n_ready_columns": 11,
+    "n_numeric_features": 9,
+    "target_columns": [
+      "anomaly",
+      "changepoint"
+    ],
+    "mechanism_edges": 6
+  },
+  "anchor_model": {
+    "name": "run_level_anomaly_anchor_with_dynamic_graph_challengers",
+    "purpose": "run-held-out anomaly baseline challenged by learned-reliability dynamic LLM/graph evidence",
+    "implementation_status": "recovered evidence reports main 0.8343 and learned reliability route 0.8532; smoke fallback uses ExtraTrees",
+    "candidate_replacements": [
+      "MSFG-Time-TCN",
+      "USAD-style",
+      "TranAD-style",
+      "GDN-style",
+      "MTAD-GAT-style"
+    ],
+    "preprocess": [
+      "median_imputer",
+      "standard_scaler"
+    ],
+    "smoke_test_fallback": "balanced_extra_trees_anchor"
+  },
+  "candidate_evidence_models": [
+    {
+      "name": "normal_residual_evidence_head",
+      "family": "ExtraTrees on |scaled feature - normal center| plus missingness mask",
+      "role": "detect deviations from normal process state",
+      "fit_scope": "train split only"
+    },
+    {
+      "name": "mechanism_edge_feature_head",
+      "family": "knowledge graph edge deltas/ratios generated from admitted feature-feature edges",
+      "role": "convert candidate mechanism graph into falsifiable features",
+      "n_graph_edges": 6
+    },
+    {
+      "name": "temporal_sequence_candidate",
+      "family": "MSFG-TCN or temporal context windows over run_id/sample_index",
+      "role": "dataset-specific temporal evidence candidate"
+    }
+  ],
+  "router": {
+    "name": "UGMC_selective_logit_correction",
+    "validation_objective": "macro-F1 plus positive/rare recall term",
+    "gate_features": [
+      "anchor_confidence",
+      "candidate_agreement",
+      "top-k membership"
+    ],
+    "fallback": "anchor prediction when candidate evidence is unsafe"
+  },
+  "safety_checks": [
+    "report main anchor and candidate-routed metrics separately",
+    "retain class id mapping for non-contiguous public labels",
+    "store graph admission policy next to every ready dataset"
+  ]
+}

@@ -1,0 +1,331 @@
+{
+  "version": "cmapss-mdfa-source-profile-v1",
+  "status": "source_profile_count_reconciled_runner_pending",
+  "claim_boundary": "MDFA 2025 is now a concrete open-source-profile target for C-MAPSS. The local raw files match the MDFA FD001-FD004 unit-count table, while the bundled readme has an FD004 count inconsistency. This profile does not prove an exact reproduction until PCA/key-sensor preprocessing, the runner, matched budget, and seed-level predictions are materialized.",
+  "raw_dir": "C:\\Users\\CPILAB\\aaai_work\\knowledge_exports\\public_datasets\\cmapss\\raw\\extracted",
+  "source": {
+    "id": "mdfa_2025",
+    "title": "Remaining Useful Life Prediction for Aero-Engines Based on Multi-Scale Dilated Fusion Attention Model",
+    "url": "https://www.mdpi.com/2076-3417/15/17/9813",
+    "doi": "https://doi.org/10.3390/app15179813",
+    "published_table_counts": {
+      "FD001": {
+        "train_units": 100,
+        "test_units": 100,
+        "operating_conditions": 1,
+        "fault_modes": 1
+      },
+      "FD002": {
+        "train_units": 260,
+        "test_units": 259,
+        "operating_conditions": 6,
+        "fault_modes": 1
+      },
+      "FD003": {
+        "train_units": 100,
+        "test_units": 100,
+        "operating_conditions": 1,
+        "fault_modes": 2
+      },
+      "FD004": {
+        "train_units": 249,
+        "test_units": 248,
+        "operating_conditions": 6,
+        "fault_modes": 2
+      }
+    },
+    "published_hyperparameters": {
+      "batch_size": 32,
+      "window_size": 30,
+      "epochs": 100,
+      "optimizer": "Adam",
+      "loss": "MSE",
+      "learning_rate": 0.0001,
+      "dropout": 0.3
+    },
+    "published_architecture": {
+      "model_family": "multi-scale dilated fusion attention",
+      "dilation_rates": [
+        1,
+        2,
+        4
+      ],
+      "kernel_size": "3x3",
+      "conv_formulation": "source_2d_time_feature",
+      "attention": [
+        "channel_attention",
+        "spatial_attention"
+      ],
+      "fusion": "four branches concatenated then compressed with 1x1 convolution"
+    },
+    "published_metrics": [
+      "RMSE",
+      "Score"
+    ],
+    "published_mdfa_results": {
+      "FD001": {
+        "rmse": 11.78,
+        "score": 299.08
+      },
+      "FD002": {
+        "rmse": 16.38,
+        "score": 1380.65
+      },
+      "FD003": {
+        "rmse": 11.89,
+        "score": 303.34
+      },
+      "FD004": {
+        "rmse": 19.23,
+        "score": 3566.44
+      }
+    },
+    "published_preprocessing_claims": [
+      "Piecewise linear RUL labeling is used.",
+      "The initial RUL is set to 125 cycles.",
+      "PCA is used to transform correlated variables into orthogonal principal components.",
+      "Optimal component count is selected by cumulative contribution rate.",
+      "Key sensor variables are reported in the source table."
+    ],
+    "published_rul_label_policy": {
+      "piecewise_linear_rul": true,
+      "initial_rul": 125,
+      "test_scoring_cap_policy": "not_explicitly_machine_readable"
+    },
+    "published_table4_key_sensors": [
+      {
+        "source_code": "Ps30",
+        "local_sensor": "s11",
+        "sensor_id": 11,
+        "description": "Static pressure at HPC outlet"
+      },
+      {
+        "source_code": "T24",
+        "local_sensor": "s2",
+        "sensor_id": 2,
+        "description": "Total temperature at LPC outlet"
+      },
+      {
+        "source_code": "T30",
+        "local_sensor": "s3",
+        "sensor_id": 3,
+        "description": "Total temperature at HPC outlet"
+      },
+      {
+        "source_code": "P30",
+        "local_sensor": "s7",
+        "sensor_id": 7,
+        "description": "Total pressure at HPC outlet"
+      },
+      {
+        "source_code": "Phi",
+        "local_sensor": "s12",
+        "sensor_id": 12,
+        "description": "Fuel flow to high-pressure compressor static pressure ratio"
+      },
+      {
+        "source_code": "Nf",
+        "local_sensor": "s8",
+        "sensor_id": 8,
+        "description": "Physical fan speed"
+      },
+      {
+        "source_code": "Nc",
+        "local_sensor": "s9",
+        "sensor_id": 9,
+        "description": "Physical core speed"
+      },
+      {
+        "source_code": "W31",
+        "local_sensor": "s20",
+        "sensor_id": 20,
+        "description": "HPT coolant bleed"
+      },
+      {
+        "source_code": "W32",
+        "local_sensor": "s21",
+        "sensor_id": 21,
+        "description": "LPT coolant bleed"
+      }
+    ]
+  },
+  "table4_key_sensor_mapping": [
+    {
+      "source_code": "Ps30",
+      "local_sensor": "s11",
+      "sensor_id": 11,
+      "description": "Static pressure at HPC outlet"
+    },
+    {
+      "source_code": "T24",
+      "local_sensor": "s2",
+      "sensor_id": 2,
+      "description": "Total temperature at LPC outlet"
+    },
+    {
+      "source_code": "T30",
+      "local_sensor": "s3",
+      "sensor_id": 3,
+      "description": "Total temperature at HPC outlet"
+    },
+    {
+      "source_code": "P30",
+      "local_sensor": "s7",
+      "sensor_id": 7,
+      "description": "Total pressure at HPC outlet"
+    },
+    {
+      "source_code": "Phi",
+      "local_sensor": "s12",
+      "sensor_id": 12,
+      "description": "Fuel flow to high-pressure compressor static pressure ratio"
+    },
+    {
+      "source_code": "Nf",
+      "local_sensor": "s8",
+      "sensor_id": 8,
+      "description": "Physical fan speed"
+    },
+    {
+      "source_code": "Nc",
+      "local_sensor": "s9",
+      "sensor_id": 9,
+      "description": "Physical core speed"
+    },
+    {
+      "source_code": "W31",
+      "local_sensor": "s20",
+      "sensor_id": 20,
+      "description": "HPT coolant bleed"
+    },
+    {
+      "source_code": "W32",
+      "local_sensor": "s21",
+      "sensor_id": 21,
+      "description": "LPT coolant bleed"
+    }
+  ],
+  "local_count_reconciliation": [
+    {
+      "subset": "FD001",
+      "local_train_rows": 20631,
+      "local_test_rows": 13096,
+      "local_train_units": 100,
+      "local_test_units": 100,
+      "local_rul_rows": 100,
+      "columns_train": 26,
+      "columns_test": 26,
+      "local_max_train_cycle": 362,
+      "local_max_test_cycle": 303,
+      "mdfa_train_units": 100,
+      "mdfa_test_units": 100,
+      "readme_train_units": 100,
+      "readme_test_units": 100,
+      "counts_match_mdfa": true,
+      "counts_match_readme": true,
+      "rul_rows_match_test_units": true,
+      "raw_files_present": true
+    },
+    {
+      "subset": "FD002",
+      "local_train_rows": 53759,
+      "local_test_rows": 33991,
+      "local_train_units": 260,
+      "local_test_units": 259,
+      "local_rul_rows": 259,
+      "columns_train": 26,
+      "columns_test": 26,
+      "local_max_train_cycle": 378,
+      "local_max_test_cycle": 367,
+      "mdfa_train_units": 260,
+      "mdfa_test_units": 259,
+      "readme_train_units": 260,
+      "readme_test_units": 259,
+      "counts_match_mdfa": true,
+      "counts_match_readme": true,
+      "rul_rows_match_test_units": true,
+      "raw_files_present": true
+    },
+    {
+      "subset": "FD003",
+      "local_train_rows": 24720,
+      "local_test_rows": 16596,
+      "local_train_units": 100,
+      "local_test_units": 100,
+      "local_rul_rows": 100,
+      "columns_train": 26,
+      "columns_test": 26,
+      "local_max_train_cycle": 525,
+      "local_max_test_cycle": 475,
+      "mdfa_train_units": 100,
+      "mdfa_test_units": 100,
+      "readme_train_units": 100,
+      "readme_test_units": 100,
+      "counts_match_mdfa": true,
+      "counts_match_readme": true,
+      "rul_rows_match_test_units": true,
+      "raw_files_present": true
+    },
+    {
+      "subset": "FD004",
+      "local_train_rows": 61249,
+      "local_test_rows": 41214,
+      "local_train_units": 249,
+      "local_test_units": 248,
+      "local_rul_rows": 248,
+      "columns_train": 26,
+      "columns_test": 26,
+      "local_max_train_cycle": 543,
+      "local_max_test_cycle": 486,
+      "mdfa_train_units": 249,
+      "mdfa_test_units": 248,
+      "readme_train_units": 248,
+      "readme_test_units": 249,
+      "counts_match_mdfa": true,
+      "counts_match_readme": false,
+      "rul_rows_match_test_units": true,
+      "raw_files_present": true
+    }
+  ],
+  "gates": {
+    "open_fulltext_protocol_available": true,
+    "mdfa_hyperparameters_extracted": true,
+    "mdfa_architecture_fields_extracted": true,
+    "mdfa_piecewise_rul_cap_machine_readable": true,
+    "mdfa_table4_key_sensors_machine_readable": true,
+    "local_raw_files_present": true,
+    "local_unit_counts_match_mdfa_table": true,
+    "local_rul_rows_match_test_units": true,
+    "readme_counts_match_local_files": false,
+    "exact_pca_preprocessing_machine_readable": false,
+    "exact_test_label_policy_machine_readable": false,
+    "source_matched_runner_code_present": true,
+    "full_source_matched_prediction_archive_present": false,
+    "safe_to_promote_mdfa_to_exact_reproduction": false
+  },
+  "missing_gates": [
+    "readme_counts_match_local_files",
+    "exact_pca_preprocessing_machine_readable",
+    "exact_test_label_policy_machine_readable",
+    "full_source_matched_prediction_archive_present",
+    "safe_to_promote_mdfa_to_exact_reproduction"
+  ],
+  "readme_count_inconsistencies": [
+    {
+      "subset": "FD004",
+      "readme_train_units": 248,
+      "readme_test_units": 249,
+      "local_train_units": 249,
+      "local_test_units": 248,
+      "mdfa_train_units": 249,
+      "mdfa_test_units": 248
+    }
+  ],
+  "next_actions": [
+    "Keep the source-matched MDFA runner fixed with source_2d time-feature input, window=30, batch=32, epochs=100, Adam, lr=0.0001, dropout=0.3, and dilation rates 1/2/4.",
+    "Treat the source PCA cumulative-contribution threshold and test-label scoring policy as non-machine-readable until the original authors or supplementary code specify the exact values.",
+    "Retain the machine-readable Table-4 feature policy (`mdfa_key_sensors_pca`) as a source-aligned negative/control branch, not as an exact reproduction proof.",
+    "Run exact-source three-seed FD001-FD004 terminal RUL only if the missing PCA threshold and preprocessing policy are resolved.",
+    "Report the bundled readme FD004 train/test count inconsistency, but use the raw file unique-unit counts because they match the MDFA published table and RUL line counts."
+  ]
+}

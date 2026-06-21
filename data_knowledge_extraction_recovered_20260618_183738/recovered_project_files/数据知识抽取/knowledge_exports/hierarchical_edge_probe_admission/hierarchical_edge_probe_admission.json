@@ -1,0 +1,1834 @@
+{
+  "version": "hierarchical-edge-probe-admission-v1",
+  "thresholds": {
+    "min_validation_gain": 0.0,
+    "min_low_tail_delta": -0.002,
+    "max_far_delta": 0.005,
+    "max_mar_delta": 0.005,
+    "min_cf_sensitivity": 0.0
+  },
+  "gate_order": [
+    "validation_gain",
+    "low_tail_far_mar_safety",
+    "cf_guard"
+  ],
+  "candidate_edges": [
+    {
+      "edge_id": "tep_global",
+      "source": "xmv_03",
+      "target": "xmeas_01",
+      "lag": 1,
+      "source_family": "expert",
+      "target_group": "feed_flow",
+      "lag_group": "lag1",
+      "relation": "control_loop",
+      "confidence": 0.82,
+      "weight": 0.72,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_01_xmeas_04_to_xmeas_06",
+      "source": "xmeas_04",
+      "target": "xmeas_06",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor_feed",
+      "lag_group": "lag2",
+      "relation": "feed_ratio",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_01_xmeas_06_to_xmeas_35",
+      "source": "xmeas_06",
+      "target": "xmeas_35",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "composition",
+      "lag_group": "lag2",
+      "relation": "composition_effect",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_02_xmeas_04_to_xmeas_06",
+      "source": "xmeas_04",
+      "target": "xmeas_06",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor_feed",
+      "lag_group": "lag2",
+      "relation": "feed_composition",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_02_xmeas_06_to_xmeas_36",
+      "source": "xmeas_06",
+      "target": "xmeas_36",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "composition",
+      "lag_group": "lag2",
+      "relation": "composition_effect",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_03_xmeas_02_to_xmeas_09",
+      "source": "xmeas_02",
+      "target": "xmeas_09",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor",
+      "lag_group": "lag2",
+      "relation": "thermal_feed",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_03_xmeas_09_to_xmeas_11",
+      "source": "xmeas_09",
+      "target": "xmeas_11",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "separator",
+      "lag_group": "lag2",
+      "relation": "thermal_propagation",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_04_xmv_10_to_xmeas_21",
+      "source": "xmv_10",
+      "target": "xmeas_21",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "cooling",
+      "lag_group": "lag2",
+      "relation": "cooling_loop",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_04_xmeas_21_to_xmeas_09",
+      "source": "xmeas_21",
+      "target": "xmeas_09",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor",
+      "lag_group": "lag2",
+      "relation": "cooling_feedback",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_05_xmv_11_to_xmeas_22",
+      "source": "xmv_11",
+      "target": "xmeas_22",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "cooling",
+      "lag_group": "lag2",
+      "relation": "cooling_loop",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_05_xmeas_22_to_xmeas_11",
+      "source": "xmeas_22",
+      "target": "xmeas_11",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "separator",
+      "lag_group": "lag2",
+      "relation": "cooling_feedback",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_06_xmv_03_to_xmeas_01",
+      "source": "xmv_03",
+      "target": "xmeas_01",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "feed_flow",
+      "lag_group": "lag2",
+      "relation": "feed_loss",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_06_xmeas_01_to_xmeas_06",
+      "source": "xmeas_01",
+      "target": "xmeas_06",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor_feed",
+      "lag_group": "lag2",
+      "relation": "feed_propagation",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_07_xmeas_04_to_xmeas_06",
+      "source": "xmeas_04",
+      "target": "xmeas_06",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor_feed",
+      "lag_group": "lag2",
+      "relation": "feed_pressure_loss",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_07_xmeas_06_to_xmeas_07",
+      "source": "xmeas_06",
+      "target": "xmeas_07",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor",
+      "lag_group": "lag2",
+      "relation": "reactor_inventory",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_08_xmeas_23_to_xmeas_06",
+      "source": "xmeas_23",
+      "target": "xmeas_06",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor_feed",
+      "lag_group": "lag2",
+      "relation": "feed_composition",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_08_xmeas_06_to_xmeas_37",
+      "source": "xmeas_06",
+      "target": "xmeas_37",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "composition",
+      "lag_group": "lag2",
+      "relation": "composition_effect",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_09_xmeas_02_to_xmeas_09",
+      "source": "xmeas_02",
+      "target": "xmeas_09",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor",
+      "lag_group": "lag2",
+      "relation": "thermal_feed",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_09_xmeas_09_to_xmeas_38",
+      "source": "xmeas_09",
+      "target": "xmeas_38",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "composition",
+      "lag_group": "lag2",
+      "relation": "composition_effect",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_10_xmeas_04_to_xmeas_09",
+      "source": "xmeas_04",
+      "target": "xmeas_09",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor",
+      "lag_group": "lag2",
+      "relation": "feed_temperature",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_10_xmeas_09_to_xmeas_11",
+      "source": "xmeas_09",
+      "target": "xmeas_11",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "separator",
+      "lag_group": "lag2",
+      "relation": "thermal_propagation",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_11_xmv_10_to_xmeas_21",
+      "source": "xmv_10",
+      "target": "xmeas_21",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "cooling",
+      "lag_group": "lag2",
+      "relation": "cooling_loop",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_11_xmeas_21_to_xmeas_09",
+      "source": "xmeas_21",
+      "target": "xmeas_09",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor",
+      "lag_group": "lag2",
+      "relation": "cooling_feedback",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_12_xmv_11_to_xmeas_22",
+      "source": "xmv_11",
+      "target": "xmeas_22",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "cooling",
+      "lag_group": "lag2",
+      "relation": "cooling_loop",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_12_xmeas_22_to_xmeas_13",
+      "source": "xmeas_22",
+      "target": "xmeas_13",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "separator",
+      "lag_group": "lag2",
+      "relation": "cooling_feedback",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_13_xmeas_09_to_xmeas_35",
+      "source": "xmeas_09",
+      "target": "xmeas_35",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "composition",
+      "lag_group": "lag2",
+      "relation": "reaction_kinetics",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_13_xmeas_09_to_xmeas_36",
+      "source": "xmeas_09",
+      "target": "xmeas_36",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "composition",
+      "lag_group": "lag2",
+      "relation": "reaction_kinetics",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_14_xmv_10_to_xmeas_09",
+      "source": "xmv_10",
+      "target": "xmeas_09",
+      "lag": 1,
+      "source_family": "expert",
+      "target_group": "reactor",
+      "lag_group": "lag1",
+      "relation": "reactor_cooling_valve",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_14_xmeas_09_to_xmeas_07",
+      "source": "xmeas_09",
+      "target": "xmeas_07",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor",
+      "lag_group": "lag2",
+      "relation": "reactor_dynamics",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_15_xmv_11_to_xmeas_11",
+      "source": "xmv_11",
+      "target": "xmeas_11",
+      "lag": 1,
+      "source_family": "expert",
+      "target_group": "separator",
+      "lag_group": "lag1",
+      "relation": "condenser_cooling_valve",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_15_xmeas_11_to_xmeas_13",
+      "source": "xmeas_11",
+      "target": "xmeas_13",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "separator",
+      "lag_group": "lag2",
+      "relation": "separator_dynamics",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_16_xmeas_07_to_xmeas_20",
+      "source": "xmeas_07",
+      "target": "xmeas_20",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "compressor",
+      "lag_group": "lag2",
+      "relation": "unknown_process_disturbance",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_16_xmeas_20_to_xmeas_13",
+      "source": "xmeas_20",
+      "target": "xmeas_13",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "separator",
+      "lag_group": "lag2",
+      "relation": "compressor_separator_coupling",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_17_xmeas_05_to_xmeas_20",
+      "source": "xmeas_05",
+      "target": "xmeas_20",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "compressor",
+      "lag_group": "lag2",
+      "relation": "unknown_recycle_disturbance",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_17_xmeas_20_to_xmeas_06",
+      "source": "xmeas_20",
+      "target": "xmeas_06",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor_feed",
+      "lag_group": "lag2",
+      "relation": "recycle_feed_coupling",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_18_xmeas_09_to_xmeas_18",
+      "source": "xmeas_09",
+      "target": "xmeas_18",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "stripper",
+      "lag_group": "lag2",
+      "relation": "unknown_thermal_disturbance",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_18_xmeas_18_to_xmeas_39",
+      "source": "xmeas_18",
+      "target": "xmeas_39",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "composition",
+      "lag_group": "lag2",
+      "relation": "composition_effect",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_19_xmeas_12_to_xmeas_15",
+      "source": "xmeas_12",
+      "target": "xmeas_15",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "stripper",
+      "lag_group": "lag2",
+      "relation": "unknown_inventory_disturbance",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_19_xmeas_15_to_xmeas_17",
+      "source": "xmeas_15",
+      "target": "xmeas_17",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "stripper",
+      "lag_group": "lag2",
+      "relation": "inventory_balance",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_20_xmeas_10_to_xmeas_13",
+      "source": "xmeas_10",
+      "target": "xmeas_13",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "separator",
+      "lag_group": "lag2",
+      "relation": "unknown_purge_pressure_disturbance",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_20_xmeas_13_to_xmeas_20",
+      "source": "xmeas_13",
+      "target": "xmeas_20",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "compressor",
+      "lag_group": "lag2",
+      "relation": "pressure_compressor_coupling",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_21_xmv_04_to_xmeas_04",
+      "source": "xmv_04",
+      "target": "xmeas_04",
+      "lag": 1,
+      "source_family": "expert",
+      "target_group": "feed_flow",
+      "lag_group": "lag1",
+      "relation": "stream_4_valve_fixed",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "tep_fault_21_xmeas_04_to_xmeas_06",
+      "source": "xmeas_04",
+      "target": "xmeas_06",
+      "lag": 2,
+      "source_family": "expert",
+      "target_group": "reactor_feed",
+      "lag_group": "lag2",
+      "relation": "feed_propagation",
+      "confidence": 0.92,
+      "weight": 0.86,
+      "raw_source": "tep_expert"
+    },
+    {
+      "edge_id": "llm_tep_fault_04_xmv_10_to_xmeas_09",
+      "source": "xmv_10",
+      "target": "xmeas_09",
+      "lag": 2,
+      "source_family": "llm",
+      "target_group": "reactor",
+      "lag_group": "lag2",
+      "relation": "cooling_loop",
+      "confidence": 0.62,
+      "weight": 0.55,
+      "raw_source": "llm_tep_candidate"
+    },
+    {
+      "edge_id": "llm_tep_fault_04_xmeas_21_to_xmeas_07",
+      "source": "xmeas_21",
+      "target": "xmeas_07",
+      "lag": 2,
+      "source_family": "llm",
+      "target_group": "reactor",
+      "lag_group": "lag2",
+      "relation": "cooling_pressure_coupling",
+      "confidence": 0.62,
+      "weight": 0.55,
+      "raw_source": "llm_tep_candidate"
+    },
+    {
+      "edge_id": "llm_tep_fault_05_xmv_11_to_xmeas_13",
+      "source": "xmv_11",
+      "target": "xmeas_13",
+      "lag": 2,
+      "source_family": "llm",
+      "target_group": "separator",
+      "lag_group": "lag2",
+      "relation": "cooling_pressure_coupling",
+      "confidence": 0.62,
+      "weight": 0.55,
+      "raw_source": "llm_tep_candidate"
+    },
+    {
+      "edge_id": "llm_tep_fault_13_xmeas_07_to_xmeas_35",
+      "source": "xmeas_07",
+      "target": "xmeas_35",
+      "lag": 2,
+      "source_family": "llm",
+      "target_group": "composition",
+      "lag_group": "lag2",
+      "relation": "reaction_kinetics",
+      "confidence": 0.62,
+      "weight": 0.55,
+      "raw_source": "llm_tep_candidate"
+    },
+    {
+      "edge_id": "llm_tep_fault_13_xmeas_09_to_xmeas_40",
+      "source": "xmeas_09",
+      "target": "xmeas_40",
+      "lag": 2,
+      "source_family": "llm",
+      "target_group": "composition",
+      "lag_group": "lag2",
+      "relation": "composition_effect",
+      "confidence": 0.62,
+      "weight": 0.55,
+      "raw_source": "llm_tep_candidate"
+    },
+    {
+      "edge_id": "llm_tep_fault_16_xmeas_20_to_xmeas_07",
+      "source": "xmeas_20",
+      "target": "xmeas_07",
+      "lag": 2,
+      "source_family": "llm",
+      "target_group": "reactor",
+      "lag_group": "lag2",
+      "relation": "compressor_reactor_coupling",
+      "confidence": 0.62,
+      "weight": 0.55,
+      "raw_source": "llm_tep_candidate"
+    },
+    {
+      "edge_id": "llm_tep_fault_21_xmv_04_to_xmeas_35",
+      "source": "xmv_04",
+      "target": "xmeas_35",
+      "lag": 2,
+      "source_family": "llm",
+      "target_group": "composition",
+      "lag_group": "lag2",
+      "relation": "stream_4_composition_effect",
+      "confidence": 0.62,
+      "weight": 0.55,
+      "raw_source": "llm_tep_candidate"
+    }
+  ],
+  "probe_results": [
+    {
+      "probe_id": "source_family:expert",
+      "probe_level": "source_family",
+      "probe_key": "expert",
+      "edge_ids": [
+        "tep_global",
+        "tep_fault_01_xmeas_04_to_xmeas_06",
+        "tep_fault_01_xmeas_06_to_xmeas_35",
+        "tep_fault_02_xmeas_04_to_xmeas_06",
+        "tep_fault_02_xmeas_06_to_xmeas_36",
+        "tep_fault_03_xmeas_02_to_xmeas_09",
+        "tep_fault_03_xmeas_09_to_xmeas_11",
+        "tep_fault_04_xmv_10_to_xmeas_21",
+        "tep_fault_04_xmeas_21_to_xmeas_09",
+        "tep_fault_05_xmv_11_to_xmeas_22",
+        "tep_fault_05_xmeas_22_to_xmeas_11",
+        "tep_fault_06_xmv_03_to_xmeas_01",
+        "tep_fault_06_xmeas_01_to_xmeas_06",
+        "tep_fault_07_xmeas_04_to_xmeas_06",
+        "tep_fault_07_xmeas_06_to_xmeas_07",
+        "tep_fault_08_xmeas_23_to_xmeas_06",
+        "tep_fault_08_xmeas_06_to_xmeas_37",
+        "tep_fault_09_xmeas_02_to_xmeas_09",
+        "tep_fault_09_xmeas_09_to_xmeas_38",
+        "tep_fault_10_xmeas_04_to_xmeas_09",
+        "tep_fault_10_xmeas_09_to_xmeas_11",
+        "tep_fault_11_xmv_10_to_xmeas_21",
+        "tep_fault_11_xmeas_21_to_xmeas_09",
+        "tep_fault_12_xmv_11_to_xmeas_22",
+        "tep_fault_12_xmeas_22_to_xmeas_13",
+        "tep_fault_13_xmeas_09_to_xmeas_35",
+        "tep_fault_13_xmeas_09_to_xmeas_36",
+        "tep_fault_14_xmv_10_to_xmeas_09",
+        "tep_fault_14_xmeas_09_to_xmeas_07",
+        "tep_fault_15_xmv_11_to_xmeas_11",
+        "tep_fault_15_xmeas_11_to_xmeas_13",
+        "tep_fault_16_xmeas_07_to_xmeas_20",
+        "tep_fault_16_xmeas_20_to_xmeas_13",
+        "tep_fault_17_xmeas_05_to_xmeas_20",
+        "tep_fault_17_xmeas_20_to_xmeas_06",
+        "tep_fault_18_xmeas_09_to_xmeas_18",
+        "tep_fault_18_xmeas_18_to_xmeas_39",
+        "tep_fault_19_xmeas_12_to_xmeas_15",
+        "tep_fault_19_xmeas_15_to_xmeas_17",
+        "tep_fault_20_xmeas_10_to_xmeas_13",
+        "tep_fault_20_xmeas_13_to_xmeas_20",
+        "tep_fault_21_xmv_04_to_xmeas_04",
+        "tep_fault_21_xmeas_04_to_xmeas_06"
+      ],
+      "n_edges": 43,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "source_family:llm",
+      "probe_level": "source_family",
+      "probe_key": "llm",
+      "edge_ids": [
+        "llm_tep_fault_04_xmv_10_to_xmeas_09",
+        "llm_tep_fault_04_xmeas_21_to_xmeas_07",
+        "llm_tep_fault_05_xmv_11_to_xmeas_13",
+        "llm_tep_fault_13_xmeas_07_to_xmeas_35",
+        "llm_tep_fault_13_xmeas_09_to_xmeas_40",
+        "llm_tep_fault_16_xmeas_20_to_xmeas_07",
+        "llm_tep_fault_21_xmv_04_to_xmeas_35"
+      ],
+      "n_edges": 7,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "target_group:composition",
+      "probe_level": "target_group",
+      "probe_key": "composition",
+      "edge_ids": [
+        "tep_fault_01_xmeas_06_to_xmeas_35",
+        "tep_fault_02_xmeas_06_to_xmeas_36",
+        "tep_fault_08_xmeas_06_to_xmeas_37",
+        "tep_fault_09_xmeas_09_to_xmeas_38",
+        "tep_fault_13_xmeas_09_to_xmeas_35",
+        "tep_fault_13_xmeas_09_to_xmeas_36",
+        "tep_fault_18_xmeas_18_to_xmeas_39",
+        "llm_tep_fault_13_xmeas_07_to_xmeas_35",
+        "llm_tep_fault_13_xmeas_09_to_xmeas_40",
+        "llm_tep_fault_21_xmv_04_to_xmeas_35"
+      ],
+      "n_edges": 10,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "target_group:compressor",
+      "probe_level": "target_group",
+      "probe_key": "compressor",
+      "edge_ids": [
+        "tep_fault_16_xmeas_07_to_xmeas_20",
+        "tep_fault_17_xmeas_05_to_xmeas_20",
+        "tep_fault_20_xmeas_13_to_xmeas_20"
+      ],
+      "n_edges": 3,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "target_group:cooling",
+      "probe_level": "target_group",
+      "probe_key": "cooling",
+      "edge_ids": [
+        "tep_fault_04_xmv_10_to_xmeas_21",
+        "tep_fault_05_xmv_11_to_xmeas_22",
+        "tep_fault_11_xmv_10_to_xmeas_21",
+        "tep_fault_12_xmv_11_to_xmeas_22"
+      ],
+      "n_edges": 4,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "target_group:feed_flow",
+      "probe_level": "target_group",
+      "probe_key": "feed_flow",
+      "edge_ids": [
+        "tep_global",
+        "tep_fault_06_xmv_03_to_xmeas_01",
+        "tep_fault_21_xmv_04_to_xmeas_04"
+      ],
+      "n_edges": 3,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "target_group:reactor",
+      "probe_level": "target_group",
+      "probe_key": "reactor",
+      "edge_ids": [
+        "tep_fault_03_xmeas_02_to_xmeas_09",
+        "tep_fault_04_xmeas_21_to_xmeas_09",
+        "tep_fault_07_xmeas_06_to_xmeas_07",
+        "tep_fault_09_xmeas_02_to_xmeas_09",
+        "tep_fault_10_xmeas_04_to_xmeas_09",
+        "tep_fault_11_xmeas_21_to_xmeas_09",
+        "tep_fault_14_xmv_10_to_xmeas_09",
+        "tep_fault_14_xmeas_09_to_xmeas_07",
+        "llm_tep_fault_04_xmv_10_to_xmeas_09",
+        "llm_tep_fault_04_xmeas_21_to_xmeas_07",
+        "llm_tep_fault_16_xmeas_20_to_xmeas_07"
+      ],
+      "n_edges": 11,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "target_group:reactor_feed",
+      "probe_level": "target_group",
+      "probe_key": "reactor_feed",
+      "edge_ids": [
+        "tep_fault_01_xmeas_04_to_xmeas_06",
+        "tep_fault_02_xmeas_04_to_xmeas_06",
+        "tep_fault_06_xmeas_01_to_xmeas_06",
+        "tep_fault_07_xmeas_04_to_xmeas_06",
+        "tep_fault_08_xmeas_23_to_xmeas_06",
+        "tep_fault_17_xmeas_20_to_xmeas_06",
+        "tep_fault_21_xmeas_04_to_xmeas_06"
+      ],
+      "n_edges": 7,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "target_group:separator",
+      "probe_level": "target_group",
+      "probe_key": "separator",
+      "edge_ids": [
+        "tep_fault_03_xmeas_09_to_xmeas_11",
+        "tep_fault_05_xmeas_22_to_xmeas_11",
+        "tep_fault_10_xmeas_09_to_xmeas_11",
+        "tep_fault_12_xmeas_22_to_xmeas_13",
+        "tep_fault_15_xmv_11_to_xmeas_11",
+        "tep_fault_15_xmeas_11_to_xmeas_13",
+        "tep_fault_16_xmeas_20_to_xmeas_13",
+        "tep_fault_20_xmeas_10_to_xmeas_13",
+        "llm_tep_fault_05_xmv_11_to_xmeas_13"
+      ],
+      "n_edges": 9,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "target_group:stripper",
+      "probe_level": "target_group",
+      "probe_key": "stripper",
+      "edge_ids": [
+        "tep_fault_18_xmeas_09_to_xmeas_18",
+        "tep_fault_19_xmeas_12_to_xmeas_15",
+        "tep_fault_19_xmeas_15_to_xmeas_17"
+      ],
+      "n_edges": 3,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "lag_group:lag1",
+      "probe_level": "lag_group",
+      "probe_key": "lag1",
+      "edge_ids": [
+        "tep_global",
+        "tep_fault_14_xmv_10_to_xmeas_09",
+        "tep_fault_15_xmv_11_to_xmeas_11",
+        "tep_fault_21_xmv_04_to_xmeas_04"
+      ],
+      "n_edges": 4,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "lag_group:lag2",
+      "probe_level": "lag_group",
+      "probe_key": "lag2",
+      "edge_ids": [
+        "tep_fault_01_xmeas_04_to_xmeas_06",
+        "tep_fault_01_xmeas_06_to_xmeas_35",
+        "tep_fault_02_xmeas_04_to_xmeas_06",
+        "tep_fault_02_xmeas_06_to_xmeas_36",
+        "tep_fault_03_xmeas_02_to_xmeas_09",
+        "tep_fault_03_xmeas_09_to_xmeas_11",
+        "tep_fault_04_xmv_10_to_xmeas_21",
+        "tep_fault_04_xmeas_21_to_xmeas_09",
+        "tep_fault_05_xmv_11_to_xmeas_22",
+        "tep_fault_05_xmeas_22_to_xmeas_11",
+        "tep_fault_06_xmv_03_to_xmeas_01",
+        "tep_fault_06_xmeas_01_to_xmeas_06",
+        "tep_fault_07_xmeas_04_to_xmeas_06",
+        "tep_fault_07_xmeas_06_to_xmeas_07",
+        "tep_fault_08_xmeas_23_to_xmeas_06",
+        "tep_fault_08_xmeas_06_to_xmeas_37",
+        "tep_fault_09_xmeas_02_to_xmeas_09",
+        "tep_fault_09_xmeas_09_to_xmeas_38",
+        "tep_fault_10_xmeas_04_to_xmeas_09",
+        "tep_fault_10_xmeas_09_to_xmeas_11",
+        "tep_fault_11_xmv_10_to_xmeas_21",
+        "tep_fault_11_xmeas_21_to_xmeas_09",
+        "tep_fault_12_xmv_11_to_xmeas_22",
+        "tep_fault_12_xmeas_22_to_xmeas_13",
+        "tep_fault_13_xmeas_09_to_xmeas_35",
+        "tep_fault_13_xmeas_09_to_xmeas_36",
+        "tep_fault_14_xmeas_09_to_xmeas_07",
+        "tep_fault_15_xmeas_11_to_xmeas_13",
+        "tep_fault_16_xmeas_07_to_xmeas_20",
+        "tep_fault_16_xmeas_20_to_xmeas_13",
+        "tep_fault_17_xmeas_05_to_xmeas_20",
+        "tep_fault_17_xmeas_20_to_xmeas_06",
+        "tep_fault_18_xmeas_09_to_xmeas_18",
+        "tep_fault_18_xmeas_18_to_xmeas_39",
+        "tep_fault_19_xmeas_12_to_xmeas_15",
+        "tep_fault_19_xmeas_15_to_xmeas_17",
+        "tep_fault_20_xmeas_10_to_xmeas_13",
+        "tep_fault_20_xmeas_13_to_xmeas_20",
+        "tep_fault_21_xmeas_04_to_xmeas_06",
+        "llm_tep_fault_04_xmv_10_to_xmeas_09",
+        "llm_tep_fault_04_xmeas_21_to_xmeas_07",
+        "llm_tep_fault_05_xmv_11_to_xmeas_13",
+        "llm_tep_fault_13_xmeas_07_to_xmeas_35",
+        "llm_tep_fault_13_xmeas_09_to_xmeas_40",
+        "llm_tep_fault_16_xmeas_20_to_xmeas_07",
+        "llm_tep_fault_21_xmv_04_to_xmeas_35"
+      ],
+      "n_edges": 46,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_global",
+      "probe_level": "single_edge",
+      "probe_key": "tep_global",
+      "edge_ids": [
+        "tep_global"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_01_xmeas_04_to_xmeas_06",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_01_xmeas_04_to_xmeas_06",
+      "edge_ids": [
+        "tep_fault_01_xmeas_04_to_xmeas_06"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_01_xmeas_06_to_xmeas_35",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_01_xmeas_06_to_xmeas_35",
+      "edge_ids": [
+        "tep_fault_01_xmeas_06_to_xmeas_35"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_02_xmeas_04_to_xmeas_06",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_02_xmeas_04_to_xmeas_06",
+      "edge_ids": [
+        "tep_fault_02_xmeas_04_to_xmeas_06"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_02_xmeas_06_to_xmeas_36",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_02_xmeas_06_to_xmeas_36",
+      "edge_ids": [
+        "tep_fault_02_xmeas_06_to_xmeas_36"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_03_xmeas_02_to_xmeas_09",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_03_xmeas_02_to_xmeas_09",
+      "edge_ids": [
+        "tep_fault_03_xmeas_02_to_xmeas_09"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_03_xmeas_09_to_xmeas_11",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_03_xmeas_09_to_xmeas_11",
+      "edge_ids": [
+        "tep_fault_03_xmeas_09_to_xmeas_11"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_04_xmv_10_to_xmeas_21",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_04_xmv_10_to_xmeas_21",
+      "edge_ids": [
+        "tep_fault_04_xmv_10_to_xmeas_21"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_04_xmeas_21_to_xmeas_09",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_04_xmeas_21_to_xmeas_09",
+      "edge_ids": [
+        "tep_fault_04_xmeas_21_to_xmeas_09"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_05_xmv_11_to_xmeas_22",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_05_xmv_11_to_xmeas_22",
+      "edge_ids": [
+        "tep_fault_05_xmv_11_to_xmeas_22"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_05_xmeas_22_to_xmeas_11",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_05_xmeas_22_to_xmeas_11",
+      "edge_ids": [
+        "tep_fault_05_xmeas_22_to_xmeas_11"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_06_xmv_03_to_xmeas_01",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_06_xmv_03_to_xmeas_01",
+      "edge_ids": [
+        "tep_fault_06_xmv_03_to_xmeas_01"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_06_xmeas_01_to_xmeas_06",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_06_xmeas_01_to_xmeas_06",
+      "edge_ids": [
+        "tep_fault_06_xmeas_01_to_xmeas_06"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_07_xmeas_04_to_xmeas_06",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_07_xmeas_04_to_xmeas_06",
+      "edge_ids": [
+        "tep_fault_07_xmeas_04_to_xmeas_06"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_07_xmeas_06_to_xmeas_07",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_07_xmeas_06_to_xmeas_07",
+      "edge_ids": [
+        "tep_fault_07_xmeas_06_to_xmeas_07"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_08_xmeas_23_to_xmeas_06",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_08_xmeas_23_to_xmeas_06",
+      "edge_ids": [
+        "tep_fault_08_xmeas_23_to_xmeas_06"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_08_xmeas_06_to_xmeas_37",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_08_xmeas_06_to_xmeas_37",
+      "edge_ids": [
+        "tep_fault_08_xmeas_06_to_xmeas_37"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_09_xmeas_02_to_xmeas_09",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_09_xmeas_02_to_xmeas_09",
+      "edge_ids": [
+        "tep_fault_09_xmeas_02_to_xmeas_09"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_09_xmeas_09_to_xmeas_38",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_09_xmeas_09_to_xmeas_38",
+      "edge_ids": [
+        "tep_fault_09_xmeas_09_to_xmeas_38"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_10_xmeas_04_to_xmeas_09",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_10_xmeas_04_to_xmeas_09",
+      "edge_ids": [
+        "tep_fault_10_xmeas_04_to_xmeas_09"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_10_xmeas_09_to_xmeas_11",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_10_xmeas_09_to_xmeas_11",
+      "edge_ids": [
+        "tep_fault_10_xmeas_09_to_xmeas_11"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_11_xmv_10_to_xmeas_21",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_11_xmv_10_to_xmeas_21",
+      "edge_ids": [
+        "tep_fault_11_xmv_10_to_xmeas_21"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_11_xmeas_21_to_xmeas_09",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_11_xmeas_21_to_xmeas_09",
+      "edge_ids": [
+        "tep_fault_11_xmeas_21_to_xmeas_09"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_12_xmv_11_to_xmeas_22",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_12_xmv_11_to_xmeas_22",
+      "edge_ids": [
+        "tep_fault_12_xmv_11_to_xmeas_22"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_12_xmeas_22_to_xmeas_13",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_12_xmeas_22_to_xmeas_13",
+      "edge_ids": [
+        "tep_fault_12_xmeas_22_to_xmeas_13"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_13_xmeas_09_to_xmeas_35",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_13_xmeas_09_to_xmeas_35",
+      "edge_ids": [
+        "tep_fault_13_xmeas_09_to_xmeas_35"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_13_xmeas_09_to_xmeas_36",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_13_xmeas_09_to_xmeas_36",
+      "edge_ids": [
+        "tep_fault_13_xmeas_09_to_xmeas_36"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_14_xmv_10_to_xmeas_09",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_14_xmv_10_to_xmeas_09",
+      "edge_ids": [
+        "tep_fault_14_xmv_10_to_xmeas_09"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_14_xmeas_09_to_xmeas_07",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_14_xmeas_09_to_xmeas_07",
+      "edge_ids": [
+        "tep_fault_14_xmeas_09_to_xmeas_07"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_15_xmv_11_to_xmeas_11",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_15_xmv_11_to_xmeas_11",
+      "edge_ids": [
+        "tep_fault_15_xmv_11_to_xmeas_11"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_15_xmeas_11_to_xmeas_13",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_15_xmeas_11_to_xmeas_13",
+      "edge_ids": [
+        "tep_fault_15_xmeas_11_to_xmeas_13"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_16_xmeas_07_to_xmeas_20",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_16_xmeas_07_to_xmeas_20",
+      "edge_ids": [
+        "tep_fault_16_xmeas_07_to_xmeas_20"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_16_xmeas_20_to_xmeas_13",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_16_xmeas_20_to_xmeas_13",
+      "edge_ids": [
+        "tep_fault_16_xmeas_20_to_xmeas_13"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_17_xmeas_05_to_xmeas_20",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_17_xmeas_05_to_xmeas_20",
+      "edge_ids": [
+        "tep_fault_17_xmeas_05_to_xmeas_20"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_17_xmeas_20_to_xmeas_06",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_17_xmeas_20_to_xmeas_06",
+      "edge_ids": [
+        "tep_fault_17_xmeas_20_to_xmeas_06"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_18_xmeas_09_to_xmeas_18",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_18_xmeas_09_to_xmeas_18",
+      "edge_ids": [
+        "tep_fault_18_xmeas_09_to_xmeas_18"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_18_xmeas_18_to_xmeas_39",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_18_xmeas_18_to_xmeas_39",
+      "edge_ids": [
+        "tep_fault_18_xmeas_18_to_xmeas_39"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_19_xmeas_12_to_xmeas_15",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_19_xmeas_12_to_xmeas_15",
+      "edge_ids": [
+        "tep_fault_19_xmeas_12_to_xmeas_15"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_19_xmeas_15_to_xmeas_17",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_19_xmeas_15_to_xmeas_17",
+      "edge_ids": [
+        "tep_fault_19_xmeas_15_to_xmeas_17"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_20_xmeas_10_to_xmeas_13",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_20_xmeas_10_to_xmeas_13",
+      "edge_ids": [
+        "tep_fault_20_xmeas_10_to_xmeas_13"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_20_xmeas_13_to_xmeas_20",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_20_xmeas_13_to_xmeas_20",
+      "edge_ids": [
+        "tep_fault_20_xmeas_13_to_xmeas_20"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_21_xmv_04_to_xmeas_04",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_21_xmv_04_to_xmeas_04",
+      "edge_ids": [
+        "tep_fault_21_xmv_04_to_xmeas_04"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:tep_fault_21_xmeas_04_to_xmeas_06",
+      "probe_level": "single_edge",
+      "probe_key": "tep_fault_21_xmeas_04_to_xmeas_06",
+      "edge_ids": [
+        "tep_fault_21_xmeas_04_to_xmeas_06"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:llm_tep_fault_04_xmv_10_to_xmeas_09",
+      "probe_level": "single_edge",
+      "probe_key": "llm_tep_fault_04_xmv_10_to_xmeas_09",
+      "edge_ids": [
+        "llm_tep_fault_04_xmv_10_to_xmeas_09"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:llm_tep_fault_04_xmeas_21_to_xmeas_07",
+      "probe_level": "single_edge",
+      "probe_key": "llm_tep_fault_04_xmeas_21_to_xmeas_07",
+      "edge_ids": [
+        "llm_tep_fault_04_xmeas_21_to_xmeas_07"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:llm_tep_fault_05_xmv_11_to_xmeas_13",
+      "probe_level": "single_edge",
+      "probe_key": "llm_tep_fault_05_xmv_11_to_xmeas_13",
+      "edge_ids": [
+        "llm_tep_fault_05_xmv_11_to_xmeas_13"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:llm_tep_fault_13_xmeas_07_to_xmeas_35",
+      "probe_level": "single_edge",
+      "probe_key": "llm_tep_fault_13_xmeas_07_to_xmeas_35",
+      "edge_ids": [
+        "llm_tep_fault_13_xmeas_07_to_xmeas_35"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:llm_tep_fault_13_xmeas_09_to_xmeas_40",
+      "probe_level": "single_edge",
+      "probe_key": "llm_tep_fault_13_xmeas_09_to_xmeas_40",
+      "edge_ids": [
+        "llm_tep_fault_13_xmeas_09_to_xmeas_40"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:llm_tep_fault_16_xmeas_20_to_xmeas_07",
+      "probe_level": "single_edge",
+      "probe_key": "llm_tep_fault_16_xmeas_20_to_xmeas_07",
+      "edge_ids": [
+        "llm_tep_fault_16_xmeas_20_to_xmeas_07"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    },
+    {
+      "probe_id": "single_edge:llm_tep_fault_21_xmv_04_to_xmeas_35",
+      "probe_level": "single_edge",
+      "probe_key": "llm_tep_fault_21_xmv_04_to_xmeas_35",
+      "edge_ids": [
+        "llm_tep_fault_21_xmv_04_to_xmeas_35"
+      ],
+      "n_edges": 1,
+      "status": "needs_validation_probe",
+      "admitted": false,
+      "stage_reached": "validation_gain",
+      "cf_evaluated": false,
+      "reject_reasons": [
+        "validation_gain_missing"
+      ]
+    }
+  ],
+  "validation_admitted_edges": [],
+  "n_validation_admitted_edges": 0,
+  "dataset": "TEP",
+  "artifact_status": "probe_plan_only_no_validation_scores",
+  "candidate_pool_policy": "frozen expert and LLM candidates; data-only candidates must be added as a separate family before admission",
+  "llm_role": "LLM outputs are mechanism candidates or expert-edge condition verifiers only; they are not causal discoveries.",
+  "relation_interface_options": [
+    "edge_mask",
+    "attention_bias",
+    "channel_fusion_gate",
+    "patch_or_frequency_relation_mask",
+    "residual_channel_after_validation_admission"
+  ],
+  "literature_guards": [
+    {
+      "name": "CUTS+",
+      "url": "https://ojs.aaai.org/index.php/AAAI/article/view/29034",
+      "implication": "probe variable and lag relations selectively instead of injecting an undifferentiated edge pool"
+    },
+    {
+      "name": "CATCH",
+      "url": "https://arxiv.org/html/2410.12261v2",
+      "implication": "prefer mask, attention-bias, channel-gate, or patch/frequency relation interfaces over crude shifted-difference channels"
+    },
+    {
+      "name": "Corr2Cause",
+      "url": "https://arxiv.org/abs/2306.05836",
+      "implication": "do not treat LLM correlation-to-causation judgments as reliable causal discovery"
+    },
+    {
+      "name": "LLM causal discovery survey",
+      "url": "https://www.ijcai.org/proceedings/2025/1186",
+      "implication": "use LLMs as imperfect experts for candidate generation or expert-edge conditional verification"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "registry_version": "prototype-kg-registry-v1",
+  "display_policy": {
+    "frontend": "show lightweight graph summary, node preview, relation preview, source status, and governance flow",
+    "backend": "validate and serve graph JSON, large edge-feature files, review records, and versioned releases",
+    "model": "only published and reviewed graph versions can be referenced by warning and traceability services"
+  },
+  "assets": [
+    {
+      "id": "steel_realtime_seed_graph",
+      "name": "实时系统图谱",
+      "source_path": "knowledge_exports/steel_realtime_system_v1/realtime_seed.json::knowledge_graph",
+      "storage_type": "embedded_json",
+      "status": "loaded",
+      "usage": "frontend preview and current evidence package"
+    },
+    {
+      "id": "rag_knowledge_graph_candidate",
+      "name": "RAG 抽取图谱",
+      "source_path": "knowledge_exports/public_benchmark_ready/*/knowledge_model/knowledge_graph.json",
+      "storage_type": "json_graph",
+      "status": "pending_backend_validation",
+      "usage": "candidate graph for review, merge, and version release"
+    },
+    {
+      "id": "mechanism_edge_features",
+      "name": "机制边特征",
+      "source_path": "knowledge_exports/public_benchmark_ready/*/knowledge_model/mechanism_edge_features.csv",
+      "storage_type": "large_feature_table",
+      "status": "backend_archive_only",
+      "usage": "model-side evidence features and audit download"
+    },
+    {
+      "id": "case_ingest_candidates",
+      "name": "复盘入图候选",
+      "source_path": "api:/api/kg/case-ingest",
+      "storage_type": "review_queue",
+      "status": "human_review_required",
+      "usage": "operator feedback to entity/relation/evidence candidates"
+    }
+  ]
+}

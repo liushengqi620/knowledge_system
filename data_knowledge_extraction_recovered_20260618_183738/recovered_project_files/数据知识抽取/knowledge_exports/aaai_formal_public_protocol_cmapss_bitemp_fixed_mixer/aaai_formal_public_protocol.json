@@ -1,0 +1,125 @@
+{
+  "schema": "aaai_formal_public_protocol_v1",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "device": "cuda",
+  "output_root": "knowledge_exports\\aaai_formal_public_runs",
+  "selected_runs": [
+    "cmapss_rul_direct_regime_bitempmix"
+  ],
+  "invariants": [
+    "SKAB paper results use window_size=48, hidden_dim=64, max_paths=16, epochs=40.",
+    "C-MAPSS paper results use original RUL regression with terminal test-unit evaluation as the primary task.",
+    "LLM verifier branches must not add independent graph edges to the main candidate set.",
+    "Smoke runs are debugging evidence only and must not be mixed into final tables."
+  ],
+  "runs": [
+    {
+      "name": "cmapss_rul_direct_regime_bitempmix",
+      "dataset": "cmapss",
+      "role": "C-MAPSS RUL bidirectional-window enhanced backbone",
+      "claim_use": "Use as the strongest C-MAPSS RUL branch when reporting terminal-test original RUL: direct capped-RUL supervision, train-only regime residuals, longer history, temporal mixer, and bidirectional encoding inside the historical window.",
+      "ready_root": "knowledge_exports/public_benchmark_ready",
+      "target": "rul",
+      "output_subdir": "cmapss_rul_direct_regime_bitempmix_w80_e20",
+      "expected_metric": "rul_rmse",
+      "paper_status": "formal_required_for_cmapss_claim",
+      "command": [
+        "C:\\Users\\CPILAB\\.conda\\envs\\Py312torch290\\python.exe",
+        "-B",
+        "Scripts\\run_public_ms_gse_rpf_experiment.py",
+        "--ready-root",
+        "knowledge_exports/public_benchmark_ready",
+        "--dataset",
+        "cmapss",
+        "--seeds",
+        "42,43,44",
+        "--output-dir",
+        "knowledge_exports\\aaai_formal_public_runs\\cmapss_rul_direct_regime_bitempmix_w80_e20",
+        "--device",
+        "cuda",
+        "--variant",
+        "full",
+        "--cmapss-target",
+        "rul",
+        "--hidden-dim",
+        "64",
+        "--window-size",
+        "80",
+        "--max-rows-per-split",
+        "12000",
+        "--epochs",
+        "20",
+        "--batch-size",
+        "256",
+        "--graph-top-k",
+        "4",
+        "--max-paths",
+        "16",
+        "--forecast-weight",
+        "0.10",
+        "--graph-weight",
+        "0.02",
+        "--health-aux-weight",
+        "0.20",
+        "--rul-loss-weight",
+        "1.0",
+        "--health-rul-cap",
+        "125",
+        "--use-regime-prototype-residuals",
+        "--regime-prototype-k",
+        "6",
+        "--regime-healthy-stage-max",
+        "0",
+        "--use-temporal-mixer",
+        "--temporal-mixer-depth",
+        "3",
+        "--evidence-prior-mode",
+        "none",
+        "--prior-strength",
+        "0",
+        "--temporal-encoder-mode",
+        "multi_scale_bidirectional"
+      ],
+      "status": {
+        "complete": true,
+        "expected_seeds": [
+          42,
+          43,
+          44
+        ],
+        "completed_seeds": [
+          42,
+          43,
+          44
+        ],
+        "missing_seeds": [],
+        "metric_name": "rul_rmse",
+        "metric_mean": 21.803503388979692,
+        "runs": {
+          "42": {
+            "path": "knowledge_exports\\aaai_formal_public_runs\\cmapss_rul_direct_regime_bitempmix_w80_e20\\ms_gse_rpf_cmapss_rul_full_prior-none_seed42.json",
+            "status": "ok",
+            "metric": 21.94522333126273,
+            "metric_name": "rul_rmse"
+          },
+          "43": {
+            "path": "knowledge_exports\\aaai_formal_public_runs\\cmapss_rul_direct_regime_bitempmix_w80_e20\\ms_gse_rpf_cmapss_rul_full_prior-none_seed43.json",
+            "status": "ok",
+            "metric": 21.728917280920022,
+            "metric_name": "rul_rmse"
+          },
+          "44": {
+            "path": "knowledge_exports\\aaai_formal_public_runs\\cmapss_rul_direct_regime_bitempmix_w80_e20\\ms_gse_rpf_cmapss_rul_full_prior-none_seed44.json",
+            "status": "ok",
+            "metric": 21.736369554756326,
+            "metric_name": "rul_rmse"
+          }
+        }
+      }
+    }
+  ]
+}

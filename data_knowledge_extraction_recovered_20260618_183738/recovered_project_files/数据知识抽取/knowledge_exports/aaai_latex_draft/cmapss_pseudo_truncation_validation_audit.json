@@ -1,0 +1,1968 @@
+{
+  "version": "cmapss-pseudo-truncation-validation-audit-v1",
+  "status": "pseudo_truncation_validation_complete_with_score_tradeoff",
+  "claim_boundary": "This audit validates C-MAPSS cap/window selection on train-split pseudo-terminal units. It supports RMSE-oriented temporal-anchor selection only; path-fusion branches still require their own validation-admission proof, and PHM score trade-offs must be reported separately.",
+  "candidates": [
+    {
+      "candidate": "gru_w80_cap125",
+      "baseline": "gru_sequence",
+      "window_size": 80,
+      "rul_cap": 125.0
+    },
+    {
+      "candidate": "gru_w80_cap150",
+      "baseline": "gru_sequence",
+      "window_size": 80,
+      "rul_cap": 150.0
+    },
+    {
+      "candidate": "gru_w160_cap150",
+      "baseline": "gru_sequence",
+      "window_size": 160,
+      "rul_cap": 150.0
+    }
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "target_ruls": [
+    20,
+    50,
+    80,
+    110,
+    140,
+    170
+  ],
+  "summary": [
+    {
+      "candidate": "gru_w160_cap150",
+      "n_seeds": 3,
+      "window_size": 160,
+      "rul_cap": 150.0,
+      "pseudo_val_rmse_mean": 16.829048088268543,
+      "pseudo_val_rmse_std": 0.8296036365766153,
+      "pseudo_val_score_mean": 36636.78467580545,
+      "official_test_rmse_mean": 18.28403181947832,
+      "official_test_rmse_std": 0.1324035306656403,
+      "official_test_score_mean": 6619.390412637503,
+      "fit_seconds_mean": 3.16416579997167
+    },
+    {
+      "candidate": "gru_w80_cap125",
+      "n_seeds": 3,
+      "window_size": 80,
+      "rul_cap": 125.0,
+      "pseudo_val_rmse_mean": 21.948661933530342,
+      "pseudo_val_rmse_std": 0.3888051733342179,
+      "pseudo_val_score_mean": 54579.21984785528,
+      "official_test_rmse_mean": 20.682235665282,
+      "official_test_rmse_std": 0.12181074528822954,
+      "official_test_score_mean": 7403.7295334921655,
+      "fit_seconds_mean": 3.5336890999848642
+    },
+    {
+      "candidate": "gru_w80_cap150",
+      "n_seeds": 3,
+      "window_size": 80,
+      "rul_cap": 150.0,
+      "pseudo_val_rmse_mean": 17.247915535288705,
+      "pseudo_val_rmse_std": 0.42804357826097456,
+      "pseudo_val_score_mean": 47585.59167463996,
+      "official_test_rmse_mean": 18.478231573200226,
+      "official_test_rmse_std": 0.1958298205345601,
+      "official_test_score_mean": 6211.187716199135,
+      "fit_seconds_mean": 3.101023133378476
+    }
+  ],
+  "selected_by_pseudo_validation": {
+    "candidate": "gru_w160_cap150",
+    "n_seeds": 3,
+    "window_size": 160,
+    "rul_cap": 150.0,
+    "pseudo_val_rmse_mean": 16.829048088268543,
+    "pseudo_val_rmse_std": 0.8296036365766153,
+    "pseudo_val_score_mean": 36636.78467580545,
+    "official_test_rmse_mean": 18.28403181947832,
+    "official_test_rmse_std": 0.1324035306656403,
+    "official_test_score_mean": 6619.390412637503,
+    "fit_seconds_mean": 3.16416579997167
+  },
+  "best_by_official_test": {
+    "candidate": "gru_w160_cap150",
+    "n_seeds": 3,
+    "window_size": 160,
+    "rul_cap": 150.0,
+    "pseudo_val_rmse_mean": 16.829048088268543,
+    "pseudo_val_rmse_std": 0.8296036365766153,
+    "pseudo_val_score_mean": 36636.78467580545,
+    "official_test_rmse_mean": 18.28403181947832,
+    "official_test_rmse_std": 0.1324035306656403,
+    "official_test_score_mean": 6619.390412637503,
+    "fit_seconds_mean": 3.16416579997167
+  },
+  "gates": {
+    "pseudo_terminal_validation_train_only": true,
+    "all_candidates_materialized": true,
+    "selection_declared_without_test_metrics": true,
+    "pseudo_rmse_selection_matches_best_test_rmse": true,
+    "cap150_preferred_over_cap125_w80_by_pseudo_rmse": true,
+    "long_window_preferred_over_w80_cap150_by_pseudo_rmse": true,
+    "pseudo_score_selection_matches_best_test_score": false,
+    "official_score_tradeoff_disclosed": true
+  },
+  "missing_gates": [
+    "pseudo_score_selection_matches_best_test_score"
+  ],
+  "runs": [
+    {
+      "status": "ok",
+      "candidate": "gru_w80_cap125",
+      "baseline": "gru_sequence",
+      "seed": 42,
+      "window_size": 80,
+      "rul_cap": 125.0,
+      "protocol": "train_unit_pseudo_terminal_validation_for_cmapss_rul",
+      "split_protocol": "official_test_grouped_unit_validation",
+      "train_size": 12000,
+      "pseudo_val_size": 823,
+      "official_test_size": 707,
+      "target_ruls": [
+        20,
+        50,
+        80,
+        110,
+        140,
+        170
+      ],
+      "pseudo_val_rul_distribution": {
+        "count": 823,
+        "min": 20.0,
+        "p25": 50.0,
+        "median": 80.0,
+        "mean": 92.43013000488281,
+        "p75": 140.0,
+        "max": 170.0,
+        "count_gt_125": 255,
+        "count_gt_150": 115
+      },
+      "official_test_rul_distribution": {
+        "count": 707,
+        "min": 6.0,
+        "p25": 36.0,
+        "median": 83.0,
+        "mean": 81.43705749511719,
+        "p75": 119.0,
+        "max": 195.0,
+        "count_gt_125": 150,
+        "count_gt_150": 78
+      },
+      "regime_prototype": {
+        "enabled": true,
+        "source": "train_only_regime_healthy_prototype_residuals",
+        "regime_cols": [
+          "op_setting_1",
+          "op_setting_2",
+          "op_setting_3"
+        ],
+        "residual_cols": [
+          "sensor_01",
+          "sensor_02",
+          "sensor_03",
+          "sensor_04",
+          "sensor_05",
+          "sensor_06",
+          "sensor_07",
+          "sensor_08",
+          "sensor_09",
+          "sensor_10",
+          "sensor_11",
+          "sensor_12",
+          "sensor_13",
+          "sensor_14",
+          "sensor_15",
+          "sensor_16",
+          "sensor_17",
+          "sensor_18",
+          "sensor_19",
+          "sensor_20",
+          "sensor_21"
+        ],
+        "n_residual_cols": 21,
+        "requested_regimes": 6,
+        "actual_regimes": 6,
+        "healthy_stage_max": 0,
+        "global_healthy_count": 4000,
+        "baseline_counts": {
+          "0": 1539,
+          "1": 733,
+          "2": 441,
+          "3": 427,
+          "4": 465,
+          "5": 395
+        }
+      },
+      "baseline_diagnostics": {
+        "model_family": "gru_sequence",
+        "parameters": 46785,
+        "device": "cuda",
+        "epochs": 25,
+        "batch_size": 256,
+        "learning_rate": 0.001,
+        "hidden_dim": 64,
+        "layers": 2,
+        "dropout": 0.1,
+        "loss_tail": [
+          0.004127596708093869,
+          0.004034205726248787,
+          0.0038156535952015127,
+          0.0037860760485079695,
+          0.003816850483417511
+        ],
+        "val_rul_rmse_history_tail": [
+          21.676713062547957,
+          21.935025450007004,
+          21.905498220224683,
+          21.842410918540793,
+          21.869196265560507
+        ],
+        "best_val_rul_rmse": 21.676713062547957,
+        "train_seconds": 3.4454852999188006,
+        "train_samples_per_second": 87070.46290607308
+      },
+      "fit_seconds": 4.384027800057083,
+      "pseudo_val_metrics": {
+        "rul_mae": 15.295626488519902,
+        "rul_rmse": 21.676713062547957,
+        "rul_score": 6435.865636226388
+      },
+      "official_test_metrics": {
+        "rul_mae": 13.088713393690226,
+        "rul_rmse": 20.641230995264685,
+        "rul_score": 7362.738338585725
+      },
+      "pseudo_val_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 26,
+            "n_samples": 150,
+            "rul_mae": 14.33746208190918,
+            "rul_rmse": 20.33640120156007,
+            "rul_score": 936.8802375389721
+          },
+          {
+            "subset": "FD002",
+            "n_units": 61,
+            "n_samples": 352,
+            "rul_mae": 15.640837891535325,
+            "rul_rmse": 21.935825932690364,
+            "rul_score": 2857.0780085931633
+          },
+          {
+            "subset": "FD003",
+            "n_units": 16,
+            "n_samples": 94,
+            "rul_mae": 14.556139418419372,
+            "rul_rmse": 21.28367287858936,
+            "rul_score": 673.9446967976538
+          },
+          {
+            "subset": "FD004",
+            "n_units": 39,
+            "n_samples": 227,
+            "rul_mae": 15.699688302262764,
+            "rul_rmse": 22.283588744982698,
+            "rul_score": 1967.9626932965994
+          }
+        ]
+      },
+      "official_test_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 9.165793280601502,
+            "rul_rmse": 12.348896882324517,
+            "rul_score": 244.28763218177352
+          },
+          {
+            "subset": "FD002",
+            "n_units": 259,
+            "n_samples": 259,
+            "rul_mae": 14.580745387721706,
+            "rul_rmse": 22.878391902739253,
+            "rul_score": 3563.7283687879462
+          },
+          {
+            "subset": "FD003",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 7.730995173454285,
+            "rul_rmse": 11.070187052846817,
+            "rul_score": 223.52369184735005
+          },
+          {
+            "subset": "FD004",
+            "n_units": 248,
+            "n_samples": 248,
+            "rul_mae": 15.27269543755439,
+            "rul_rmse": 23.602410167820803,
+            "rul_score": 3331.198645768655
+          }
+        ]
+      }
+    },
+    {
+      "status": "ok",
+      "candidate": "gru_w80_cap150",
+      "baseline": "gru_sequence",
+      "seed": 42,
+      "window_size": 80,
+      "rul_cap": 150.0,
+      "protocol": "train_unit_pseudo_terminal_validation_for_cmapss_rul",
+      "split_protocol": "official_test_grouped_unit_validation",
+      "train_size": 12000,
+      "pseudo_val_size": 823,
+      "official_test_size": 707,
+      "target_ruls": [
+        20,
+        50,
+        80,
+        110,
+        140,
+        170
+      ],
+      "pseudo_val_rul_distribution": {
+        "count": 823,
+        "min": 20.0,
+        "p25": 50.0,
+        "median": 80.0,
+        "mean": 92.43013000488281,
+        "p75": 140.0,
+        "max": 170.0,
+        "count_gt_125": 255,
+        "count_gt_150": 115
+      },
+      "official_test_rul_distribution": {
+        "count": 707,
+        "min": 6.0,
+        "p25": 36.0,
+        "median": 83.0,
+        "mean": 81.43705749511719,
+        "p75": 119.0,
+        "max": 195.0,
+        "count_gt_125": 150,
+        "count_gt_150": 78
+      },
+      "regime_prototype": {
+        "enabled": true,
+        "source": "train_only_regime_healthy_prototype_residuals",
+        "regime_cols": [
+          "op_setting_1",
+          "op_setting_2",
+          "op_setting_3"
+        ],
+        "residual_cols": [
+          "sensor_01",
+          "sensor_02",
+          "sensor_03",
+          "sensor_04",
+          "sensor_05",
+          "sensor_06",
+          "sensor_07",
+          "sensor_08",
+          "sensor_09",
+          "sensor_10",
+          "sensor_11",
+          "sensor_12",
+          "sensor_13",
+          "sensor_14",
+          "sensor_15",
+          "sensor_16",
+          "sensor_17",
+          "sensor_18",
+          "sensor_19",
+          "sensor_20",
+          "sensor_21"
+        ],
+        "n_residual_cols": 21,
+        "requested_regimes": 6,
+        "actual_regimes": 6,
+        "healthy_stage_max": 0,
+        "global_healthy_count": 4000,
+        "baseline_counts": {
+          "0": 1539,
+          "1": 733,
+          "2": 441,
+          "3": 427,
+          "4": 465,
+          "5": 395
+        }
+      },
+      "baseline_diagnostics": {
+        "model_family": "gru_sequence",
+        "parameters": 46785,
+        "device": "cuda",
+        "epochs": 25,
+        "batch_size": 256,
+        "learning_rate": 0.001,
+        "hidden_dim": 64,
+        "layers": 2,
+        "dropout": 0.1,
+        "loss_tail": [
+          0.005386740509222479,
+          0.005429469821776481,
+          0.00525070278053271,
+          0.00510678405160124,
+          0.004892290297380471
+        ],
+        "val_rul_rmse_history_tail": [
+          16.810754484963056,
+          17.127574845474598,
+          17.543344387916836,
+          16.798662457312293,
+          16.797119795678643
+        ],
+        "best_val_rul_rmse": 16.685057574519693,
+        "train_seconds": 3.118690100032836,
+        "train_samples_per_second": 96194.23231466356
+      },
+      "fit_seconds": 3.135333900107071,
+      "pseudo_val_metrics": {
+        "rul_mae": 11.952043745381575,
+        "rul_rmse": 16.685057574519693,
+        "rul_score": 4378.628159173351
+      },
+      "official_test_metrics": {
+        "rul_mae": 12.246971008295386,
+        "rul_rmse": 18.273915770809005,
+        "rul_score": 6244.104455196988
+      },
+      "pseudo_val_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 26,
+            "n_samples": 150,
+            "rul_mae": 10.762586860656738,
+            "rul_rmse": 14.845620336007746,
+            "rul_score": 485.5151273303859
+          },
+          {
+            "subset": "FD002",
+            "n_units": 61,
+            "n_samples": 352,
+            "rul_mae": 13.030097089030527,
+            "rul_rmse": 17.826037263723276,
+            "rul_score": 2409.444261559799
+          },
+          {
+            "subset": "FD003",
+            "n_units": 16,
+            "n_samples": 94,
+            "rul_mae": 9.896049032820033,
+            "rul_rmse": 14.233620588664854,
+            "rul_score": 283.59701825180537
+          },
+          {
+            "subset": "FD004",
+            "n_units": 39,
+            "n_samples": 227,
+            "rul_mae": 11.917714488663863,
+            "rul_rmse": 16.94235241721723,
+            "rul_score": 1200.0717520313617
+          }
+        ]
+      },
+      "official_test_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 10.18288055896759,
+            "rul_rmse": 14.86096011970532,
+            "rul_score": 448.8468274256476
+          },
+          {
+            "subset": "FD002",
+            "n_units": 259,
+            "n_samples": 259,
+            "rul_mae": 14.10539350362358,
+            "rul_rmse": 20.79358181847432,
+            "rul_score": 3331.5464416994073
+          },
+          {
+            "subset": "FD003",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 8.380039114952087,
+            "rul_rmse": 12.9760363850924,
+            "rul_score": 702.6301295420772
+          },
+          {
+            "subset": "FD004",
+            "n_units": 248,
+            "n_samples": 248,
+            "rul_mae": 12.697659750138559,
+            "rul_rmse": 18.533488227023653,
+            "rul_score": 1761.0810565298557
+          }
+        ]
+      }
+    },
+    {
+      "status": "ok",
+      "candidate": "gru_w160_cap150",
+      "baseline": "gru_sequence",
+      "seed": 42,
+      "window_size": 160,
+      "rul_cap": 150.0,
+      "protocol": "train_unit_pseudo_terminal_validation_for_cmapss_rul",
+      "split_protocol": "official_test_grouped_unit_validation",
+      "train_size": 12000,
+      "pseudo_val_size": 823,
+      "official_test_size": 707,
+      "target_ruls": [
+        20,
+        50,
+        80,
+        110,
+        140,
+        170
+      ],
+      "pseudo_val_rul_distribution": {
+        "count": 823,
+        "min": 20.0,
+        "p25": 50.0,
+        "median": 80.0,
+        "mean": 92.43013000488281,
+        "p75": 140.0,
+        "max": 170.0,
+        "count_gt_125": 255,
+        "count_gt_150": 115
+      },
+      "official_test_rul_distribution": {
+        "count": 707,
+        "min": 6.0,
+        "p25": 36.0,
+        "median": 83.0,
+        "mean": 81.43705749511719,
+        "p75": 119.0,
+        "max": 195.0,
+        "count_gt_125": 150,
+        "count_gt_150": 78
+      },
+      "regime_prototype": {
+        "enabled": true,
+        "source": "train_only_regime_healthy_prototype_residuals",
+        "regime_cols": [
+          "op_setting_1",
+          "op_setting_2",
+          "op_setting_3"
+        ],
+        "residual_cols": [
+          "sensor_01",
+          "sensor_02",
+          "sensor_03",
+          "sensor_04",
+          "sensor_05",
+          "sensor_06",
+          "sensor_07",
+          "sensor_08",
+          "sensor_09",
+          "sensor_10",
+          "sensor_11",
+          "sensor_12",
+          "sensor_13",
+          "sensor_14",
+          "sensor_15",
+          "sensor_16",
+          "sensor_17",
+          "sensor_18",
+          "sensor_19",
+          "sensor_20",
+          "sensor_21"
+        ],
+        "n_residual_cols": 21,
+        "requested_regimes": 6,
+        "actual_regimes": 6,
+        "healthy_stage_max": 0,
+        "global_healthy_count": 4000,
+        "baseline_counts": {
+          "0": 1539,
+          "1": 733,
+          "2": 441,
+          "3": 427,
+          "4": 465,
+          "5": 395
+        }
+      },
+      "baseline_diagnostics": {
+        "model_family": "gru_sequence",
+        "parameters": 46785,
+        "device": "cuda",
+        "epochs": 25,
+        "batch_size": 256,
+        "learning_rate": 0.001,
+        "hidden_dim": 64,
+        "layers": 2,
+        "dropout": 0.1,
+        "loss_tail": [
+          0.004448655353700544,
+          0.004542426894755757,
+          0.0042541350455994305,
+          0.004139192744178024,
+          0.004040075788036623
+        ],
+        "val_rul_rmse_history_tail": [
+          16.11778076764502,
+          16.251119836656486,
+          16.306588495296232,
+          16.060796864798316,
+          15.933197104681442
+        ],
+        "best_val_rul_rmse": 15.933197104681442,
+        "train_seconds": 3.1358479000627995,
+        "train_samples_per_second": 95667.90531964006
+      },
+      "fit_seconds": 3.1639852998778224,
+      "pseudo_val_metrics": {
+        "rul_mae": 11.642719366136182,
+        "rul_rmse": 15.933197104681442,
+        "rul_score": 3697.531239450781
+      },
+      "official_test_metrics": {
+        "rul_mae": 12.316063966912967,
+        "rul_rmse": 18.25086992844727,
+        "rul_score": 5781.071912758435
+      },
+      "pseudo_val_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 26,
+            "n_samples": 150,
+            "rul_mae": 10.101200536092122,
+            "rul_rmse": 13.772773114619566,
+            "rul_score": 371.8862265925865
+          },
+          {
+            "subset": "FD002",
+            "n_units": 61,
+            "n_samples": 352,
+            "rul_mae": 12.548961227590388,
+            "rul_rmse": 16.90560832559342,
+            "rul_score": 1813.2299529138634
+          },
+          {
+            "subset": "FD003",
+            "n_units": 16,
+            "n_samples": 94,
+            "rul_mae": 10.316937923431396,
+            "rul_rmse": 14.91085459524629,
+            "rul_score": 470.2761998591858
+          },
+          {
+            "subset": "FD004",
+            "n_units": 39,
+            "n_samples": 227,
+            "rul_mae": 11.805072427321111,
+            "rul_rmse": 16.1187971571522,
+            "rul_score": 1042.138860085145
+          }
+        ]
+      },
+      "official_test_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 10.243927249908447,
+            "rul_rmse": 14.793811089944215,
+            "rul_score": 437.8655938969136
+          },
+          {
+            "subset": "FD002",
+            "n_units": 259,
+            "n_samples": 259,
+            "rul_mae": 13.487938254036038,
+            "rul_rmse": 20.361867140793617,
+            "rul_score": 2737.9093803543033
+          },
+          {
+            "subset": "FD003",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 9.492773666381837,
+            "rul_rmse": 14.42230555805002,
+            "rul_score": 988.5971847124188
+          },
+          {
+            "subset": "FD004",
+            "n_units": 248,
+            "n_samples": 248,
+            "rul_mae": 13.066173891867361,
+            "rul_rmse": 18.559929466867924,
+            "rul_score": 1616.6997537947998
+          }
+        ]
+      }
+    },
+    {
+      "status": "ok",
+      "candidate": "gru_w80_cap125",
+      "baseline": "gru_sequence",
+      "seed": 43,
+      "window_size": 80,
+      "rul_cap": 125.0,
+      "protocol": "train_unit_pseudo_terminal_validation_for_cmapss_rul",
+      "split_protocol": "official_test_grouped_unit_validation",
+      "train_size": 12000,
+      "pseudo_val_size": 820,
+      "official_test_size": 707,
+      "target_ruls": [
+        20,
+        50,
+        80,
+        110,
+        140,
+        170
+      ],
+      "pseudo_val_rul_distribution": {
+        "count": 820,
+        "min": 20.0,
+        "p25": 50.0,
+        "median": 80.0,
+        "mean": 92.21951293945312,
+        "p75": 140.0,
+        "max": 170.0,
+        "count_gt_125": 252,
+        "count_gt_150": 114
+      },
+      "official_test_rul_distribution": {
+        "count": 707,
+        "min": 6.0,
+        "p25": 36.0,
+        "median": 83.0,
+        "mean": 81.43705749511719,
+        "p75": 119.0,
+        "max": 195.0,
+        "count_gt_125": 150,
+        "count_gt_150": 78
+      },
+      "regime_prototype": {
+        "enabled": true,
+        "source": "train_only_regime_healthy_prototype_residuals",
+        "regime_cols": [
+          "op_setting_1",
+          "op_setting_2",
+          "op_setting_3"
+        ],
+        "residual_cols": [
+          "sensor_01",
+          "sensor_02",
+          "sensor_03",
+          "sensor_04",
+          "sensor_05",
+          "sensor_06",
+          "sensor_07",
+          "sensor_08",
+          "sensor_09",
+          "sensor_10",
+          "sensor_11",
+          "sensor_12",
+          "sensor_13",
+          "sensor_14",
+          "sensor_15",
+          "sensor_16",
+          "sensor_17",
+          "sensor_18",
+          "sensor_19",
+          "sensor_20",
+          "sensor_21"
+        ],
+        "n_residual_cols": 21,
+        "requested_regimes": 6,
+        "actual_regimes": 6,
+        "healthy_stage_max": 0,
+        "global_healthy_count": 4000,
+        "baseline_counts": {
+          "0": 1506,
+          "1": 437,
+          "2": 438,
+          "3": 440,
+          "4": 431,
+          "5": 748
+        }
+      },
+      "baseline_diagnostics": {
+        "model_family": "gru_sequence",
+        "parameters": 46785,
+        "device": "cuda",
+        "epochs": 25,
+        "batch_size": 256,
+        "learning_rate": 0.001,
+        "hidden_dim": 64,
+        "layers": 2,
+        "dropout": 0.1,
+        "loss_tail": [
+          0.004161244590192082,
+          0.004094375763088465,
+          0.0038644313772625114,
+          0.003986195245004715,
+          0.0037549663325177228
+        ],
+        "val_rul_rmse_history_tail": [
+          21.97465118146936,
+          22.365067941348943,
+          21.913754248937963,
+          21.857147526796236,
+          21.67076796856587
+        ],
+        "best_val_rul_rmse": 21.67076796856587,
+        "train_seconds": 3.1030671999324113,
+        "train_samples_per_second": 96678.53793386568
+      },
+      "fit_seconds": 3.118792299879715,
+      "pseudo_val_metrics": {
+        "rul_mae": 15.535508781526147,
+        "rul_rmse": 21.67076796856587,
+        "rul_score": 6461.680440140133
+      },
+      "official_test_metrics": {
+        "rul_mae": 13.321432830589327,
+        "rul_rmse": 20.55783889995153,
+        "rul_score": 7209.055088279707
+      },
+      "pseudo_val_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 17,
+            "n_samples": 97,
+            "rul_mae": 16.30334114782589,
+            "rul_rmse": 22.95652202679089,
+            "rul_score": 902.9772058216316
+          },
+          {
+            "subset": "FD002",
+            "n_units": 57,
+            "n_samples": 323,
+            "rul_mae": 15.712481994747009,
+            "rul_rmse": 21.301143261564565,
+            "rul_score": 2422.960494800458
+          },
+          {
+            "subset": "FD003",
+            "n_units": 22,
+            "n_samples": 129,
+            "rul_mae": 14.643135166907495,
+            "rul_rmse": 21.145196206224885,
+            "rul_score": 894.0382793636409
+          },
+          {
+            "subset": "FD004",
+            "n_units": 46,
+            "n_samples": 271,
+            "rul_mae": 15.474527633498075,
+            "rul_rmse": 21.879830509852987,
+            "rul_score": 2241.7044601544026
+          }
+        ]
+      },
+      "official_test_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 9.213719415664674,
+            "rul_rmse": 12.456121471239943,
+            "rul_score": 232.23454159391628
+          },
+          {
+            "subset": "FD002",
+            "n_units": 259,
+            "n_samples": 259,
+            "rul_mae": 14.921718026680376,
+            "rul_rmse": 22.92995589081592,
+            "rul_score": 3645.055363654981
+          },
+          {
+            "subset": "FD003",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 7.803157391548157,
+            "rul_rmse": 11.002295165867835,
+            "rul_score": 226.53864878955446
+          },
+          {
+            "subset": "FD004",
+            "n_units": 248,
+            "n_samples": 248,
+            "rul_mae": 15.531614361270782,
+            "rul_rmse": 23.331186734548364,
+            "rul_score": 3105.226534241255
+          }
+        ]
+      }
+    },
+    {
+      "status": "ok",
+      "candidate": "gru_w80_cap150",
+      "baseline": "gru_sequence",
+      "seed": 43,
+      "window_size": 80,
+      "rul_cap": 150.0,
+      "protocol": "train_unit_pseudo_terminal_validation_for_cmapss_rul",
+      "split_protocol": "official_test_grouped_unit_validation",
+      "train_size": 12000,
+      "pseudo_val_size": 820,
+      "official_test_size": 707,
+      "target_ruls": [
+        20,
+        50,
+        80,
+        110,
+        140,
+        170
+      ],
+      "pseudo_val_rul_distribution": {
+        "count": 820,
+        "min": 20.0,
+        "p25": 50.0,
+        "median": 80.0,
+        "mean": 92.21951293945312,
+        "p75": 140.0,
+        "max": 170.0,
+        "count_gt_125": 252,
+        "count_gt_150": 114
+      },
+      "official_test_rul_distribution": {
+        "count": 707,
+        "min": 6.0,
+        "p25": 36.0,
+        "median": 83.0,
+        "mean": 81.43705749511719,
+        "p75": 119.0,
+        "max": 195.0,
+        "count_gt_125": 150,
+        "count_gt_150": 78
+      },
+      "regime_prototype": {
+        "enabled": true,
+        "source": "train_only_regime_healthy_prototype_residuals",
+        "regime_cols": [
+          "op_setting_1",
+          "op_setting_2",
+          "op_setting_3"
+        ],
+        "residual_cols": [
+          "sensor_01",
+          "sensor_02",
+          "sensor_03",
+          "sensor_04",
+          "sensor_05",
+          "sensor_06",
+          "sensor_07",
+          "sensor_08",
+          "sensor_09",
+          "sensor_10",
+          "sensor_11",
+          "sensor_12",
+          "sensor_13",
+          "sensor_14",
+          "sensor_15",
+          "sensor_16",
+          "sensor_17",
+          "sensor_18",
+          "sensor_19",
+          "sensor_20",
+          "sensor_21"
+        ],
+        "n_residual_cols": 21,
+        "requested_regimes": 6,
+        "actual_regimes": 6,
+        "healthy_stage_max": 0,
+        "global_healthy_count": 4000,
+        "baseline_counts": {
+          "0": 1506,
+          "1": 437,
+          "2": 438,
+          "3": 440,
+          "4": 431,
+          "5": 748
+        }
+      },
+      "baseline_diagnostics": {
+        "model_family": "gru_sequence",
+        "parameters": 46785,
+        "device": "cuda",
+        "epochs": 25,
+        "batch_size": 256,
+        "learning_rate": 0.001,
+        "hidden_dim": 64,
+        "layers": 2,
+        "dropout": 0.1,
+        "loss_tail": [
+          0.005693271240972458,
+          0.005475424928590655,
+          0.005177750366125652,
+          0.005116922136871738,
+          0.005013278110864315
+        ],
+        "val_rul_rmse_history_tail": [
+          18.47260468638596,
+          17.780195766406834,
+          17.77769977931333,
+          17.36934932310208,
+          17.618302281804027
+        ],
+        "best_val_rul_rmse": 17.336406327812693,
+        "train_seconds": 3.0392877000849694,
+        "train_samples_per_second": 98707.33856212853
+      },
+      "fit_seconds": 3.05528900003992,
+      "pseudo_val_metrics": {
+        "rul_mae": 12.493978402672745,
+        "rul_rmse": 17.336406327812693,
+        "rul_score": 4548.144900240157
+      },
+      "official_test_metrics": {
+        "rul_mae": 12.322344453533772,
+        "rul_rmse": 18.74230076981966,
+        "rul_score": 6084.488331737206
+      },
+      "pseudo_val_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 17,
+            "n_samples": 97,
+            "rul_mae": 14.610352044253005,
+            "rul_rmse": 20.55622404688207,
+            "rul_score": 873.3187544684982
+          },
+          {
+            "subset": "FD002",
+            "n_units": 57,
+            "n_samples": 323,
+            "rul_mae": 12.559272128362036,
+            "rul_rmse": 16.87552288799372,
+            "rul_score": 1598.8123833090635
+          },
+          {
+            "subset": "FD003",
+            "n_units": 22,
+            "n_samples": 129,
+            "rul_mae": 12.639565445656,
+            "rul_rmse": 17.494851086138606,
+            "rul_score": 776.1016002535333
+          },
+          {
+            "subset": "FD004",
+            "n_units": 46,
+            "n_samples": 271,
+            "rul_mae": 11.589333217522315,
+            "rul_rmse": 16.52412351956939,
+            "rul_score": 1299.912162209062
+          }
+        ]
+      },
+      "official_test_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 9.696209402084351,
+            "rul_rmse": 14.317173287931151,
+            "rul_score": 348.84756170285044
+          },
+          {
+            "subset": "FD002",
+            "n_units": 259,
+            "n_samples": 259,
+            "rul_mae": 13.838223753748712,
+            "rul_rmse": 21.441952020321153,
+            "rul_score": 3329.4910945956162
+          },
+          {
+            "subset": "FD003",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 8.79719630241394,
+            "rul_rmse": 13.569487166533499,
+            "rul_score": 631.5260332041612
+          },
+          {
+            "subset": "FD004",
+            "n_units": 248,
+            "n_samples": 248,
+            "rul_mae": 13.219584701522704,
+            "rul_rmse": 19.088315323561154,
+            "rul_score": 1774.623642234579
+          }
+        ]
+      }
+    },
+    {
+      "status": "ok",
+      "candidate": "gru_w160_cap150",
+      "baseline": "gru_sequence",
+      "seed": 43,
+      "window_size": 160,
+      "rul_cap": 150.0,
+      "protocol": "train_unit_pseudo_terminal_validation_for_cmapss_rul",
+      "split_protocol": "official_test_grouped_unit_validation",
+      "train_size": 12000,
+      "pseudo_val_size": 820,
+      "official_test_size": 707,
+      "target_ruls": [
+        20,
+        50,
+        80,
+        110,
+        140,
+        170
+      ],
+      "pseudo_val_rul_distribution": {
+        "count": 820,
+        "min": 20.0,
+        "p25": 50.0,
+        "median": 80.0,
+        "mean": 92.21951293945312,
+        "p75": 140.0,
+        "max": 170.0,
+        "count_gt_125": 252,
+        "count_gt_150": 114
+      },
+      "official_test_rul_distribution": {
+        "count": 707,
+        "min": 6.0,
+        "p25": 36.0,
+        "median": 83.0,
+        "mean": 81.43705749511719,
+        "p75": 119.0,
+        "max": 195.0,
+        "count_gt_125": 150,
+        "count_gt_150": 78
+      },
+      "regime_prototype": {
+        "enabled": true,
+        "source": "train_only_regime_healthy_prototype_residuals",
+        "regime_cols": [
+          "op_setting_1",
+          "op_setting_2",
+          "op_setting_3"
+        ],
+        "residual_cols": [
+          "sensor_01",
+          "sensor_02",
+          "sensor_03",
+          "sensor_04",
+          "sensor_05",
+          "sensor_06",
+          "sensor_07",
+          "sensor_08",
+          "sensor_09",
+          "sensor_10",
+          "sensor_11",
+          "sensor_12",
+          "sensor_13",
+          "sensor_14",
+          "sensor_15",
+          "sensor_16",
+          "sensor_17",
+          "sensor_18",
+          "sensor_19",
+          "sensor_20",
+          "sensor_21"
+        ],
+        "n_residual_cols": 21,
+        "requested_regimes": 6,
+        "actual_regimes": 6,
+        "healthy_stage_max": 0,
+        "global_healthy_count": 4000,
+        "baseline_counts": {
+          "0": 1506,
+          "1": 437,
+          "2": 438,
+          "3": 440,
+          "4": 431,
+          "5": 748
+        }
+      },
+      "baseline_diagnostics": {
+        "model_family": "gru_sequence",
+        "parameters": 46785,
+        "device": "cuda",
+        "epochs": 25,
+        "batch_size": 256,
+        "learning_rate": 0.001,
+        "hidden_dim": 64,
+        "layers": 2,
+        "dropout": 0.1,
+        "loss_tail": [
+          0.004436562605638137,
+          0.0044836216219799946,
+          0.004209802277941019,
+          0.004152476079167521,
+          0.003943289739099589
+        ],
+        "val_rul_rmse_history_tail": [
+          17.082473991436096,
+          17.025484175146822,
+          18.130588443551645,
+          16.90847585635612,
+          17.6025139250943
+        ],
+        "best_val_rul_rmse": 16.620885512699004,
+        "train_seconds": 3.1273147999309003,
+        "train_samples_per_second": 95928.94198135367
+      },
+      "fit_seconds": 3.1518588999751955,
+      "pseudo_val_metrics": {
+        "rul_mae": 11.782247151398078,
+        "rul_rmse": 16.620885512699004,
+        "rul_score": 4498.876101073642
+      },
+      "official_test_metrics": {
+        "rul_mae": 11.994784200714198,
+        "rul_rmse": 18.14101558727279,
+        "rul_score": 6836.186510920301
+      },
+      "pseudo_val_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 17,
+            "n_samples": 97,
+            "rul_mae": 12.546316146850586,
+            "rul_rmse": 17.501919831462416,
+            "rul_score": 525.854905114302
+          },
+          {
+            "subset": "FD002",
+            "n_units": 57,
+            "n_samples": 323,
+            "rul_mae": 12.053393981036018,
+            "rul_rmse": 16.56474008214026,
+            "rul_score": 2032.0753538852314
+          },
+          {
+            "subset": "FD003",
+            "n_units": 22,
+            "n_samples": 129,
+            "rul_mae": 11.75174548274787,
+            "rul_rmse": 16.700505729890295,
+            "rul_score": 791.545811116636
+          },
+          {
+            "subset": "FD004",
+            "n_units": 46,
+            "n_samples": 271,
+            "rul_mae": 11.20010544189228,
+            "rul_rmse": 16.323326681531142,
+            "rul_score": 1149.4000309574722
+          }
+        ]
+      },
+      "official_test_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 9.747590498924255,
+            "rul_rmse": 13.86676509378843,
+            "rul_score": 363.947310455974
+          },
+          {
+            "subset": "FD002",
+            "n_units": 259,
+            "n_samples": 259,
+            "rul_mae": 12.565224802171862,
+            "rul_rmse": 19.947547152970152,
+            "rul_score": 3767.635907068001
+          },
+          {
+            "subset": "FD003",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 9.958890600204468,
+            "rul_rmse": 14.910689245045129,
+            "rul_score": 1061.0000726833111
+          },
+          {
+            "subset": "FD004",
+            "n_units": 248,
+            "n_samples": 248,
+            "rul_mae": 13.126093129957876,
+            "rul_rmse": 18.85345692369974,
+            "rul_score": 1643.6032207130133
+          }
+        ]
+      }
+    },
+    {
+      "status": "ok",
+      "candidate": "gru_w80_cap125",
+      "baseline": "gru_sequence",
+      "seed": 44,
+      "window_size": 80,
+      "rul_cap": 125.0,
+      "protocol": "train_unit_pseudo_terminal_validation_for_cmapss_rul",
+      "split_protocol": "official_test_grouped_unit_validation",
+      "train_size": 12000,
+      "pseudo_val_size": 827,
+      "official_test_size": 707,
+      "target_ruls": [
+        20,
+        50,
+        80,
+        110,
+        140,
+        170
+      ],
+      "pseudo_val_rul_distribution": {
+        "count": 827,
+        "min": 20.0,
+        "p25": 50.0,
+        "median": 80.0,
+        "mean": 92.87786865234375,
+        "p75": 140.0,
+        "max": 170.0,
+        "count_gt_125": 259,
+        "count_gt_150": 121
+      },
+      "official_test_rul_distribution": {
+        "count": 707,
+        "min": 6.0,
+        "p25": 36.0,
+        "median": 83.0,
+        "mean": 81.43705749511719,
+        "p75": 119.0,
+        "max": 195.0,
+        "count_gt_125": 150,
+        "count_gt_150": 78
+      },
+      "regime_prototype": {
+        "enabled": true,
+        "source": "train_only_regime_healthy_prototype_residuals",
+        "regime_cols": [
+          "op_setting_1",
+          "op_setting_2",
+          "op_setting_3"
+        ],
+        "residual_cols": [
+          "sensor_01",
+          "sensor_02",
+          "sensor_03",
+          "sensor_04",
+          "sensor_05",
+          "sensor_06",
+          "sensor_07",
+          "sensor_08",
+          "sensor_09",
+          "sensor_10",
+          "sensor_11",
+          "sensor_12",
+          "sensor_13",
+          "sensor_14",
+          "sensor_15",
+          "sensor_16",
+          "sensor_17",
+          "sensor_18",
+          "sensor_19",
+          "sensor_20",
+          "sensor_21"
+        ],
+        "n_residual_cols": 21,
+        "requested_regimes": 6,
+        "actual_regimes": 6,
+        "healthy_stage_max": 0,
+        "global_healthy_count": 4000,
+        "baseline_counts": {
+          "0": 1507,
+          "1": 463,
+          "2": 449,
+          "3": 444,
+          "4": 422,
+          "5": 715
+        }
+      },
+      "baseline_diagnostics": {
+        "model_family": "gru_sequence",
+        "parameters": 46785,
+        "device": "cuda",
+        "epochs": 25,
+        "batch_size": 256,
+        "learning_rate": 0.001,
+        "hidden_dim": 64,
+        "layers": 2,
+        "dropout": 0.1,
+        "loss_tail": [
+          0.004143879521004063,
+          0.0039923868805883415,
+          0.0039707596185914375,
+          0.003777136327698827,
+          0.003832619344974135
+        ],
+        "val_rul_rmse_history_tail": [
+          22.98671581028896,
+          22.575585860130726,
+          22.690443853480456,
+          22.4985047694772,
+          22.72533745555827
+        ],
+        "best_val_rul_rmse": 22.4985047694772,
+        "train_seconds": 3.0837971998844296,
+        "train_samples_per_second": 97282.66178179388
+      },
+      "fit_seconds": 3.098247200017795,
+      "pseudo_val_metrics": {
+        "rul_mae": 15.547836298521657,
+        "rul_rmse": 22.4985047694772,
+        "rul_score": 150840.11346719932
+      },
+      "official_test_metrics": {
+        "rul_mae": 13.391475141975802,
+        "rul_rmse": 20.84763710062979,
+        "rul_score": 7639.395173611063
+      },
+      "pseudo_val_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 18,
+            "n_samples": 102,
+            "rul_mae": 14.698461850484213,
+            "rul_rmse": 21.727275991029735,
+            "rul_score": 827.430651536891
+          },
+          {
+            "subset": "FD002",
+            "n_units": 53,
+            "n_samples": 307,
+            "rul_mae": 15.718454861097305,
+            "rul_rmse": 22.042918874709102,
+            "rul_score": 2656.0594024496204
+          },
+          {
+            "subset": "FD003",
+            "n_units": 24,
+            "n_samples": 142,
+            "rul_mae": 14.680401748334857,
+            "rul_rmse": 21.563469965574786,
+            "rul_score": 1040.8911349609848
+          },
+          {
+            "subset": "FD004",
+            "n_units": 47,
+            "n_samples": 276,
+            "rul_mae": 16.118242099665213,
+            "rul_rmse": 23.718271887851067,
+            "rul_score": 146315.73227825182
+          }
+        ]
+      },
+      "official_test_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 9.180809636116027,
+            "rul_rmse": 12.48574017758629,
+            "rul_score": 237.88930668560755
+          },
+          {
+            "subset": "FD002",
+            "n_units": 259,
+            "n_samples": 259,
+            "rul_mae": 15.268081806801462,
+            "rul_rmse": 23.440017131089515,
+            "rul_score": 3869.836356639289
+          },
+          {
+            "subset": "FD003",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 7.9946742391586305,
+            "rul_rmse": 11.34359322146836,
+            "rul_score": 243.36385476761484
+          },
+          {
+            "subset": "FD004",
+            "n_units": 248,
+            "n_samples": 248,
+            "rul_mae": 15.305610281805839,
+            "rul_rmse": 23.462268678669428,
+            "rul_score": 3288.305655518551
+          }
+        ]
+      }
+    },
+    {
+      "status": "ok",
+      "candidate": "gru_w80_cap150",
+      "baseline": "gru_sequence",
+      "seed": 44,
+      "window_size": 80,
+      "rul_cap": 150.0,
+      "protocol": "train_unit_pseudo_terminal_validation_for_cmapss_rul",
+      "split_protocol": "official_test_grouped_unit_validation",
+      "train_size": 12000,
+      "pseudo_val_size": 827,
+      "official_test_size": 707,
+      "target_ruls": [
+        20,
+        50,
+        80,
+        110,
+        140,
+        170
+      ],
+      "pseudo_val_rul_distribution": {
+        "count": 827,
+        "min": 20.0,
+        "p25": 50.0,
+        "median": 80.0,
+        "mean": 92.87786865234375,
+        "p75": 140.0,
+        "max": 170.0,
+        "count_gt_125": 259,
+        "count_gt_150": 121
+      },
+      "official_test_rul_distribution": {
+        "count": 707,
+        "min": 6.0,
+        "p25": 36.0,
+        "median": 83.0,
+        "mean": 81.43705749511719,
+        "p75": 119.0,
+        "max": 195.0,
+        "count_gt_125": 150,
+        "count_gt_150": 78
+      },
+      "regime_prototype": {
+        "enabled": true,
+        "source": "train_only_regime_healthy_prototype_residuals",
+        "regime_cols": [
+          "op_setting_1",
+          "op_setting_2",
+          "op_setting_3"
+        ],
+        "residual_cols": [
+          "sensor_01",
+          "sensor_02",
+          "sensor_03",
+          "sensor_04",
+          "sensor_05",
+          "sensor_06",
+          "sensor_07",
+          "sensor_08",
+          "sensor_09",
+          "sensor_10",
+          "sensor_11",
+          "sensor_12",
+          "sensor_13",
+          "sensor_14",
+          "sensor_15",
+          "sensor_16",
+          "sensor_17",
+          "sensor_18",
+          "sensor_19",
+          "sensor_20",
+          "sensor_21"
+        ],
+        "n_residual_cols": 21,
+        "requested_regimes": 6,
+        "actual_regimes": 6,
+        "healthy_stage_max": 0,
+        "global_healthy_count": 4000,
+        "baseline_counts": {
+          "0": 1507,
+          "1": 463,
+          "2": 449,
+          "3": 444,
+          "4": 422,
+          "5": 715
+        }
+      },
+      "baseline_diagnostics": {
+        "model_family": "gru_sequence",
+        "parameters": 46785,
+        "device": "cuda",
+        "epochs": 25,
+        "batch_size": 256,
+        "learning_rate": 0.001,
+        "hidden_dim": 64,
+        "layers": 2,
+        "dropout": 0.1,
+        "loss_tail": [
+          0.005478092806136354,
+          0.00513103832688896,
+          0.005166874346422388,
+          0.00485644643591281,
+          0.004888966283265581
+        ],
+        "val_rul_rmse_history_tail": [
+          18.270037251798247,
+          17.772174932827173,
+          17.851422702678548,
+          18.08085098406604,
+          17.72228270353373
+        ],
+        "best_val_rul_rmse": 17.72228270353373,
+        "train_seconds": 3.0962264998815954,
+        "train_samples_per_second": 96892.13628637067
+      },
+      "fit_seconds": 3.1124464999884367,
+      "pseudo_val_metrics": {
+        "rul_mae": 12.263707840745365,
+        "rul_rmse": 17.72228270353373,
+        "rul_score": 133830.00196450637
+      },
+      "official_test_metrics": {
+        "rul_mae": 12.518465952623682,
+        "rul_rmse": 18.418478178972016,
+        "rul_score": 6304.97036166321
+      },
+      "pseudo_val_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 18,
+            "n_samples": 102,
+            "rul_mae": 11.895420579349294,
+            "rul_rmse": 17.62654206068529,
+            "rul_score": 919.4908030435683
+          },
+          {
+            "subset": "FD002",
+            "n_units": 53,
+            "n_samples": 307,
+            "rul_mae": 13.048334454092219,
+            "rul_rmse": 18.264323369242412,
+            "rul_score": 2615.2615715575544
+          },
+          {
+            "subset": "FD003",
+            "n_units": 24,
+            "n_samples": 142,
+            "rul_mae": 10.26336925130495,
+            "rul_rmse": 14.404723731388726,
+            "rul_score": 443.9302135938865
+          },
+          {
+            "subset": "FD004",
+            "n_units": 47,
+            "n_samples": 276,
+            "rul_mae": 12.55621874677962,
+            "rul_rmse": 18.66733019491237,
+            "rul_score": 129851.31937631137
+          }
+        ]
+      },
+      "official_test_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 10.359382376670837,
+            "rul_rmse": 15.170819804182507,
+            "rul_score": 611.9621844286288
+          },
+          {
+            "subset": "FD002",
+            "n_units": 259,
+            "n_samples": 259,
+            "rul_mae": 14.071504927970267,
+            "rul_rmse": 20.583251149460004,
+            "rul_score": 3276.9546953591484
+          },
+          {
+            "subset": "FD003",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 9.534194226264953,
+            "rul_rmse": 14.459458342502877,
+            "rul_score": 693.9543333396362
+          },
+          {
+            "subset": "FD004",
+            "n_units": 248,
+            "n_samples": 248,
+            "rul_mae": 12.970475773657522,
+            "rul_rmse": 18.642364100908097,
+            "rul_score": 1722.0991485357954
+          }
+        ]
+      }
+    },
+    {
+      "status": "ok",
+      "candidate": "gru_w160_cap150",
+      "baseline": "gru_sequence",
+      "seed": 44,
+      "window_size": 160,
+      "rul_cap": 150.0,
+      "protocol": "train_unit_pseudo_terminal_validation_for_cmapss_rul",
+      "split_protocol": "official_test_grouped_unit_validation",
+      "train_size": 12000,
+      "pseudo_val_size": 827,
+      "official_test_size": 707,
+      "target_ruls": [
+        20,
+        50,
+        80,
+        110,
+        140,
+        170
+      ],
+      "pseudo_val_rul_distribution": {
+        "count": 827,
+        "min": 20.0,
+        "p25": 50.0,
+        "median": 80.0,
+        "mean": 92.87786865234375,
+        "p75": 140.0,
+        "max": 170.0,
+        "count_gt_125": 259,
+        "count_gt_150": 121
+      },
+      "official_test_rul_distribution": {
+        "count": 707,
+        "min": 6.0,
+        "p25": 36.0,
+        "median": 83.0,
+        "mean": 81.43705749511719,
+        "p75": 119.0,
+        "max": 195.0,
+        "count_gt_125": 150,
+        "count_gt_150": 78
+      },
+      "regime_prototype": {
+        "enabled": true,
+        "source": "train_only_regime_healthy_prototype_residuals",
+        "regime_cols": [
+          "op_setting_1",
+          "op_setting_2",
+          "op_setting_3"
+        ],
+        "residual_cols": [
+          "sensor_01",
+          "sensor_02",
+          "sensor_03",
+          "sensor_04",
+          "sensor_05",
+          "sensor_06",
+          "sensor_07",
+          "sensor_08",
+          "sensor_09",
+          "sensor_10",
+          "sensor_11",
+          "sensor_12",
+          "sensor_13",
+          "sensor_14",
+          "sensor_15",
+          "sensor_16",
+          "sensor_17",
+          "sensor_18",
+          "sensor_19",
+          "sensor_20",
+          "sensor_21"
+        ],
+        "n_residual_cols": 21,
+        "requested_regimes": 6,
+        "actual_regimes": 6,
+        "healthy_stage_max": 0,
+        "global_healthy_count": 4000,
+        "baseline_counts": {
+          "0": 1507,
+          "1": 463,
+          "2": 449,
+          "3": 444,
+          "4": 422,
+          "5": 715
+        }
+      },
+      "baseline_diagnostics": {
+        "model_family": "gru_sequence",
+        "parameters": 46785,
+        "device": "cuda",
+        "epochs": 25,
+        "batch_size": 256,
+        "learning_rate": 0.001,
+        "hidden_dim": 64,
+        "layers": 2,
+        "dropout": 0.1,
+        "loss_tail": [
+          0.004505711414435125,
+          0.00427074295448813,
+          0.004086947747248601,
+          0.00405844301976105,
+          0.0038356195758790412
+        ],
+        "val_rul_rmse_history_tail": [
+          17.933061647425184,
+          18.11063515946155,
+          18.782668234470012,
+          18.670100310625948,
+          18.39462468440378
+        ],
+        "best_val_rul_rmse": 17.933061647425184,
+        "train_seconds": 3.152972999960184,
+        "train_samples_per_second": 95148.29337383746
+      },
+      "fit_seconds": 3.176653200061992,
+      "pseudo_val_metrics": {
+        "rul_mae": 12.338953383744412,
+        "rul_rmse": 17.933061647425184,
+        "rul_score": 101713.94668689193
+      },
+      "official_test_metrics": {
+        "rul_mae": 12.352628910895621,
+        "rul_rmse": 18.46020994271489,
+        "rul_score": 7240.91281423377
+      },
+      "pseudo_val_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 18,
+            "n_samples": 102,
+            "rul_mae": 11.943041745354147,
+            "rul_rmse": 17.35453898161107,
+            "rul_score": 679.4528656150142
+          },
+          {
+            "subset": "FD002",
+            "n_units": 53,
+            "n_samples": 307,
+            "rul_mae": 13.005914694323213,
+            "rul_rmse": 18.07804513349575,
+            "rul_score": 2495.7217344415167
+          },
+          {
+            "subset": "FD003",
+            "n_units": 24,
+            "n_samples": 142,
+            "rul_mae": 11.409736619868749,
+            "rul_rmse": 15.772174150219529,
+            "rul_score": 741.851986267152
+          },
+          {
+            "subset": "FD004",
+            "n_units": 47,
+            "n_samples": 276,
+            "rul_mae": 12.221470214318538,
+            "rul_rmse": 18.99484102431879,
+            "rul_score": 97796.92010056824
+          }
+        ]
+      },
+      "official_test_subset_metrics": {
+        "enabled": true,
+        "rows": [
+          {
+            "subset": "FD001",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 10.634906821250915,
+            "rul_rmse": 15.8865280044629,
+            "rul_score": 694.9042693917055
+          },
+          {
+            "subset": "FD002",
+            "n_units": 259,
+            "n_samples": 259,
+            "rul_mae": 13.214277245363213,
+            "rul_rmse": 20.11706572838944,
+            "rul_score": 3642.733581880945
+          },
+          {
+            "subset": "FD003",
+            "n_units": 100,
+            "n_samples": 100,
+            "rul_mae": 10.54923773765564,
+            "rul_rmse": 16.084620856207486,
+            "rul_score": 1175.366905793608
+          },
+          {
+            "subset": "FD004",
+            "n_units": 248,
+            "n_samples": 248,
+            "rul_mae": 12.872566038562406,
+            "rul_rmse": 18.51383210602925,
+            "rul_score": 1727.908057167511
+          }
+        ]
+      }
+    }
+  ],
+  "next_actions": [
+    "If pseudo-selection and official-test ranking disagree, keep C-MAPSS as exploratory support and rerun a predeclared wider validation panel.",
+    "Path-fusion variants must be evaluated against the same pseudo-terminal panel before any C-MAPSS path-fusion claim is admitted.",
+    "Published C-MAPSS baselines still require exact cap, subset, score, preprocessing, and budget alignment before literature-wide SOTA wording."
+  ],
+  "selected_by_pseudo_validation_score": {
+    "candidate": "gru_w160_cap150",
+    "n_seeds": 3,
+    "window_size": 160,
+    "rul_cap": 150.0,
+    "pseudo_val_rmse_mean": 16.829048088268543,
+    "pseudo_val_rmse_std": 0.8296036365766153,
+    "pseudo_val_score_mean": 36636.78467580545,
+    "official_test_rmse_mean": 18.28403181947832,
+    "official_test_rmse_std": 0.1324035306656403,
+    "official_test_score_mean": 6619.390412637503,
+    "fit_seconds_mean": 3.16416579997167
+  },
+  "best_by_official_test_score": {
+    "candidate": "gru_w80_cap150",
+    "n_seeds": 3,
+    "window_size": 80,
+    "rul_cap": 150.0,
+    "pseudo_val_rmse_mean": 17.247915535288705,
+    "pseudo_val_rmse_std": 0.42804357826097456,
+    "pseudo_val_score_mean": 47585.59167463996,
+    "official_test_rmse_mean": 18.478231573200226,
+    "official_test_rmse_std": 0.1958298205345601,
+    "official_test_score_mean": 6211.187716199135,
+    "fit_seconds_mean": 3.101023133378476
+  },
+  "official_score_tradeoff": {
+    "present": true,
+    "selected_candidate": "gru_w160_cap150",
+    "selected_official_test_score": 6619.390412637503,
+    "best_score_candidate": "gru_w80_cap150",
+    "best_official_test_score": 6211.187716199135,
+    "score_gap": 408.20269643836764
+  }
+}

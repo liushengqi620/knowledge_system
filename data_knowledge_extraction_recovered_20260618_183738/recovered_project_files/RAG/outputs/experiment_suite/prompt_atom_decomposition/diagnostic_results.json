@@ -1,0 +1,1502 @@
+[
+  {
+    "strategy": "no_atom",
+    "atom_count": 1,
+    "mean_tokens_per_atom": 201,
+    "error_attribution_coverage": 1.0,
+    "attribution_precision_proxy": 0.1354,
+    "edit_locality": 0.1354,
+    "semantic_completeness": 1.0,
+    "protected_tag_coverage": 1.0,
+    "protected_gate_coverage": 1.0,
+    "over_coarse_risk": 1.0,
+    "over_fine_risk": 0.0,
+    "mean_candidate_atoms_per_error": 1,
+    "diagnostic_score": 0.5542,
+    "atoms": [
+      {
+        "atom_id": "A1",
+        "category": "WholePrompt",
+        "protected": true,
+        "source_units": [
+          "F1",
+          "F2",
+          "F3",
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "D1",
+          "D2",
+          "D3",
+          "D4",
+          "V1",
+          "V2",
+          "V3"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "endpoint_consistency",
+          "entity_boundary",
+          "entity_type",
+          "evidence",
+          "hallucination",
+          "implicit_chain",
+          "industrial_domain",
+          "json_format",
+          "nested_entity",
+          "relation_direction",
+          "relation_type",
+          "schema",
+          "task_scope",
+          "validation"
+        ],
+        "text": "Extract only process-relevant industrial knowledge from continuous casting text. All extracted entities and relations must be supported by the input text. Do not infer unstated defects, causes, equipment states, or improvement actions. Entity types are ProcessParameter, EquipmentState, QualityDefect, MaterialState, Operation, ProductPart, and QualityIndicator. Preserve complete entity boundaries, including modifiers such as excessive, insufficient, unstable, or abnormal. Relation types include cause, affect, control, improve, located_at, has_parameter, and associated_with. Causal relations must follow cause-to-effect direction, not effect-to-cause direction. A relation is valid only when both endpoints appear as extracted entities and the entity-type combination is legal. Example: 'casting speed increased, leading to longitudinal cracks' should produce casting speed -> cause -> longitudinal cracks. Example: keep 'mold level fluctuation' as one EquipmentState entity rather than splitting it into unrelated words. Example: if one sentence contains a chain A causes B and B causes C, extract both local links when text evidence supports them. Example: reject a triple if the source text mentions only an isolated material state and no relation. Return valid JSON with top-level keys entities and relations. Remove entities or relations that are not supported by explicit textual evidence. Check relation direction, relation type, endpoint existence, and duplicate triples before final output."
+      }
+    ]
+  },
+  {
+    "strategy": "fsdv_block",
+    "atom_count": 4,
+    "mean_tokens_per_atom": 50.25,
+    "error_attribution_coverage": 1.0,
+    "attribution_precision_proxy": 0.2082,
+    "edit_locality": 0.4479,
+    "semantic_completeness": 1.0,
+    "protected_tag_coverage": 1.0,
+    "protected_gate_coverage": 1.0,
+    "over_coarse_risk": 0.2692,
+    "over_fine_risk": 0.0,
+    "mean_candidate_atoms_per_error": 2,
+    "diagnostic_score": 0.6793,
+    "atoms": [
+      {
+        "atom_id": "F",
+        "category": "Foundation",
+        "protected": true,
+        "source_units": [
+          "F1",
+          "F2",
+          "F3"
+        ],
+        "tags": [
+          "evidence",
+          "hallucination",
+          "industrial_domain",
+          "task_scope"
+        ],
+        "text": "Extract only process-relevant industrial knowledge from continuous casting text. All extracted entities and relations must be supported by the input text. Do not infer unstated defects, causes, equipment states, or improvement actions."
+      },
+      {
+        "atom_id": "S",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5"
+        ],
+        "tags": [
+          "causal_chain",
+          "endpoint_consistency",
+          "entity_boundary",
+          "entity_type",
+          "nested_entity",
+          "relation_direction",
+          "relation_type",
+          "schema"
+        ],
+        "text": "Entity types are ProcessParameter, EquipmentState, QualityDefect, MaterialState, Operation, ProductPart, and QualityIndicator. Preserve complete entity boundaries, including modifiers such as excessive, insufficient, unstable, or abnormal. Relation types include cause, affect, control, improve, located_at, has_parameter, and associated_with. Causal relations must follow cause-to-effect direction, not effect-to-cause direction. A relation is valid only when both endpoints appear as extracted entities and the entity-type combination is legal."
+      },
+      {
+        "atom_id": "D",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D1",
+          "D2",
+          "D3",
+          "D4"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "entity_boundary",
+          "evidence",
+          "hallucination",
+          "implicit_chain",
+          "relation_direction"
+        ],
+        "text": "Example: 'casting speed increased, leading to longitudinal cracks' should produce casting speed -> cause -> longitudinal cracks. Example: keep 'mold level fluctuation' as one EquipmentState entity rather than splitting it into unrelated words. Example: if one sentence contains a chain A causes B and B causes C, extract both local links when text evidence supports them. Example: reject a triple if the source text mentions only an isolated material state and no relation."
+      },
+      {
+        "atom_id": "V",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V1",
+          "V2",
+          "V3"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "evidence",
+          "hallucination",
+          "json_format",
+          "relation_direction",
+          "relation_type",
+          "validation"
+        ],
+        "text": "Return valid JSON with top-level keys entities and relations. Remove entities or relations that are not supported by explicit textual evidence. Check relation direction, relation type, endpoint existence, and duplicate triples before final output."
+      }
+    ]
+  },
+  {
+    "strategy": "sentence_level",
+    "atom_count": 15,
+    "mean_tokens_per_atom": 13.4,
+    "error_attribution_coverage": 1.0,
+    "attribution_precision_proxy": 0.3601,
+    "edit_locality": 0.7292,
+    "semantic_completeness": 0.9,
+    "protected_tag_coverage": 1.0,
+    "protected_gate_coverage": 0.8333,
+    "over_coarse_risk": 0.0051,
+    "over_fine_risk": 0.1,
+    "mean_candidate_atoms_per_error": 3.833,
+    "diagnostic_score": 0.734,
+    "atoms": [
+      {
+        "atom_id": "F1",
+        "category": "Foundation",
+        "protected": false,
+        "source_units": [
+          "F1"
+        ],
+        "tags": [
+          "industrial_domain",
+          "task_scope"
+        ],
+        "text": "Extract only process-relevant industrial knowledge from continuous casting text."
+      },
+      {
+        "atom_id": "F2",
+        "category": "Foundation",
+        "protected": true,
+        "source_units": [
+          "F2"
+        ],
+        "tags": [
+          "evidence"
+        ],
+        "text": "All extracted entities and relations must be supported by the input text."
+      },
+      {
+        "atom_id": "F3",
+        "category": "Foundation",
+        "protected": true,
+        "source_units": [
+          "F3"
+        ],
+        "tags": [
+          "evidence",
+          "hallucination"
+        ],
+        "text": "Do not infer unstated defects, causes, equipment states, or improvement actions."
+      },
+      {
+        "atom_id": "S1",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S1"
+        ],
+        "tags": [
+          "entity_type",
+          "schema"
+        ],
+        "text": "Entity types are ProcessParameter, EquipmentState, QualityDefect, MaterialState, Operation, ProductPart, and QualityIndicator."
+      },
+      {
+        "atom_id": "S2",
+        "category": "Schema",
+        "protected": false,
+        "source_units": [
+          "S2"
+        ],
+        "tags": [
+          "entity_boundary",
+          "nested_entity",
+          "schema"
+        ],
+        "text": "Preserve complete entity boundaries, including modifiers such as excessive, insufficient, unstable, or abnormal."
+      },
+      {
+        "atom_id": "S3",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S3"
+        ],
+        "tags": [
+          "relation_type",
+          "schema"
+        ],
+        "text": "Relation types include cause, affect, control, improve, located_at, has_parameter, and associated_with."
+      },
+      {
+        "atom_id": "S4",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S4"
+        ],
+        "tags": [
+          "causal_chain",
+          "relation_direction",
+          "schema"
+        ],
+        "text": "Causal relations must follow cause-to-effect direction, not effect-to-cause direction."
+      },
+      {
+        "atom_id": "S5",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S5"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "entity_type",
+          "schema"
+        ],
+        "text": "A relation is valid only when both endpoints appear as extracted entities and the entity-type combination is legal."
+      },
+      {
+        "atom_id": "D1",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D1"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "relation_direction"
+        ],
+        "text": "Example: 'casting speed increased, leading to longitudinal cracks' should produce casting speed -> cause -> longitudinal cracks."
+      },
+      {
+        "atom_id": "D2",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D2"
+        ],
+        "tags": [
+          "demonstration",
+          "entity_boundary"
+        ],
+        "text": "Example: keep 'mold level fluctuation' as one EquipmentState entity rather than splitting it into unrelated words."
+      },
+      {
+        "atom_id": "D3",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D3"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "implicit_chain"
+        ],
+        "text": "Example: if one sentence contains a chain A causes B and B causes C, extract both local links when text evidence supports them."
+      },
+      {
+        "atom_id": "D4",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D4"
+        ],
+        "tags": [
+          "demonstration",
+          "evidence",
+          "hallucination"
+        ],
+        "text": "Example: reject a triple if the source text mentions only an isolated material state and no relation."
+      },
+      {
+        "atom_id": "V1",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V1"
+        ],
+        "tags": [
+          "json_format",
+          "validation"
+        ],
+        "text": "Return valid JSON with top-level keys entities and relations."
+      },
+      {
+        "atom_id": "V2",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V2"
+        ],
+        "tags": [
+          "evidence",
+          "hallucination",
+          "validation"
+        ],
+        "text": "Remove entities or relations that are not supported by explicit textual evidence."
+      },
+      {
+        "atom_id": "V3",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V3"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "relation_direction",
+          "relation_type",
+          "validation"
+        ],
+        "text": "Check relation direction, relation type, endpoint existence, and duplicate triples before final output."
+      }
+    ]
+  },
+  {
+    "strategy": "random_atom",
+    "atom_count": 5,
+    "mean_tokens_per_atom": 40.2,
+    "error_attribution_coverage": 1.0,
+    "attribution_precision_proxy": 0.1798,
+    "edit_locality": 0.375,
+    "semantic_completeness": 1.0,
+    "protected_tag_coverage": 1.0,
+    "protected_gate_coverage": 1.0,
+    "over_coarse_risk": 0.2615,
+    "over_fine_risk": 0.0,
+    "mean_candidate_atoms_per_error": 3,
+    "diagnostic_score": 0.6848,
+    "atoms": [
+      {
+        "atom_id": "R1",
+        "category": "Mixed",
+        "protected": true,
+        "source_units": [
+          "F1",
+          "D2",
+          "F3"
+        ],
+        "tags": [
+          "demonstration",
+          "entity_boundary",
+          "evidence",
+          "hallucination",
+          "industrial_domain",
+          "task_scope"
+        ],
+        "text": "Extract only process-relevant industrial knowledge from continuous casting text. Example: keep 'mold level fluctuation' as one EquipmentState entity rather than splitting it into unrelated words. Do not infer unstated defects, causes, equipment states, or improvement actions."
+      },
+      {
+        "atom_id": "R2",
+        "category": "Mixed",
+        "protected": true,
+        "source_units": [
+          "D4",
+          "V2",
+          "S2"
+        ],
+        "tags": [
+          "demonstration",
+          "entity_boundary",
+          "evidence",
+          "hallucination",
+          "nested_entity",
+          "schema",
+          "validation"
+        ],
+        "text": "Example: reject a triple if the source text mentions only an isolated material state and no relation. Remove entities or relations that are not supported by explicit textual evidence. Preserve complete entity boundaries, including modifiers such as excessive, insufficient, unstable, or abnormal."
+      },
+      {
+        "atom_id": "R3",
+        "category": "Mixed",
+        "protected": true,
+        "source_units": [
+          "S5",
+          "S4",
+          "S1"
+        ],
+        "tags": [
+          "causal_chain",
+          "endpoint_consistency",
+          "entity_type",
+          "relation_direction",
+          "schema"
+        ],
+        "text": "A relation is valid only when both endpoints appear as extracted entities and the entity-type combination is legal. Causal relations must follow cause-to-effect direction, not effect-to-cause direction. Entity types are ProcessParameter, EquipmentState, QualityDefect, MaterialState, Operation, ProductPart, and QualityIndicator."
+      },
+      {
+        "atom_id": "R4",
+        "category": "Mixed",
+        "protected": true,
+        "source_units": [
+          "V3",
+          "D3",
+          "V1"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "endpoint_consistency",
+          "implicit_chain",
+          "json_format",
+          "relation_direction",
+          "relation_type",
+          "validation"
+        ],
+        "text": "Check relation direction, relation type, endpoint existence, and duplicate triples before final output. Example: if one sentence contains a chain A causes B and B causes C, extract both local links when text evidence supports them. Return valid JSON with top-level keys entities and relations."
+      },
+      {
+        "atom_id": "R5",
+        "category": "Mixed",
+        "protected": true,
+        "source_units": [
+          "D1",
+          "S3",
+          "F2"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "evidence",
+          "relation_direction",
+          "relation_type",
+          "schema"
+        ],
+        "text": "Example: 'casting speed increased, leading to longitudinal cracks' should produce casting speed -> cause -> longitudinal cracks. Relation types include cause, affect, control, improve, located_at, has_parameter, and associated_with. All extracted entities and relations must be supported by the input text."
+      }
+    ]
+  },
+  {
+    "strategy": "over_fine",
+    "atom_count": 57,
+    "mean_tokens_per_atom": 3.175,
+    "error_attribution_coverage": 1.0,
+    "attribution_precision_proxy": 0.3601,
+    "edit_locality": 0.7292,
+    "semantic_completeness": 0.307,
+    "protected_tag_coverage": 1.0,
+    "protected_gate_coverage": 0.8333,
+    "over_coarse_risk": 0.0067,
+    "over_fine_risk": 0.693,
+    "mean_candidate_atoms_per_error": 14.333,
+    "diagnostic_score": 0.5856,
+    "atoms": [
+      {
+        "atom_id": "F1.1",
+        "category": "Foundation",
+        "protected": false,
+        "source_units": [
+          "F1.1"
+        ],
+        "tags": [
+          "industrial_domain",
+          "task_scope"
+        ],
+        "text": "Extract only process-relevant industrial"
+      },
+      {
+        "atom_id": "F1.2",
+        "category": "Foundation",
+        "protected": false,
+        "source_units": [
+          "F1.2"
+        ],
+        "tags": [
+          "industrial_domain",
+          "task_scope"
+        ],
+        "text": "knowledge from continuous casting text."
+      },
+      {
+        "atom_id": "F2.1",
+        "category": "Foundation",
+        "protected": true,
+        "source_units": [
+          "F2.1"
+        ],
+        "tags": [
+          "evidence"
+        ],
+        "text": "All extracted entities"
+      },
+      {
+        "atom_id": "F2.2",
+        "category": "Foundation",
+        "protected": true,
+        "source_units": [
+          "F2.2"
+        ],
+        "tags": [
+          "evidence"
+        ],
+        "text": "relations must be supported by the input text"
+      },
+      {
+        "atom_id": "F3.1",
+        "category": "Foundation",
+        "protected": true,
+        "source_units": [
+          "F3.1"
+        ],
+        "tags": [
+          "evidence",
+          "hallucination"
+        ],
+        "text": "Do not infer unstated defects"
+      },
+      {
+        "atom_id": "F3.2",
+        "category": "Foundation",
+        "protected": true,
+        "source_units": [
+          "F3.2"
+        ],
+        "tags": [
+          "evidence",
+          "hallucination"
+        ],
+        "text": "causes"
+      },
+      {
+        "atom_id": "F3.3",
+        "category": "Foundation",
+        "protected": true,
+        "source_units": [
+          "F3.3"
+        ],
+        "tags": [
+          "evidence",
+          "hallucination"
+        ],
+        "text": "equipment states"
+      },
+      {
+        "atom_id": "F3.4",
+        "category": "Foundation",
+        "protected": true,
+        "source_units": [
+          "F3.4"
+        ],
+        "tags": [
+          "evidence",
+          "hallucination"
+        ],
+        "text": "improvement actions"
+      },
+      {
+        "atom_id": "S1.1",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S1.1"
+        ],
+        "tags": [
+          "entity_type",
+          "schema"
+        ],
+        "text": "Entity types are ProcessParameter"
+      },
+      {
+        "atom_id": "S1.2",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S1.2"
+        ],
+        "tags": [
+          "entity_type",
+          "schema"
+        ],
+        "text": "EquipmentState"
+      },
+      {
+        "atom_id": "S1.3",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S1.3"
+        ],
+        "tags": [
+          "entity_type",
+          "schema"
+        ],
+        "text": "QualityDefect"
+      },
+      {
+        "atom_id": "S1.4",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S1.4"
+        ],
+        "tags": [
+          "entity_type",
+          "schema"
+        ],
+        "text": "MaterialState"
+      },
+      {
+        "atom_id": "S1.5",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S1.5"
+        ],
+        "tags": [
+          "entity_type",
+          "schema"
+        ],
+        "text": "Operation"
+      },
+      {
+        "atom_id": "S1.6",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S1.6"
+        ],
+        "tags": [
+          "entity_type",
+          "schema"
+        ],
+        "text": "ProductPart"
+      },
+      {
+        "atom_id": "S1.7",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S1.7"
+        ],
+        "tags": [
+          "entity_type",
+          "schema"
+        ],
+        "text": "QualityIndicator"
+      },
+      {
+        "atom_id": "S2.1",
+        "category": "Schema",
+        "protected": false,
+        "source_units": [
+          "S2.1"
+        ],
+        "tags": [
+          "entity_boundary",
+          "nested_entity",
+          "schema"
+        ],
+        "text": "Preserve complete entity boundaries"
+      },
+      {
+        "atom_id": "S2.2",
+        "category": "Schema",
+        "protected": false,
+        "source_units": [
+          "S2.2"
+        ],
+        "tags": [
+          "entity_boundary",
+          "nested_entity",
+          "schema"
+        ],
+        "text": "modifiers such as excessive"
+      },
+      {
+        "atom_id": "S2.3",
+        "category": "Schema",
+        "protected": false,
+        "source_units": [
+          "S2.3"
+        ],
+        "tags": [
+          "entity_boundary",
+          "nested_entity",
+          "schema"
+        ],
+        "text": "insufficient"
+      },
+      {
+        "atom_id": "S2.4",
+        "category": "Schema",
+        "protected": false,
+        "source_units": [
+          "S2.4"
+        ],
+        "tags": [
+          "entity_boundary",
+          "nested_entity",
+          "schema"
+        ],
+        "text": "unstable"
+      },
+      {
+        "atom_id": "S2.5",
+        "category": "Schema",
+        "protected": false,
+        "source_units": [
+          "S2.5"
+        ],
+        "tags": [
+          "entity_boundary",
+          "nested_entity",
+          "schema"
+        ],
+        "text": "abnormal"
+      },
+      {
+        "atom_id": "S3.1",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S3.1"
+        ],
+        "tags": [
+          "relation_type",
+          "schema"
+        ],
+        "text": "Relation types include cause"
+      },
+      {
+        "atom_id": "S3.2",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S3.2"
+        ],
+        "tags": [
+          "relation_type",
+          "schema"
+        ],
+        "text": "affect"
+      },
+      {
+        "atom_id": "S3.3",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S3.3"
+        ],
+        "tags": [
+          "relation_type",
+          "schema"
+        ],
+        "text": "control"
+      },
+      {
+        "atom_id": "S3.4",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S3.4"
+        ],
+        "tags": [
+          "relation_type",
+          "schema"
+        ],
+        "text": "improve"
+      },
+      {
+        "atom_id": "S3.5",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S3.5"
+        ],
+        "tags": [
+          "relation_type",
+          "schema"
+        ],
+        "text": "located_at"
+      },
+      {
+        "atom_id": "S3.6",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S3.6"
+        ],
+        "tags": [
+          "relation_type",
+          "schema"
+        ],
+        "text": "has_parameter"
+      },
+      {
+        "atom_id": "S3.7",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S3.7"
+        ],
+        "tags": [
+          "relation_type",
+          "schema"
+        ],
+        "text": "associated_with"
+      },
+      {
+        "atom_id": "S4.1",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S4.1"
+        ],
+        "tags": [
+          "causal_chain",
+          "relation_direction",
+          "schema"
+        ],
+        "text": "Causal relations must follow cause-to-effect direction"
+      },
+      {
+        "atom_id": "S4.2",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S4.2"
+        ],
+        "tags": [
+          "causal_chain",
+          "relation_direction",
+          "schema"
+        ],
+        "text": "not effect-to-cause direction"
+      },
+      {
+        "atom_id": "S5.1",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S5.1"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "entity_type",
+          "schema"
+        ],
+        "text": "A relation is valid only"
+      },
+      {
+        "atom_id": "S5.2",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S5.2"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "entity_type",
+          "schema"
+        ],
+        "text": "both endpoints appear as extracted entities"
+      },
+      {
+        "atom_id": "S5.3",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S5.3"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "entity_type",
+          "schema"
+        ],
+        "text": "the entity-type combination is legal"
+      },
+      {
+        "atom_id": "D1.1",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D1.1"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "relation_direction"
+        ],
+        "text": "Example"
+      },
+      {
+        "atom_id": "D1.2",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D1.2"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "relation_direction"
+        ],
+        "text": "'casting speed increased"
+      },
+      {
+        "atom_id": "D1.3",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D1.3"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "relation_direction"
+        ],
+        "text": "leading to longitudinal cracks' should produce casting speed -> cause -> longitudinal cracks"
+      },
+      {
+        "atom_id": "D2.1",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D2.1"
+        ],
+        "tags": [
+          "demonstration",
+          "entity_boundary"
+        ],
+        "text": "Example"
+      },
+      {
+        "atom_id": "D2.2",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D2.2"
+        ],
+        "tags": [
+          "demonstration",
+          "entity_boundary"
+        ],
+        "text": "keep 'mold level fluctuation' as one EquipmentState entity"
+      },
+      {
+        "atom_id": "D2.3",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D2.3"
+        ],
+        "tags": [
+          "demonstration",
+          "entity_boundary"
+        ],
+        "text": "splitting it into unrelated words"
+      },
+      {
+        "atom_id": "D3.1",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D3.1"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "implicit_chain"
+        ],
+        "text": "Example"
+      },
+      {
+        "atom_id": "D3.2",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D3.2"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "implicit_chain"
+        ],
+        "text": "one sentence contains a chain A causes B"
+      },
+      {
+        "atom_id": "D3.3",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D3.3"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "implicit_chain"
+        ],
+        "text": "B causes C"
+      },
+      {
+        "atom_id": "D3.4",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D3.4"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "implicit_chain"
+        ],
+        "text": "extract both local links"
+      },
+      {
+        "atom_id": "D3.5",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D3.5"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "implicit_chain"
+        ],
+        "text": "text evidence supports them"
+      },
+      {
+        "atom_id": "D4.1",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D4.1"
+        ],
+        "tags": [
+          "demonstration",
+          "evidence",
+          "hallucination"
+        ],
+        "text": "Example"
+      },
+      {
+        "atom_id": "D4.2",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D4.2"
+        ],
+        "tags": [
+          "demonstration",
+          "evidence",
+          "hallucination"
+        ],
+        "text": "reject a triple"
+      },
+      {
+        "atom_id": "D4.3",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D4.3"
+        ],
+        "tags": [
+          "demonstration",
+          "evidence",
+          "hallucination"
+        ],
+        "text": "the source text mentions only an isolated material state"
+      },
+      {
+        "atom_id": "D4.4",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D4.4"
+        ],
+        "tags": [
+          "demonstration",
+          "evidence",
+          "hallucination"
+        ],
+        "text": "no relation"
+      },
+      {
+        "atom_id": "V1.1",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V1.1"
+        ],
+        "tags": [
+          "json_format",
+          "validation"
+        ],
+        "text": "Return valid JSON"
+      },
+      {
+        "atom_id": "V1.2",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V1.2"
+        ],
+        "tags": [
+          "json_format",
+          "validation"
+        ],
+        "text": "top-level keys entities"
+      },
+      {
+        "atom_id": "V1.3",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V1.3"
+        ],
+        "tags": [
+          "json_format",
+          "validation"
+        ],
+        "text": "relations"
+      },
+      {
+        "atom_id": "V2.1",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V2.1"
+        ],
+        "tags": [
+          "evidence",
+          "hallucination",
+          "validation"
+        ],
+        "text": "Remove entities"
+      },
+      {
+        "atom_id": "V2.2",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V2.2"
+        ],
+        "tags": [
+          "evidence",
+          "hallucination",
+          "validation"
+        ],
+        "text": "relations that are not supported by explicit textual evidence"
+      },
+      {
+        "atom_id": "V3.1",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V3.1"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "relation_direction",
+          "relation_type",
+          "validation"
+        ],
+        "text": "Check relation direction"
+      },
+      {
+        "atom_id": "V3.2",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V3.2"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "relation_direction",
+          "relation_type",
+          "validation"
+        ],
+        "text": "relation type"
+      },
+      {
+        "atom_id": "V3.3",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V3.3"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "relation_direction",
+          "relation_type",
+          "validation"
+        ],
+        "text": "endpoint existence"
+      },
+      {
+        "atom_id": "V3.4",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V3.4"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "relation_direction",
+          "relation_type",
+          "validation"
+        ],
+        "text": "duplicate triples"
+      },
+      {
+        "atom_id": "V3.5",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V3.5"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "relation_direction",
+          "relation_type",
+          "validation"
+        ],
+        "text": "final output"
+      }
+    ]
+  },
+  {
+    "strategy": "functional_atom",
+    "atom_count": 15,
+    "mean_tokens_per_atom": 13.4,
+    "error_attribution_coverage": 1.0,
+    "attribution_precision_proxy": 0.3601,
+    "edit_locality": 0.7292,
+    "semantic_completeness": 0.9,
+    "protected_tag_coverage": 1.0,
+    "protected_gate_coverage": 0.8333,
+    "over_coarse_risk": 0.0051,
+    "over_fine_risk": 0.1,
+    "mean_candidate_atoms_per_error": 3.833,
+    "diagnostic_score": 0.734,
+    "atoms": [
+      {
+        "atom_id": "F1",
+        "category": "Foundation",
+        "protected": false,
+        "source_units": [
+          "F1"
+        ],
+        "tags": [
+          "industrial_domain",
+          "task_scope"
+        ],
+        "text": "Extract only process-relevant industrial knowledge from continuous casting text."
+      },
+      {
+        "atom_id": "F2",
+        "category": "Foundation",
+        "protected": true,
+        "source_units": [
+          "F2"
+        ],
+        "tags": [
+          "evidence"
+        ],
+        "text": "All extracted entities and relations must be supported by the input text."
+      },
+      {
+        "atom_id": "F3",
+        "category": "Foundation",
+        "protected": true,
+        "source_units": [
+          "F3"
+        ],
+        "tags": [
+          "evidence",
+          "hallucination"
+        ],
+        "text": "Do not infer unstated defects, causes, equipment states, or improvement actions."
+      },
+      {
+        "atom_id": "S1",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S1"
+        ],
+        "tags": [
+          "entity_type",
+          "schema"
+        ],
+        "text": "Entity types are ProcessParameter, EquipmentState, QualityDefect, MaterialState, Operation, ProductPart, and QualityIndicator."
+      },
+      {
+        "atom_id": "S2",
+        "category": "Schema",
+        "protected": false,
+        "source_units": [
+          "S2"
+        ],
+        "tags": [
+          "entity_boundary",
+          "nested_entity",
+          "schema"
+        ],
+        "text": "Preserve complete entity boundaries, including modifiers such as excessive, insufficient, unstable, or abnormal."
+      },
+      {
+        "atom_id": "S3",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S3"
+        ],
+        "tags": [
+          "relation_type",
+          "schema"
+        ],
+        "text": "Relation types include cause, affect, control, improve, located_at, has_parameter, and associated_with."
+      },
+      {
+        "atom_id": "S4",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S4"
+        ],
+        "tags": [
+          "causal_chain",
+          "relation_direction",
+          "schema"
+        ],
+        "text": "Causal relations must follow cause-to-effect direction, not effect-to-cause direction."
+      },
+      {
+        "atom_id": "S5",
+        "category": "Schema",
+        "protected": true,
+        "source_units": [
+          "S5"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "entity_type",
+          "schema"
+        ],
+        "text": "A relation is valid only when both endpoints appear as extracted entities and the entity-type combination is legal."
+      },
+      {
+        "atom_id": "D1",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D1"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "relation_direction"
+        ],
+        "text": "Example: 'casting speed increased, leading to longitudinal cracks' should produce casting speed -> cause -> longitudinal cracks."
+      },
+      {
+        "atom_id": "D2",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D2"
+        ],
+        "tags": [
+          "demonstration",
+          "entity_boundary"
+        ],
+        "text": "Example: keep 'mold level fluctuation' as one EquipmentState entity rather than splitting it into unrelated words."
+      },
+      {
+        "atom_id": "D3",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D3"
+        ],
+        "tags": [
+          "causal_chain",
+          "demonstration",
+          "implicit_chain"
+        ],
+        "text": "Example: if one sentence contains a chain A causes B and B causes C, extract both local links when text evidence supports them."
+      },
+      {
+        "atom_id": "D4",
+        "category": "Demonstration",
+        "protected": false,
+        "source_units": [
+          "D4"
+        ],
+        "tags": [
+          "demonstration",
+          "evidence",
+          "hallucination"
+        ],
+        "text": "Example: reject a triple if the source text mentions only an isolated material state and no relation."
+      },
+      {
+        "atom_id": "V1",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V1"
+        ],
+        "tags": [
+          "json_format",
+          "validation"
+        ],
+        "text": "Return valid JSON with top-level keys entities and relations."
+      },
+      {
+        "atom_id": "V2",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V2"
+        ],
+        "tags": [
+          "evidence",
+          "hallucination",
+          "validation"
+        ],
+        "text": "Remove entities or relations that are not supported by explicit textual evidence."
+      },
+      {
+        "atom_id": "V3",
+        "category": "Validation",
+        "protected": true,
+        "source_units": [
+          "V3"
+        ],
+        "tags": [
+          "endpoint_consistency",
+          "relation_direction",
+          "relation_type",
+          "validation"
+        ],
+        "text": "Check relation direction, relation type, endpoint existence, and duplicate triples before final output."
+      }
+    ]
+  }
+]

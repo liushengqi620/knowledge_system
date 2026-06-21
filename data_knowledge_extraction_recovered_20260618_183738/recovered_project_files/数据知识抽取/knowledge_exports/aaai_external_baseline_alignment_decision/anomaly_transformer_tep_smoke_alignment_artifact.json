@@ -1,0 +1,35 @@
+{
+  "status": "local_matched_adapter_probe_available",
+  "method": "Anomaly Transformer",
+  "model_name": "anomaly_transformer",
+  "dataset": "TEP",
+  "source_artifact": "knowledge_exports/tep_anomaly_transformer_matched_adapter_smoke/anomaly_transformer_smoke.json",
+  "source_sha256": "46d169873bd6d1bfe3fe5d01d602ebb2f8276d246e0ab75ff6c832ad106b61fa",
+  "command": "python Scripts/run_tep_sequence_graph_ablation.py --output knowledge_exports/tep_anomaly_transformer_matched_adapter_smoke/anomaly_transformer_smoke.json --model anomaly_transformer --seeds 42 --max-rows 600 --window-size 12 --hidden-dim 16 --epochs 1 --batch-size 128 --normal-pretrain-epochs 0 --variants no_graph --device auto",
+  "seed_budget": [
+    42
+  ],
+  "variants": [
+    "no_graph"
+  ],
+  "summary": {
+    "no_graph": {
+      "n_runs": 1,
+      "target_defect_macro_f1_mean": 0.0071142068329128815,
+      "target_defect_macro_f1_std": 0.0,
+      "macro_f1_mean": 0.006790833795053205,
+      "macro_f1_std": 0.0,
+      "event_macro_recall_mean": 0.047619047619047616,
+      "event_macro_recall_std": 0.0,
+      "path_hit_rate_mean": 0.0,
+      "path_hit_rate_std": 0.0,
+      "candidate_edges_mean": null,
+      "candidate_edges_std": null,
+      "matched_edges_mean": null,
+      "matched_edges_std": null,
+      "pruned_edges_mean": null,
+      "pruned_edges_std": null
+    }
+  },
+  "claim_boundary": "pipeline smoke only; not admissible as an official external comparison score until exact external protocol alignment and full seed budget pass"
+}

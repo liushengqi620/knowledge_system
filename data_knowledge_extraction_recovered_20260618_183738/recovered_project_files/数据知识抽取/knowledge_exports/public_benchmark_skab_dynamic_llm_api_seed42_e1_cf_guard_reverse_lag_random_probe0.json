@@ -1,0 +1,260 @@
+{
+  "status": "ok",
+  "task": "skab_dynamic_llm_graph_api_experiment",
+  "model": "gpt-5.5",
+  "seed": 42,
+  "sequence_epochs": 1,
+  "edge_probe_epochs": 0,
+  "api": {
+    "status": "skipped"
+  },
+  "parse": {
+    "status": "ok",
+    "path": "C:\\Users\\CPILAB\\Documents\\xwechat_files\\wxid_fn3terjpgaio22_c340\\msg\\file\\2026-06\\codex_recovery\\data_knowledge_extraction_recovered_20260618_183738\\recovered_project_files\\数据知识抽取\\knowledge_exports\\public_benchmark_skab_dynamic_llm_api_seed42_e8_learned_reliability_probe2_t045_k4.json",
+    "loaded_edges": 8
+  },
+  "error_summary": {
+    "source": "default",
+    "false_negative_rate": 0.25,
+    "false_positive_rate": 0.1,
+    "weak_segments": []
+  },
+  "dynamic_edges": [],
+  "candidate_dynamic_edges": [
+    {
+      "source": "Current",
+      "target": "Temperature",
+      "lag": 2,
+      "relation": "motor_load_heating",
+      "reliability": 0.45,
+      "source_families": [
+        "expert"
+      ]
+    },
+    {
+      "source": "Volume Flow RateRMS",
+      "target": "Pressure",
+      "lag": 1,
+      "relation": "flow_pressure_coupling",
+      "reliability": 0.45,
+      "source_families": [
+        "expert"
+      ]
+    },
+    {
+      "source": "Accelerometer1RMS",
+      "target": "Accelerometer2RMS",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.9,
+      "correlation": 0.9951837259750459,
+      "source_families": [
+        "data"
+      ]
+    },
+    {
+      "source": "Accelerometer2RMS",
+      "target": "Accelerometer1RMS",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.9,
+      "correlation": 0.9951837259750459,
+      "source_families": [
+        "data"
+      ]
+    },
+    {
+      "source": "Temperature",
+      "target": "Volume Flow RateRMS",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.8779992932257022,
+      "correlation": 0.8779992932257022,
+      "source_families": [
+        "data"
+      ]
+    },
+    {
+      "source": "Volume Flow RateRMS",
+      "target": "Temperature",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.8779992932257022,
+      "correlation": 0.8779992932257022,
+      "source_families": [
+        "data"
+      ]
+    }
+  ],
+  "edge_policy": {
+    "policy": "learned_reliability",
+    "base_edges": 0,
+    "dynamic_edges": 8,
+    "n_input_edges": 8,
+    "n_kept_after_reliability": 6,
+    "n_rejected_by_reliability": 2,
+    "edge_reliability_threshold": 0.45,
+    "validation_macro_f1_baseline": 0.8063128078117565,
+    "validation_macro_f1_candidate": 0.7977502257080733,
+    "validation_macro_f1_gain": -0.008562582103683214,
+    "edge_min_validation_macro_gain": 0.0,
+    "n_rejected_by_validation_gain_guard": 6,
+    "counterfactual_guard_modes": [
+      "reverse_direction",
+      "lag_shift",
+      "random_target"
+    ],
+    "counterfactual_validation_macro_drops": {},
+    "counterfactual_min_macro_drop": 0.01,
+    "counterfactual_max_macro_drop": 0.0,
+    "n_rejected_by_counterfactual_guard": 0,
+    "counterfactual_guard_skipped": "validation_gain_guard_rejected",
+    "n_kept_edges": 0,
+    "admitted": false,
+    "edge_max_far_increase_percent": 1.0
+  },
+  "baseline": {
+    "threshold": 0.4799999999999999,
+    "validation_metrics": {
+      "accuracy": 0.8105343511450381,
+      "balanced_accuracy": 0.848767328589815,
+      "macro_f1": 0.8063128078117565,
+      "macro_precision": 0.8140061286105299,
+      "macro_recall": 0.848767328589815,
+      "positive_f1": 0.7777180727207594,
+      "positive_precision": 0.6492224880382775,
+      "positive_recall": 0.9696292987941045
+    },
+    "metrics": {
+      "accuracy": 0.7793109286379413,
+      "balanced_accuracy": 0.7935718549302371,
+      "macro_f1": 0.772052275109036,
+      "macro_precision": 0.7706311917035407,
+      "macro_recall": 0.7935718549302371,
+      "positive_f1": 0.7313755795981453,
+      "positive_precision": 0.6457423580786026,
+      "positive_recall": 0.8431931575196009
+    },
+    "protocol": {
+      "binary": {
+        "f1": 0.7313755795981453,
+        "precision": 0.6457423580786026,
+        "recall": 0.8431931575196009,
+        "far_percent": 25.604944765912677,
+        "mar_percent": 15.680684248039915
+      },
+      "point_adjusted": {
+        "f1": 0.9090909090909091,
+        "detected_runs": 10,
+        "anomalous_runs": 11
+      },
+      "right_window_changepoint": {
+        "window_steps": 60,
+        "detected_runs": 10,
+        "anomalous_runs": 11
+      }
+    },
+    "sequence_n_features": 11,
+    "time_context": {
+      "mode": "time_context"
+    },
+    "msfg": {
+      "n_fused_edges": 0,
+      "n_used_edges": 0,
+      "edge_feature_cols": [],
+      "used_edges": []
+    },
+    "train": {
+      "loss_tail": [
+        0.4556875904755933
+      ],
+      "epochs": 1,
+      "device": "cuda",
+      "model_family": "tcn_temporal_convolution",
+      "input_features": 11,
+      "parameters": 8194,
+      "train_seconds": 0.3718489999882877,
+      "train_samples_per_second": 76490.72607670286,
+      "test_inference_seconds": 0.011427999939769506,
+      "test_inference_samples_per_second": 1033689.1899072112,
+      "graph_strength": 0.0,
+      "lagged_graph_fusion_mode": "direct_filter",
+      "residual_channel_enabled": false,
+      "normal_residual_features_enabled": false,
+      "normal_pretrain_loss_tail": []
+    }
+  },
+  "dynamic_llm_kg": {
+    "threshold": 0.4799999999999999,
+    "validation_metrics": {
+      "accuracy": 0.8105343511450381,
+      "balanced_accuracy": 0.848767328589815,
+      "macro_f1": 0.8063128078117565,
+      "macro_precision": 0.8140061286105299,
+      "macro_recall": 0.848767328589815,
+      "positive_f1": 0.7777180727207594,
+      "positive_precision": 0.6492224880382775,
+      "positive_recall": 0.9696292987941045
+    },
+    "metrics": {
+      "accuracy": 0.7793109286379413,
+      "balanced_accuracy": 0.7935718549302371,
+      "macro_f1": 0.772052275109036,
+      "macro_precision": 0.7706311917035407,
+      "macro_recall": 0.7935718549302371,
+      "positive_f1": 0.7313755795981453,
+      "positive_precision": 0.6457423580786026,
+      "positive_recall": 0.8431931575196009
+    },
+    "protocol": {
+      "binary": {
+        "f1": 0.7313755795981453,
+        "precision": 0.6457423580786026,
+        "recall": 0.8431931575196009,
+        "far_percent": 25.604944765912677,
+        "mar_percent": 15.680684248039915
+      },
+      "point_adjusted": {
+        "f1": 0.9090909090909091,
+        "detected_runs": 10,
+        "anomalous_runs": 11
+      },
+      "right_window_changepoint": {
+        "window_steps": 60,
+        "detected_runs": 10,
+        "anomalous_runs": 11
+      }
+    },
+    "sequence_n_features": 11,
+    "time_context": {
+      "mode": "time_context"
+    },
+    "msfg": {
+      "n_fused_edges": 0,
+      "n_used_edges": 0,
+      "edge_feature_cols": [],
+      "used_edges": []
+    },
+    "train": {
+      "loss_tail": [
+        0.4556875904755933
+      ],
+      "epochs": 1,
+      "device": "cuda",
+      "model_family": "tcn_temporal_convolution",
+      "input_features": 11,
+      "parameters": 8194,
+      "train_seconds": 0.3718489999882877,
+      "train_samples_per_second": 76490.72607670286,
+      "test_inference_seconds": 0.011427999939769506,
+      "test_inference_samples_per_second": 1033689.1899072112,
+      "graph_strength": 0.0,
+      "lagged_graph_fusion_mode": "direct_filter",
+      "residual_channel_enabled": false,
+      "normal_residual_features_enabled": false,
+      "normal_pretrain_loss_tail": []
+    }
+  },
+  "macro_f1_delta": 0.0,
+  "point_adjusted_f1_delta": 0.0
+}

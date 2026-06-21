@@ -1,0 +1,706 @@
+{
+  "input_feature_count": 97,
+  "output_feature_count": 76,
+  "removed_feature_count": 21,
+  "high_missing_threshold": 0.2,
+  "duplicate_corr_threshold": 0.999,
+  "removed_features": {
+    "high_missing": [
+      "注入开始时TD钢水量/t",
+      "注入结束时TD钢水量/t"
+    ],
+    "constant": [],
+    "leakage_name_candidates": [],
+    "duplicate_aliases": [
+      "cover_flux_ratio",
+      "cover_flux_total",
+      "东西拔热量差/℃",
+      "中间包吨位平均值/t",
+      "中间包吨位波动/t",
+      "中间包连浇炉数",
+      "南北拔热量差/℃",
+      "塞棒开口度最大值/mm",
+      "拉速平均值/(m/min)",
+      "拉速波动/(m/min)",
+      "液相线温度/℃",
+      "液面波动均值/mm",
+      "液面波动极差/mm",
+      "液面波动的个数≥±10mm",
+      "液面波动的个数≥±7mm",
+      "结晶器锥度南平均值/mm",
+      "覆盖剂1使用量/ppm",
+      "覆盖剂2使用量/ppm",
+      "过热度/℃"
+    ]
+  },
+  "duplicate_groups": [
+    {
+      "keeper": "cover_flux_1",
+      "dropped": [
+        "cover_flux_total",
+        "覆盖剂1使用量/ppm"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "cover_flux_2",
+      "dropped": [
+        "cover_flux_ratio",
+        "覆盖剂2使用量/ppm"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "tundish_sequence_count",
+      "dropped": [
+        "中间包连浇炉数"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "liquidus_temp",
+      "dropped": [
+        "液相线温度/℃"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "superheat",
+      "dropped": [
+        "过热度/℃"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "TD_weight_mean",
+      "dropped": [
+        "中间包吨位平均值/t"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "TD_weight_range",
+      "dropped": [
+        "中间包吨位波动/t"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "cast_speed_mean",
+      "dropped": [
+        "拉速平均值/(m/min)"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "cast_speed_range",
+      "dropped": [
+        "拉速波动/(m/min)"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "mold_level_range",
+      "dropped": [
+        "液面波动极差/mm"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "mold_level_mean",
+      "dropped": [
+        "液面波动均值/mm"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "mold_level_ge7",
+      "dropped": [
+        "液面波动的个数≥±7mm"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "mold_level_ge10",
+      "dropped": [
+        "液面波动的个数≥±10mm"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "塞棒开口度平均值/mm",
+      "dropped": [
+        "塞棒开口度最大值/mm"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "heat_exchange_ew_diff",
+      "dropped": [
+        "东西拔热量差/℃"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "heat_exchange_ns_diff",
+      "dropped": [
+        "南北拔热量差/℃"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    },
+    {
+      "keeper": "结晶器锥度北平均值/mm",
+      "dropped": [
+        "结晶器锥度南平均值/mm"
+      ],
+      "reason": "abs(corr)>=0.999; keep standard/low-missing feature"
+    }
+  ],
+  "feature_groups": {
+    "argon_and_pressure": 8,
+    "casting_speed": 4,
+    "derived_process": 1,
+    "flux": 2,
+    "mold_ems_taper_oscillation": 11,
+    "mold_heat_transfer": 8,
+    "mold_level": 9,
+    "nozzle_flow": 12,
+    "raw_process": 13,
+    "stopper": 2,
+    "tundish": 6
+  },
+  "features": [
+    {
+      "feature": "下渣线圈状态",
+      "group": "raw_process",
+      "missing_rate": 0.0,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "连铸镇静时间/min",
+      "group": "raw_process",
+      "missing_rate": 0.0013900072855554278,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "交接部开始位置/mm",
+      "group": "raw_process",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "交接部长度/mm",
+      "group": "raw_process",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "中间包吨位最大值/t",
+      "group": "tundish",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "中间包吨位最小值/t",
+      "group": "tundish",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "大包注入开始时钢水量/t",
+      "group": "raw_process",
+      "missing_rate": 5.7517542850569426e-05,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "大包注入结束时钢水量/t",
+      "group": "raw_process",
+      "missing_rate": 5.7517542850569426e-05,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "拉速最大值/(m/min)",
+      "group": "casting_speed",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "拉速最小值/(m/min)",
+      "group": "casting_speed",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "液面高度最大值/mm",
+      "group": "mold_level",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "液面高度最小值/mm",
+      "group": "mold_level",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "±3mm≤液面波动<±5mm的个数",
+      "group": "mold_level",
+      "missing_rate": 0.15443460255377892,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "±5mm≤液面波动<±7mm的个数",
+      "group": "mold_level",
+      "missing_rate": 0.15443460255377892,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "±3mm≤液面波动<±7mm的个数",
+      "group": "mold_level",
+      "missing_rate": 0.15443460255377892,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上水口流量平均值/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上水口流量最大值/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上水口流量最小值/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上水口流量波动/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上滑板流量平均值/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上滑板流量最大值/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上滑板流量最小值/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上滑板流量波动/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上水口氩气压力平均值/kPa",
+      "group": "argon_and_pressure",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上水口氩气压力最大值/kPa",
+      "group": "argon_and_pressure",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上水口氩气压力最小值/kPa",
+      "group": "argon_and_pressure",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "上水口氩气压力波动/kPa",
+      "group": "argon_and_pressure",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "塞棒氩气流量平均值/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "塞棒氩气流量最大值/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "塞棒氩气流量最小值/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "塞棒氩气流量波动/(L/min)",
+      "group": "nozzle_flow",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "塞棒氩气压力平均值/kPa",
+      "group": "argon_and_pressure",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "塞棒氩气压力最大值/kPa",
+      "group": "argon_and_pressure",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "塞棒氩气压力最小值/kPa",
+      "group": "argon_and_pressure",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "塞棒氩气压力波动/kPa",
+      "group": "argon_and_pressure",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "塞棒开口度平均值/mm",
+      "group": "stopper",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "塞棒开口度最小值/mm",
+      "group": "stopper",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "热交换平均(东)/℃",
+      "group": "mold_heat_transfer",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "热交换平均(西)/℃",
+      "group": "mold_heat_transfer",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "热交换平均(南)/℃",
+      "group": "mold_heat_transfer",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "热交换平均(北)/℃",
+      "group": "mold_heat_transfer",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器电磁搅拌电流平均值/A",
+      "group": "raw_process",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器电磁搅拌电流最大值/A",
+      "group": "raw_process",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器电磁搅拌电流最小值/A",
+      "group": "raw_process",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器电磁搅拌电流波动/A",
+      "group": "raw_process",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器电磁搅拌频率平均值/Hz",
+      "group": "raw_process",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器电磁搅拌频率最大值/Hz",
+      "group": "raw_process",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器电磁搅拌频率最小值/Hz",
+      "group": "raw_process",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器锥度北平均值/mm",
+      "group": "mold_ems_taper_oscillation",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器锥度北最大值/mm",
+      "group": "mold_ems_taper_oscillation",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器锥度北最小值/mm",
+      "group": "mold_ems_taper_oscillation",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器锥度南最大值/mm",
+      "group": "mold_ems_taper_oscillation",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器锥度南最小值/mm",
+      "group": "mold_ems_taper_oscillation",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器振动频率平均值/Hz",
+      "group": "mold_ems_taper_oscillation",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器振动频率最大值/Hz",
+      "group": "mold_ems_taper_oscillation",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器振动频率最小值/Hz",
+      "group": "mold_ems_taper_oscillation",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器振动负滑脱时间平均值/s",
+      "group": "mold_ems_taper_oscillation",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器振动负滑脱时间最大值/s",
+      "group": "mold_ems_taper_oscillation",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "结晶器振动负滑脱时间最小值/s",
+      "group": "mold_ems_taper_oscillation",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "raw_or_process_numeric"
+    },
+    {
+      "feature": "TD_weight_mean",
+      "group": "tundish",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "TD_weight_range",
+      "group": "tundish",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "TD_avg_temp",
+      "group": "tundish",
+      "missing_rate": 0.00041220905709574753,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "cast_speed_mean",
+      "group": "casting_speed",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "cast_speed_range",
+      "group": "casting_speed",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "liquidus_temp",
+      "group": "derived_process",
+      "missing_rate": 5.7517542850569426e-05,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "superheat",
+      "group": "mold_heat_transfer",
+      "missing_rate": 0.00041220905709574753,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "cover_flux_1",
+      "group": "flux",
+      "missing_rate": 0.0,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "cover_flux_2",
+      "group": "flux",
+      "missing_rate": 0.0,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "mold_level_range",
+      "group": "mold_level",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "mold_level_mean",
+      "group": "mold_level",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "mold_level_ge7",
+      "group": "mold_level",
+      "missing_rate": 0.0,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "mold_level_ge10",
+      "group": "mold_level",
+      "missing_rate": 0.0,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "tundish_sequence_count",
+      "group": "tundish",
+      "missing_rate": 5.7517542850569426e-05,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "heat_exchange_mean",
+      "group": "mold_heat_transfer",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "heat_exchange_ew_diff",
+      "group": "mold_heat_transfer",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "preferred_standard"
+    },
+    {
+      "feature": "heat_exchange_ns_diff",
+      "group": "mold_heat_transfer",
+      "missing_rate": 0.0003546915142451781,
+      "kept": true,
+      "source": "preferred_standard"
+    }
+  ]
+}

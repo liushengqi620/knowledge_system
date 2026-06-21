@@ -1,0 +1,286 @@
+{
+  "version": "aaai-claim-boundary-v1",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "claim_boundary": {
+    "positive_claim": "matched-protocol method evidence",
+    "forbidden_claim_until_complete": "official universal leaderboard superiority",
+    "rule": "Pending items are not completed result claims."
+  },
+  "global_admission_rule": {
+    "same_equation_across_datasets": true,
+    "validation_only_selection": true,
+    "tau_R_grid": [
+      0.55,
+      0.6,
+      0.65,
+      0.7
+    ],
+    "tau_q_grid": [
+      0.5,
+      0.6,
+      0.7
+    ],
+    "terms": [
+      "G_k",
+      "H_k",
+      "C_k",
+      "S_k",
+      "B_k"
+    ],
+    "invariants": [
+      "No test-set threshold or route tuning",
+      "Same reliability equation across datasets",
+      "Pending external baselines must remain unscored until executed"
+    ]
+  },
+  "datasets": [
+    {
+      "name": "TEP",
+      "role": "main strict multiclass benchmark",
+      "split": "fault-run-aware train/validation/test split; no window overlap across split boundaries",
+      "window_or_label": "strict 22-class fault labels with process windows and lag/residual graph evidence",
+      "primary_metric": "Target-F1 over 22 classes",
+      "thresholding": "validation-only tau_R/tau_q selection; test used once",
+      "budget": "seeds 42/43/44; shared threshold grid; matched preprocessing for all baselines"
+    },
+    {
+      "name": "SKAB",
+      "role": "binary anomaly reliability stress test",
+      "split": "time-series split by scenario/run with changepoint leakage blocked",
+      "window_or_label": "binary anomaly windows; formal runs use 48-step windows and validation-only thresholds",
+      "primary_metric": "Macro-F1 with FAR/MAR safety diagnostics",
+      "thresholding": "thresholds selected on validation only",
+      "budget": "seeds 42/43/44; hidden_dim 64; max_paths 16; 40 epochs; no test-threshold tuning"
+    },
+    {
+      "name": "Hydraulic",
+      "role": "non-degradation safety evidence",
+      "split": "cycle-level split following target-specific operating states",
+      "window_or_label": "per-target equipment health labels",
+      "primary_metric": "per-target F1 and non-degradation count",
+      "thresholding": "validation-only admission; no target-specific test tuning",
+      "budget": "seeds 42/43/44; report Cooler/Valve/Pump/Accumulator separately"
+    },
+    {
+      "name": "C-MAPSS",
+      "role": "original RUL generalization evidence",
+      "split": "FD001-FD004 train/test protocol with validation carved from training units",
+      "window_or_label": "original remaining useful life regression; degradation-stage labels are auxiliary only",
+      "primary_metric": "RUL RMSE, RUL MAE, and PHM-style RUL score",
+      "thresholding": "no class-threshold tuning for primary RUL metric; validation-only route/admission selection",
+      "budget": "seeds 42/43/44; pooled and per-subset RUL reporting"
+    }
+  ],
+  "baseline_obligations": [
+    {
+      "family": "temporal sequence",
+      "name": "TCN",
+      "status": "materialized_matched_protocol",
+      "datasets": [
+        "TEP"
+      ],
+      "command_template": "python Scripts/public_benchmark_experiment.py --dataset TEP --model \"TCN\" --seed 42 --protocol matched --validation-only-thresholds",
+      "checks": [
+        "matched_preprocessing",
+        "same_seeds",
+        "same_metric"
+      ]
+    },
+    {
+      "family": "temporal sequence",
+      "name": "GRU",
+      "status": "materialized_matched_protocol",
+      "datasets": [
+        "TEP"
+      ],
+      "command_template": "python Scripts/public_benchmark_experiment.py --dataset TEP --model \"GRU\" --seed 42 --protocol matched --validation-only-thresholds",
+      "checks": [
+        "matched_preprocessing",
+        "same_seeds",
+        "same_metric"
+      ]
+    },
+    {
+      "family": "temporal sequence",
+      "name": "FT-Transformer",
+      "status": "materialized_matched_protocol",
+      "datasets": [
+        "TEP"
+      ],
+      "command_template": "python Scripts/public_benchmark_experiment.py --dataset TEP --model \"FT-Transformer\" --seed 42 --protocol matched --validation-only-thresholds",
+      "checks": [
+        "matched_preprocessing",
+        "same_seeds",
+        "same_metric"
+      ]
+    },
+    {
+      "family": "temporal sequence",
+      "name": "PatchTST",
+      "status": "pending_external_alignment",
+      "datasets": [
+        "TEP",
+        "SKAB"
+      ],
+      "command_template": "python Scripts/public_benchmark_experiment.py --dataset TEP --model \"PatchTST\" --seed 42 --protocol matched --validation-only-thresholds",
+      "checks": [
+        "protocol_alignment_required",
+        "same_seeds",
+        "no_test_threshold_tuning"
+      ]
+    },
+    {
+      "family": "temporal sequence",
+      "name": "Anomaly Transformer",
+      "status": "pending_external_alignment",
+      "datasets": [
+        "SKAB",
+        "TEP"
+      ],
+      "command_template": "python Scripts/public_benchmark_experiment.py --dataset SKAB --model \"Anomaly Transformer\" --seed 42 --protocol matched --validation-only-thresholds",
+      "checks": [
+        "protocol_alignment_required",
+        "same_seeds",
+        "threshold_policy_match"
+      ]
+    },
+    {
+      "family": "temporal sequence",
+      "name": "TranAD",
+      "status": "materialized_style_baseline",
+      "datasets": [
+        "SKAB"
+      ],
+      "command_template": "python Scripts/public_benchmark_experiment.py --dataset SKAB --model \"TranAD\" --seed 42 --protocol matched --validation-only-thresholds",
+      "checks": [
+        "matched_windowing",
+        "same_metric",
+        "external_style_not_official_leaderboard"
+      ]
+    },
+    {
+      "family": "graph temporal",
+      "name": "GDN",
+      "status": "materialized_style_baseline",
+      "datasets": [
+        "SKAB",
+        "TEP"
+      ],
+      "command_template": "python Scripts/public_benchmark_experiment.py --dataset SKAB --model \"GDN\" --seed 42 --protocol matched --validation-only-thresholds",
+      "checks": [
+        "matched_windowing",
+        "same_metric",
+        "external_style_not_official_leaderboard"
+      ]
+    },
+    {
+      "family": "graph temporal",
+      "name": "MTAD-GAT",
+      "status": "materialized_style_baseline",
+      "datasets": [
+        "SKAB",
+        "TEP"
+      ],
+      "command_template": "python Scripts/public_benchmark_experiment.py --dataset SKAB --model \"MTAD-GAT\" --seed 42 --protocol matched --validation-only-thresholds",
+      "checks": [
+        "matched_windowing",
+        "same_metric",
+        "external_style_not_official_leaderboard"
+      ]
+    },
+    {
+      "family": "graph temporal",
+      "name": "Graph WaveNet",
+      "status": "pending_external_alignment",
+      "datasets": [
+        "TEP"
+      ],
+      "command_template": "python Scripts/public_benchmark_experiment.py --dataset TEP --model \"Graph WaveNet\" --seed 42 --protocol matched --validation-only-thresholds",
+      "checks": [
+        "protocol_alignment_required",
+        "same_seeds",
+        "graph_input_contract"
+      ]
+    }
+  ],
+  "reliability_gate_obligations": [
+    {
+      "name": "ordinary gate",
+      "optimization": "end-to-end prediction loss",
+      "must_control": [],
+      "purpose": "tests whether a learned soft gate is enough"
+    },
+    {
+      "name": "attention gate",
+      "optimization": "attention-weighted challenger fusion",
+      "must_control": [],
+      "purpose": "tests whether edge or token attention explains the gain"
+    },
+    {
+      "name": "validation-only gate",
+      "optimization": "mean validation gain",
+      "must_control": [
+        "G_k"
+      ],
+      "purpose": "tests whether mean validation gain is sufficient without harm and perturbation evidence"
+    },
+    {
+      "name": "complete reliability admission",
+      "optimization": "global admission plus local ERE routing",
+      "must_control": [
+        "G_k",
+        "H_k",
+        "C_k",
+        "S_k",
+        "B_k"
+      ],
+      "purpose": "target method; deployment risk control before bounded correction"
+    }
+  ],
+  "systematic_ablation_plan": [
+    {
+      "name": "Anchor only",
+      "intervention": "remove all challengers and reliability correction"
+    },
+    {
+      "name": "Unfiltered evidence",
+      "intervention": "use all generated evidence without reliability admission"
+    },
+    {
+      "name": "Expert only",
+      "intervention": "keep expert mechanism evidence; remove LLM/statistical sources"
+    },
+    {
+      "name": "LLM only",
+      "intervention": "keep LLM-generated weak-class rules; remove expert/statistical sources"
+    },
+    {
+      "name": "Lag/residual only",
+      "intervention": "keep lag and residual triggers; remove expert/LLM graph evidence"
+    },
+    {
+      "name": "Graph only",
+      "intervention": "keep graph path evidence; remove residual and source reliability channels"
+    },
+    {
+      "name": "No counterfactual guard",
+      "intervention": "remove C_k perturbation-dependence admission"
+    },
+    {
+      "name": "No tail safety",
+      "intervention": "remove H_k low-tail harm control"
+    },
+    {
+      "name": "No complexity penalty",
+      "intervention": "remove B_k path/source burden"
+    },
+    {
+      "name": "Full model",
+      "intervention": "use all source, safety, perturbation, and routing terms"
+    }
+  ]
+}

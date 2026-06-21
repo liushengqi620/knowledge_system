@@ -1,0 +1,239 @@
+{
+  "status": "ok",
+  "schema": "skab_cf_candidate_edges_v1",
+  "seed": 44,
+  "split": {
+    "train_runs": [
+      "other_12",
+      "other_11",
+      "other_5",
+      "other_6",
+      "valve2_3",
+      "valve1_4",
+      "valve1_14",
+      "other_10",
+      "valve1_12",
+      "valve1_15",
+      "valve1_11",
+      "valve1_10",
+      "valve1_7",
+      "other_13",
+      "other_1",
+      "other_9",
+      "other_14",
+      "other_2"
+    ],
+    "val_runs": [
+      "valve2_1",
+      "valve1_13",
+      "valve1_8",
+      "other_4",
+      "valve2_2",
+      "other_8"
+    ],
+    "test_runs": [
+      "valve1_2",
+      "other_3",
+      "valve1_6",
+      "valve2_0",
+      "valve1_5",
+      "valve1_0",
+      "valve1_3",
+      "valve1_9",
+      "other_7",
+      "valve1_1",
+      "anomaly-free_anomaly-free"
+    ]
+  },
+  "allowed_feature_count": 8,
+  "dynamic_edges": [
+    {
+      "source": "Current",
+      "target": "Temperature",
+      "lag": 2,
+      "relation": "motor_load_heating",
+      "reliability": 0.45,
+      "source_families": [
+        "expert"
+      ]
+    },
+    {
+      "source": "Volume Flow RateRMS",
+      "target": "Pressure",
+      "lag": 1,
+      "relation": "flow_pressure_coupling",
+      "reliability": 0.45,
+      "source_families": [
+        "expert"
+      ]
+    },
+    {
+      "source": "Current",
+      "target": "Volume Flow RateRMS",
+      "lag": 2,
+      "relation": "pump_load_flow_response",
+      "reliability": 0.25,
+      "source_families": [
+        "llm_static"
+      ]
+    },
+    {
+      "source": "Temperature",
+      "target": "Thermocouple",
+      "lag": 3,
+      "relation": "thermal_transfer",
+      "reliability": 0.25,
+      "source_families": [
+        "llm_static"
+      ]
+    },
+    {
+      "source": "Accelerometer1RMS",
+      "target": "Accelerometer2RMS",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.9,
+      "correlation": 0.9976887993646775,
+      "source_families": [
+        "data"
+      ]
+    },
+    {
+      "source": "Accelerometer2RMS",
+      "target": "Accelerometer1RMS",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.9,
+      "correlation": 0.9976887993646775,
+      "source_families": [
+        "data"
+      ]
+    },
+    {
+      "source": "Temperature",
+      "target": "Volume Flow RateRMS",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.8702492177601521,
+      "correlation": 0.8702492177601521,
+      "source_families": [
+        "data"
+      ]
+    },
+    {
+      "source": "Volume Flow RateRMS",
+      "target": "Temperature",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.8702492177601521,
+      "correlation": 0.8702492177601521,
+      "source_families": [
+        "data"
+      ]
+    }
+  ],
+  "candidate_edges": [
+    {
+      "source": "Current",
+      "target": "Temperature",
+      "lag": 2,
+      "relation": "motor_load_heating",
+      "reliability": 0.45,
+      "source_families": [
+        "expert"
+      ]
+    },
+    {
+      "source": "Volume Flow RateRMS",
+      "target": "Pressure",
+      "lag": 1,
+      "relation": "flow_pressure_coupling",
+      "reliability": 0.45,
+      "source_families": [
+        "expert"
+      ]
+    },
+    {
+      "source": "Current",
+      "target": "Volume Flow RateRMS",
+      "lag": 2,
+      "relation": "pump_load_flow_response",
+      "reliability": 0.25,
+      "source_families": [
+        "llm_static"
+      ]
+    },
+    {
+      "source": "Temperature",
+      "target": "Thermocouple",
+      "lag": 3,
+      "relation": "thermal_transfer",
+      "reliability": 0.25,
+      "source_families": [
+        "llm_static"
+      ]
+    },
+    {
+      "source": "Accelerometer1RMS",
+      "target": "Accelerometer2RMS",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.9,
+      "correlation": 0.9976887993646775,
+      "source_families": [
+        "data"
+      ]
+    },
+    {
+      "source": "Accelerometer2RMS",
+      "target": "Accelerometer1RMS",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.9,
+      "correlation": 0.9976887993646775,
+      "source_families": [
+        "data"
+      ]
+    },
+    {
+      "source": "Temperature",
+      "target": "Volume Flow RateRMS",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.8702492177601521,
+      "correlation": 0.8702492177601521,
+      "source_families": [
+        "data"
+      ]
+    },
+    {
+      "source": "Volume Flow RateRMS",
+      "target": "Temperature",
+      "lag": 1,
+      "relation": "data_correlation",
+      "reliability": 0.8702492177601521,
+      "correlation": 0.8702492177601521,
+      "source_families": [
+        "data"
+      ]
+    }
+  ],
+  "diagnostics": {
+    "source": "train_split_static_expert_llm_data_candidate_cache",
+    "min_reliability": 0.2,
+    "max_edges": 8,
+    "family_reserve": {
+      "families": [
+        "expert",
+        "llm_static"
+      ],
+      "per_family": 2
+    },
+    "data_edges": {
+      "candidate_edges": 30,
+      "selected_edges": 24
+    },
+    "n_exported_edges": 8,
+    "note": "Frozen candidate cache for matched CF/no-CF ablation. It avoids API variability; the candidates still pass downstream reliability and counterfactual admission."
+  }
+}
